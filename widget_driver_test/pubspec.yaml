@@ -1,0 +1,12 @@
+name: widget_driver_test
+description: Test helpers for WidgetDriver
+version: 1.0.0
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dependencies:
+  widget_driver:
+    path: ../widget_driver/
+  mocktail: ^0.3.0
+  test: ^1.16.0

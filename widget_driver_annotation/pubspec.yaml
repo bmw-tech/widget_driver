@@ -1,0 +1,9 @@
+name: widget_driver_annotation
+description: Annotations for WidgetDriver
+version: 1.0.0
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dev_dependencies:
+  test: ^1.0.0
