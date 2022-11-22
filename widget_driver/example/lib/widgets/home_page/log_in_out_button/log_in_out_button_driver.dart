@@ -1,13 +1,15 @@
 import 'dart:async';
 
-import 'package:example/services/auth_service.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-part 'coffee_community_page_driver.g.dart';
+import '../../../services/auth_service.dart';
+
+part 'log_in_out_button_driver.g.dart';
 
 @Driver()
-class CoffeeCommunityPageDriver extends WidgetDriver {
+class LogInOutButtonDriver extends WidgetDriver {
   late AuthService _authService;
   StreamSubscription? _subscription;
 
@@ -19,12 +21,17 @@ class CoffeeCommunityPageDriver extends WidgetDriver {
     });
   }
 
-  @DriverProperty("You are logged in!")
-  String get isLoggedInTitle {
+  @DriverProperty(Icons.logout_rounded)
+  IconData get buttonIcon {
+    return _authService.isLoggedIn ? Icons.logout_rounded : Icons.login_rounded;
+  }
+
+  @DriverAction()
+  void toggleLogInOut() {
     if (_authService.isLoggedIn) {
-      return "You are logged in!";
+      _authService.logOut();
     } else {
-      return "You are NOT logged in!";
+      _authService.logIn();
     }
   }
 

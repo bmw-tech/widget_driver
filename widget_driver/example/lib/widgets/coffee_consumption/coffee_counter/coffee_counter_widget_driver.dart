@@ -15,7 +15,8 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
 
   CoffeeCounterWidgetDriver({
     CoffeeConsumptionService? consumptionService,
-  }) : _consumptionService = consumptionService ?? GetIt.I.get<CoffeeConsumptionService>() {
+  }) : _consumptionService =
+            consumptionService ?? GetIt.I.get<CoffeeConsumptionService>() {
     _subscription = _consumptionService.counterStream.listen((event) {
       notifyWidget();
     });

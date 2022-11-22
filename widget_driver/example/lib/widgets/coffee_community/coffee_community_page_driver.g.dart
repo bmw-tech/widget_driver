@@ -7,7 +7,10 @@ part of 'coffee_community_page_driver.dart';
 // **************************************************************************
 
 class _$TestCoffeeCommunityPageDriver extends TestDriver
-    implements CoffeeCommunityPageDriver {}
+    implements CoffeeCommunityPageDriver {
+  @override
+  String get isLoggedInTitle => "You are logged in!";
+}
 
 class $CoffeeCommunityPageDriverProvider
     extends WidgetDriverProvider<CoffeeCommunityPageDriver> {

@@ -6,14 +6,18 @@ import 'utils/flutter_runtime_environment_checker.dart';
 import 'widget_driver.dart';
 import 'widget_driver_provider.dart';
 
+export 'package:flutter/widgets.dart' show BuildContext;
+
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
-abstract class DrivableWidget<Driver extends WidgetDriver, DriverProvider extends WidgetDriverProvider<Driver>>
+abstract class DrivableWidget<Driver extends WidgetDriver,
+        DriverProvider extends WidgetDriverProvider<Driver>>
     extends StatefulWidget {
   DrivableWidget({
     Key? key,
     FlutterRuntimeEnvironmentChecker? environmentChecker,
-  })  : _environmentChecker = environmentChecker ?? FlutterRuntimeEnvironmentChecker(),
+  })  : _environmentChecker =
+            environmentChecker ?? FlutterRuntimeEnvironmentChecker(),
         super(key: key);
 
   DriverProvider get driverProvider;
@@ -26,12 +30,15 @@ abstract class DrivableWidget<Driver extends WidgetDriver, DriverProvider extend
 
   @nonVirtual
   @override
-  State<DrivableWidget<Driver, DriverProvider>> createState() => _DriverWidgetState<Driver, DriverProvider>();
+  State<DrivableWidget<Driver, DriverProvider>> createState() =>
+      _DriverWidgetState<Driver, DriverProvider>();
 }
 
-class _DriverWidgetState<Driver extends WidgetDriver, DriverProvider extends WidgetDriverProvider<Driver>>
+class _DriverWidgetState<Driver extends WidgetDriver,
+        DriverProvider extends WidgetDriverProvider<Driver>>
     extends State<DrivableWidget<Driver, DriverProvider>> {
   late Driver _driver;
+  bool _didCallInitWithBuildContext = false;
 
   @override
   void initState() {
@@ -48,6 +55,11 @@ class _DriverWidgetState<Driver extends WidgetDriver, DriverProvider extends Wid
   @override
   Widget build(BuildContext context) {
     _updateWidgetDriverForTestEnvIfNeeded();
+
+    if (!_didCallInitWithBuildContext) {
+      _driver.initWithBuildContext(context);
+      _didCallInitWithBuildContext = true;
+    }
 
     widget._widgetDriverContainer.instance = _driver;
     return widget.build(context);
