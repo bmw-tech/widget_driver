@@ -469,7 +469,7 @@ packages:
       path: "../widget_driver_annotation"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "0.0.1"
   yaml:
     dependency: transitive
     description:

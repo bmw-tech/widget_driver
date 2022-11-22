@@ -42,14 +42,14 @@ packages:
       name: characters
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   collection:
     dependency: transitive
     description:
       name: collection
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "1.15.0"
+    version: "1.16.0"
   convert:
     dependency: transitive
     description:
@@ -145,14 +145,14 @@ packages:
       name: material_color_utilities
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "0.1.3"
+    version: "0.1.5"
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0"
   mime:
     dependency: transitive
     description:
@@ -318,7 +318,7 @@ packages:
       name: vector_math
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   vm_service:
     dependency: transitive
     description:
@@ -360,7 +360,7 @@ packages:
       path: "../widget_driver_annotation"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "0.0.1"
   yaml:
     dependency: transitive
     description:
@@ -369,5 +369,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.16.2 <3.0.0"
+  dart: ">=2.17.0-0 <3.0.0"
   flutter: ">=2.6.0"
