@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
@@ -9,11 +11,12 @@ part 'log_in_out_button_driver.g.dart';
 @Driver()
 class LogInOutButtonDriver extends WidgetDriver {
   late AuthService _authService;
+  StreamSubscription? _subscription;
 
   @override
   void initWithBuildContext(BuildContext context) {
     _authService = context.read<AuthService>();
-    _authService.isLoggedInStream.listen((_) {
+    _subscription = _authService.isLoggedInStream.listen((_) {
       notifyWidget();
     });
   }
@@ -30,5 +33,11 @@ class LogInOutButtonDriver extends WidgetDriver {
     } else {
       _authService.logIn();
     }
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 }
