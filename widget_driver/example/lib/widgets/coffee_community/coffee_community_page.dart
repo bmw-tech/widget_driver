@@ -7,9 +7,12 @@ class CoffeeCommunityPage extends $CoffeeCommunityPageDrivableWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Hello");
+    return Center(
+      child: Text(driver.isLoggedInTitle),
+    );
   }
 
   @override
-  $CoffeeCommunityPageDriverProvider get driverProvider => $CoffeeCommunityPageDriverProvider();
+  $CoffeeCommunityPageDriverProvider get driverProvider =>
+      $CoffeeCommunityPageDriverProvider();
 }
