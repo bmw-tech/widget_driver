@@ -10,14 +10,12 @@ export 'package:flutter/widgets.dart' show BuildContext;
 
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
-abstract class DrivableWidget<Driver extends WidgetDriver,
-        DriverProvider extends WidgetDriverProvider<Driver>>
+abstract class DrivableWidget<Driver extends WidgetDriver, DriverProvider extends WidgetDriverProvider<Driver>>
     extends StatefulWidget {
   DrivableWidget({
     Key? key,
     FlutterRuntimeEnvironmentChecker? environmentChecker,
-  })  : _environmentChecker =
-            environmentChecker ?? FlutterRuntimeEnvironmentChecker(),
+  })  : _environmentChecker = environmentChecker ?? FlutterRuntimeEnvironmentChecker(),
         super(key: key);
 
   DriverProvider get driverProvider;
@@ -30,15 +28,13 @@ abstract class DrivableWidget<Driver extends WidgetDriver,
 
   @nonVirtual
   @override
-  State<DrivableWidget<Driver, DriverProvider>> createState() =>
-      _DriverWidgetState<Driver, DriverProvider>();
+  State<DrivableWidget<Driver, DriverProvider>> createState() => _DriverWidgetState<Driver, DriverProvider>();
 }
 
-class _DriverWidgetState<Driver extends WidgetDriver,
-        DriverProvider extends WidgetDriverProvider<Driver>>
+class _DriverWidgetState<Driver extends WidgetDriver, DriverProvider extends WidgetDriverProvider<Driver>>
     extends State<DrivableWidget<Driver, DriverProvider>> {
   late Driver _driver;
-  bool _didCallInitWithBuildContext = false;
+  bool _didCallSetUpOnDriver = false;
 
   @override
   void initState() {
@@ -56,9 +52,9 @@ class _DriverWidgetState<Driver extends WidgetDriver,
   Widget build(BuildContext context) {
     _updateWidgetDriverForTestEnvIfNeeded();
 
-    if (!_didCallInitWithBuildContext) {
-      _driver.initWithBuildContext(context);
-      _didCallInitWithBuildContext = true;
+    if (!_didCallSetUpOnDriver) {
+      _driver.setUpFromBuildContext(context);
+      _didCallSetUpOnDriver = true;
     }
 
     widget._widgetDriverContainer.instance = _driver;

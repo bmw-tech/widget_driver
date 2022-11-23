@@ -12,7 +12,7 @@ class CoffeeCommunityPageDriver extends WidgetDriver {
   StreamSubscription? _subscription;
 
   @override
-  void initWithBuildContext(BuildContext context) {
+  void setUpFromBuildContext(BuildContext context) {
     _authService = context.read<AuthService>();
     _subscription = _authService.isLoggedInStream.listen((_) {
       notifyWidget();
