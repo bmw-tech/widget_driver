@@ -19,14 +19,8 @@ class CoffeeCommunityPageDriver extends WidgetDriver {
     });
   }
 
-  @DriverProperty("You are logged in!")
-  String get isLoggedInTitle {
-    if (_authService.isLoggedIn) {
-      return "You are logged in!";
-    } else {
-      return "You are NOT logged in!";
-    }
-  }
+  @DriverProperty(false)
+  bool get isLoggedIn => _authService.isLoggedIn;
 
   @override
   void dispose() {
