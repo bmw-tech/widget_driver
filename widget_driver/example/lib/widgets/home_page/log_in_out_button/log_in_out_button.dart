@@ -11,12 +11,20 @@ class LogInOutButton extends $LogInOutButtonDrivableWidget {
       onTap: () => driver.toggleLogInOut(),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Icon(driver.buttonIcon),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(driver.buttonText),
+          ),
+        ),
       ),
     );
   }
 
   @override
-  $LogInOutButtonDriverProvider get driverProvider =>
-      $LogInOutButtonDriverProvider();
+  $LogInOutButtonDriverProvider get driverProvider => $LogInOutButtonDriverProvider();
 }

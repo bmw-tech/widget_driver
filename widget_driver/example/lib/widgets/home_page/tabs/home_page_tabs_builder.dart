@@ -8,7 +8,7 @@ class HomePageTabBuilder {
   static Widget tabForType(AppTabType type) {
     switch (type) {
       case AppTabType.consumption:
-        return CoffeeConsumptionPage();
+        return const CoffeeConsumptionPage();
       case AppTabType.community:
         return CoffeeCommunityPage();
     }

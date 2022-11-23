@@ -9,7 +9,7 @@ part of 'log_in_out_button_driver.dart';
 class _$TestLogInOutButtonDriver extends TestDriver
     implements LogInOutButtonDriver {
   @override
-  IconData get buttonIcon => Icons.logout_rounded;
+  String get buttonText => _Texts.logIn;
 
   @override
   void toggleLogInOut() {}

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -21,9 +20,9 @@ class LogInOutButtonDriver extends WidgetDriver {
     });
   }
 
-  @DriverProperty(Icons.logout_rounded)
-  IconData get buttonIcon {
-    return _authService.isLoggedIn ? Icons.logout_rounded : Icons.login_rounded;
+  @DriverProperty(_Texts.logIn)
+  String get buttonText {
+    return _authService.isLoggedIn ? _Texts.logOut : _Texts.logIn;
   }
 
   @DriverAction()
@@ -40,4 +39,9 @@ class LogInOutButtonDriver extends WidgetDriver {
     _subscription?.cancel();
     super.dispose();
   }
+}
+
+class _Texts {
+  static const String logIn = "Log in";
+  static const String logOut = "Log out";
 }

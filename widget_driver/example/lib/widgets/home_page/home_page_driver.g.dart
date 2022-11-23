@@ -15,7 +15,7 @@ class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
       [AppTabType.consumption, AppTabType.community];
 
   @override
-  String title = "Widget Driver - Coffee Demo";
+  String title = "Coffee Demo App";
 }
 
 class $HomePageDriverProvider extends WidgetDriverProvider<HomePageDriver> {

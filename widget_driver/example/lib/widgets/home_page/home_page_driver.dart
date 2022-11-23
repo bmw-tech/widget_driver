@@ -12,8 +12,8 @@ class HomePageDriver extends WidgetDriver {
     HomePageAppTabs? appTabs,
   }) : _appTabs = appTabs ?? HomePageAppTabs();
 
-  @DriverProperty("Widget Driver - Coffee Demo")
-  final String title = "Widget Driver - Coffee Demo";
+  @DriverProperty("Coffee Demo App")
+  final String title = "Coffee Demo App";
 
   @DriverProperty(2)
   int get numberOfTabs {
