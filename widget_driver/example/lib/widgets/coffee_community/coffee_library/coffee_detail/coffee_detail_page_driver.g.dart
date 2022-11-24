@@ -9,6 +9,12 @@ part of 'coffee_detail_page_driver.dart';
 class _$TestCoffeeDetailPageDriver extends TestDriver
     implements CoffeeDetailPageDriver {
   @override
+  String get coffeeName => TestCoffee.testCoffeeName;
+
+  @override
+  String get coffeeDescription => TestCoffee.testCoffeeDescription;
+
+  @override
   String get coffeeImageUrl => TestCoffee.testCoffeeImageUrl;
 }
 

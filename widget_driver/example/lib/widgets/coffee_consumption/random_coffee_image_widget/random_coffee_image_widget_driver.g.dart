@@ -9,7 +9,7 @@ part of 'random_coffee_image_widget_driver.dart';
 class _$TestRandomCoffeeImageWidgetDriver extends TestDriver
     implements RandomCoffeeImageWidgetDriver {
   @override
-  String get coffeeImageUrl => "https://coffee.uaerman.dev/random";
+  String get coffeeImageUrl => TestCoffee.testCoffeeImageUrl;
 
   @override
   void updateRandomImage() {}

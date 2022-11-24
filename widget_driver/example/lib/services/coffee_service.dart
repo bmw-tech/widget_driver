@@ -25,6 +25,7 @@ class CoffeeService {
         return uri.hasScheme;
       });
     } else {
+      // ignore: avoid_print
       print('Failed to fetch coffees');
     }
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../../localization/localization.dart';
 import '../../../services/auth_service.dart';
 
 part 'log_in_out_button_driver.g.dart';
@@ -20,9 +21,9 @@ class LogInOutButtonDriver extends WidgetDriver {
     });
   }
 
-  @DriverProperty(_Texts.logIn)
+  @DriverProperty('Log in')
   String get buttonText {
-    return _authService.isLoggedIn ? _Texts.logOut : _Texts.logIn;
+    return _authService.isLoggedIn ? Localization.logOut : Localization.logIn;
   }
 
   @DriverAction()
@@ -39,9 +40,4 @@ class LogInOutButtonDriver extends WidgetDriver {
     _subscription?.cancel();
     super.dispose();
   }
-}
-
-class _Texts {
-  static const String logIn = 'Log in';
-  static const String logOut = 'Log out';
 }

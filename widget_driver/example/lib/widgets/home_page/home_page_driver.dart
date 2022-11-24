@@ -1,5 +1,6 @@
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../localization/localization.dart';
 import 'tabs/home_page_tabs.dart';
 
 part 'home_page_driver.g.dart';
@@ -13,7 +14,7 @@ class HomePageDriver extends WidgetDriver {
   }) : _appTabs = appTabs ?? HomePageAppTabs();
 
   @DriverProperty('Coffee Demo App')
-  final String title = 'Coffee Demo App';
+  final String title = Localization.appTitle;
 
   @DriverProperty(2)
   int get numberOfTabs {

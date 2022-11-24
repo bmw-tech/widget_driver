@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../../localization/localization.dart';
 import '../../../services/coffee_consumption_service.dart';
 
 part 'coffee_counter_widget_driver.g.dart';
@@ -22,16 +23,16 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
   }
 
   @DriverProperty('Consumed coffees')
-  final String descriptionText = 'Consumed coffees';
+  final String descriptionText = Localization.consumedCoffees;
 
   @DriverProperty('3')
   String get amountText => '${_consumptionService.counter}';
 
   @DriverProperty('Consume coffee')
-  final String consumeCoffeeButtonText = 'Consume coffee';
+  final String consumeCoffeeButtonText = Localization.consumeCoffees;
 
   @DriverProperty('Reset consumption')
-  final String resetCoffeeButtonText = 'Reset consumption';
+  final String resetCoffeeButtonText = Localization.resetConsumedCoffees;
 
   @DriverAction()
   void consumeCoffee() {
