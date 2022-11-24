@@ -1,7 +1,7 @@
 class CoffeeImageService {
-  final String _randomCoffeeUrl = "https://coffee.alexflipnote.dev/random";
+  final String _randomCoffeeUrl = 'https://coffee.alexflipnote.dev/random';
 
-  String getCoffeeImageUrl() {
-    return "$_randomCoffeeUrl?${DateTime.now()}";
+  String getRandomCoffeeImageUrl() {
+    return '$_randomCoffeeUrl?${DateTime.now()}';
   }
 }

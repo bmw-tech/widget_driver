@@ -1,23 +1,23 @@
-import 'package:example/services/auth_service.dart';
+import 'package:example/widgets/coffee_community/coffee_community_page_driver.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'home_page/home_page.dart';
+import 'my_app_driver.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends $MyAppDrivableWidget {
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Widget Driver Demo',
+      title: driver.appTitle,
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      home: Provider(
-        create: (_) => AuthService(),
-        child: HomePage(),
-      ),
+      home: HomePage(),
     );
   }
+
+  @override
+  $MyAppDriverProvider get driverProvider => $MyAppDriverProvider();
 }
