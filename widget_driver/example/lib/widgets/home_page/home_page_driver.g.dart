@@ -8,14 +8,14 @@ part of 'home_page_driver.dart';
 
 class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
   @override
+  String get title => 'Coffee Demo App';
+
+  @override
   int get numberOfTabs => 2;
 
   @override
   List<AppTabType> get appTabs =>
       [AppTabType.consumption, AppTabType.community];
-
-  @override
-  String title = 'Coffee Demo App';
 }
 
 class $HomePageDriverProvider extends WidgetDriverProvider<HomePageDriver> {

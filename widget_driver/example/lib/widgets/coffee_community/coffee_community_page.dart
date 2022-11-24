@@ -12,7 +12,7 @@ class CoffeeCommunityPage extends $CoffeeCommunityPageDrivableWidget {
     if (driver.isLoggedIn) {
       return CoffeeLibraryPage();
     } else {
-      return const NotLoggedInPage();
+      return NotLoggedInPage();
     }
   }
 

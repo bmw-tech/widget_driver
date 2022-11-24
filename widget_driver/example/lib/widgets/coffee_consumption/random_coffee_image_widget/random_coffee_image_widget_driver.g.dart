@@ -12,6 +12,9 @@ class _$TestRandomCoffeeImageWidgetDriver extends TestDriver
   String get coffeeImageUrl => TestCoffee.testCoffeeImageUrl;
 
   @override
+  String get title => 'Tap image to load a new one';
+
+  @override
   void updateRandomImage() {}
 }
 

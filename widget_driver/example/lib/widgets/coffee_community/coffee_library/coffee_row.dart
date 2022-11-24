@@ -25,7 +25,19 @@ class CoffeeRow extends StatelessWidget {
         );
       },
       child: Container(
-        color: Colors.brown.shade300,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: Colors.brown.shade300,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: const Offset(0, 2), // changes position of shadow
+            ),
+          ],
+        ),
         child: Row(
           children: [
             SizedBox(

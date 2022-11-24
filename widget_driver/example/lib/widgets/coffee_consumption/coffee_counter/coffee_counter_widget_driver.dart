@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../../localization/localization.dart';
@@ -11,6 +12,7 @@ part 'coffee_counter_widget_driver.g.dart';
 @Driver()
 class CoffeeCounterWidgetDriver extends WidgetDriver {
   final CoffeeConsumptionService _consumptionService;
+  late final Localization _localization;
 
   StreamSubscription? _subscription;
 
@@ -22,17 +24,22 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
     });
   }
 
+  @override
+  void setUpFromBuildContext(BuildContext context) {
+    _localization = context.read<Localization>();
+  }
+
   @DriverProperty('Consumed coffees')
-  final String descriptionText = Localization.consumedCoffees;
+  String get descriptionText => _localization.consumedCoffees;
 
   @DriverProperty('3')
   String get amountText => '${_consumptionService.counter}';
 
   @DriverProperty('Consume coffee')
-  final String consumeCoffeeButtonText = Localization.consumeCoffees;
+  String get consumeCoffeeButtonText => _localization.consumeCoffees;
 
   @DriverProperty('Reset consumption')
-  final String resetCoffeeButtonText = Localization.resetConsumedCoffees;
+  String get resetCoffeeButtonText => _localization.resetConsumedCoffees;
 
   @DriverAction()
   void consumeCoffee() {

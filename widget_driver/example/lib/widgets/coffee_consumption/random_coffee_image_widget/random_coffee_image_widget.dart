@@ -8,9 +8,15 @@ class RandomCoffeeImageWidget extends $RandomCoffeeImageDrivableWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => driver.updateRandomImage(),
-      child: CachedNetworkImage(imageUrl: driver.coffeeImageUrl),
+    return Column(
+      children: [
+        Text(driver.title),
+        const SizedBox(height: 5),
+        GestureDetector(
+          onTap: () => driver.updateRandomImage(),
+          child: CachedNetworkImage(imageUrl: driver.coffeeImageUrl),
+        ),
+      ],
     );
   }
 
