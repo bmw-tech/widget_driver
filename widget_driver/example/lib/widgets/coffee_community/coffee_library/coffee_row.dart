@@ -1,5 +1,6 @@
 import 'package:example/widgets/coffee_community/coffee_library/coffee_detail/coffee_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/coffee.dart';
 
@@ -14,7 +15,12 @@ class CoffeeRow extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => CoffeeDetailPage()),
+          MaterialPageRoute(
+            builder: (context) => Provider.value(
+              value: coffee,
+              child: CoffeeDetailPage(),
+            ),
+          ),
         );
       },
       child: Container(

@@ -1,3 +1,4 @@
+import 'package:example/models/coffee.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -13,7 +14,7 @@ class RandomCoffeeImageWidgetDriver extends WidgetDriver {
 
   final CoffeeImageService _coffeeImageService;
 
-  @DriverProperty("https://coffee.uaerman.dev/random")
+  @DriverProperty(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
     return _coffeeImageService.getRandomCoffeeImageUrl();
   }

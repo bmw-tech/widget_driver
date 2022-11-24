@@ -1,21 +1,21 @@
-import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../../../models/coffee.dart';
-import '../../../../services/coffee_image_service.dart';
 
 part 'coffee_detail_page_driver.g.dart';
 
 @Driver()
 class CoffeeDetailPageDriver extends WidgetDriver {
-  CoffeeDetailPageDriver({
-    CoffeeImageService? coffeeImageService,
-  }) : _coffeeImageService = coffeeImageService ?? GetIt.I.get<CoffeeImageService>();
+  late final Coffee _coffee;
 
-  final CoffeeImageService _coffeeImageService;
+  @override
+  void setUpFromBuildContext(BuildContext context) {
+    _coffee = context.read<Coffee>();
+  }
 
-  @DriverProperty("https://coffee.uaerman.dev/random")
+  @DriverProperty(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
-    return _coffeeImageService.getImageUrlForCoffee(Coffee());
+    return _coffee.imageUrl;
   }
 }

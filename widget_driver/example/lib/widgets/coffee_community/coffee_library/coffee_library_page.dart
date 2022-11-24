@@ -8,13 +8,23 @@ class CoffeeLibraryPage extends $CoffeeLibraryPageDrivableWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: driver.numberOfCoffees,
-        itemBuilder: (BuildContext context, int index) {
-          final coffee = driver.getCoffeeAtIndex(index);
-          return CoffeeRow(coffee: coffee);
-        });
+    if (driver.isFetching) {
+      return const Center(
+        child: SizedBox(
+          width: 60.0,
+          height: 60.0,
+          child: CircularProgressIndicator(strokeWidth: 6),
+        ),
+      );
+    } else {
+      return ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: driver.numberOfCoffees,
+          itemBuilder: (BuildContext context, int index) {
+            final coffee = driver.getCoffeeAtIndex(index);
+            return CoffeeRow(coffee: coffee);
+          });
+    }
   }
 
   @override

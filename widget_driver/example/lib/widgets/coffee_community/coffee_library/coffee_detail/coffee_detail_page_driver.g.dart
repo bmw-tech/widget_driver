@@ -9,7 +9,7 @@ part of 'coffee_detail_page_driver.dart';
 class _$TestCoffeeDetailPageDriver extends TestDriver
     implements CoffeeDetailPageDriver {
   @override
-  String get coffeeImageUrl => "https://coffee.uaerman.dev/random";
+  String get coffeeImageUrl => TestCoffee.testCoffeeImageUrl;
 }
 
 class $CoffeeDetailPageDriverProvider

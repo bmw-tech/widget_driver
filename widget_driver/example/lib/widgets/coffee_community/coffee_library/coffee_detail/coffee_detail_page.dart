@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 class CoffeeDetailPage extends $CoffeeDetailPageDrivableWidget {
   CoffeeDetailPage({Key? key}) : super(key: key);
 
+  // TODO: Add real logic here
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -42,6 +42,6 @@ class LogInOutButtonDriver extends WidgetDriver {
 }
 
 class _Texts {
-  static const String logIn = "Log in";
-  static const String logOut = "Log out";
+  static const String logIn = 'Log in';
+  static const String logOut = 'Log out';
 }

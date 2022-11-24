@@ -9,11 +9,14 @@ part of 'coffee_library_page_driver.dart';
 class _$TestCoffeeLibraryPageDriver extends TestDriver
     implements CoffeeLibraryPageDriver {
   @override
+  bool get isFetching => false;
+
+  @override
   int get numberOfCoffees => 10;
 
   @override
   Coffee getCoffeeAtIndex(int index) {
-    return _testCoffee;
+    return TestCoffee.testCoffee;
   }
 }
 

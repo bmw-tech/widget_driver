@@ -15,24 +15,23 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
 
   CoffeeCounterWidgetDriver({
     CoffeeConsumptionService? consumptionService,
-  }) : _consumptionService =
-            consumptionService ?? GetIt.I.get<CoffeeConsumptionService>() {
+  }) : _consumptionService = consumptionService ?? GetIt.I.get<CoffeeConsumptionService>() {
     _subscription = _consumptionService.counterStream.listen((event) {
       notifyWidget();
     });
   }
 
-  @DriverProperty("Consumed coffees")
-  final String descriptionText = "Consumed coffees";
+  @DriverProperty('Consumed coffees')
+  final String descriptionText = 'Consumed coffees';
 
-  @DriverProperty("3")
-  String get amountText => "${_consumptionService.counter}";
+  @DriverProperty('3')
+  String get amountText => '${_consumptionService.counter}';
 
-  @DriverProperty("Consume coffee")
-  final String consumeCoffeeButtonText = "Consume coffee";
+  @DriverProperty('Consume coffee')
+  final String consumeCoffeeButtonText = 'Consume coffee';
 
-  @DriverProperty("Reset consumption")
-  final String resetCoffeeButtonText = "Reset consumption";
+  @DriverProperty('Reset consumption')
+  final String resetCoffeeButtonText = 'Reset consumption';
 
   @DriverAction()
   void consumeCoffee() {
