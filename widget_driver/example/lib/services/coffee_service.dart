@@ -19,6 +19,11 @@ class CoffeeService {
     if (response.statusCode == 200) {
       Iterable iterable = json.decode(response.body);
       _coffeeList = List<Coffee>.from(iterable.map((itemJson) => Coffee.fromJson(itemJson)));
+      _coffeeList.retainWhere((coffee) {
+        // Only keep coffees with valid imageUrl
+        final uri = Uri.parse(coffee.imageUrl);
+        return uri.hasScheme;
+      });
     } else {
       print('Failed to fetch coffees');
     }

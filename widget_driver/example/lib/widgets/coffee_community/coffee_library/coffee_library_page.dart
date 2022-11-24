@@ -22,7 +22,10 @@ class CoffeeLibraryPage extends $CoffeeLibraryPageDrivableWidget {
           itemCount: driver.numberOfCoffees,
           itemBuilder: (BuildContext context, int index) {
             final coffee = driver.getCoffeeAtIndex(index);
-            return CoffeeRow(coffee: coffee);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: CoffeeRow(coffee: coffee),
+            );
           });
     }
   }

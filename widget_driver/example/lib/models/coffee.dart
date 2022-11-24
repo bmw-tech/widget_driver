@@ -20,6 +20,8 @@ class Coffee {
 
 /// Use this in your TestDrivers
 class TestCoffee {
+  static const testCoffeeName = 'Black coffee';
+  static const testCoffeeDescription = 'Tasty black coffee';
   static const testCoffeeImageUrl = 'https://coffee.alexflipnote.dev/random';
 
   static const testCoffee = Coffee(

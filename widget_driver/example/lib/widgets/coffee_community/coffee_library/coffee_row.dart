@@ -1,4 +1,5 @@
 import 'package:example/widgets/coffee_community/coffee_library/coffee_detail/coffee_detail_page.dart';
+import 'package:example/widgets/custom_widgets/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,9 +25,23 @@ class CoffeeRow extends StatelessWidget {
         );
       },
       child: Container(
-        height: 50,
-        color: Colors.teal,
-        child: Center(child: Text(coffee.name)),
+        color: Colors.brown.shade300,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 80,
+              height: 80,
+              child: CachedNetworkImage(imageUrl: coffee.imageUrl),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                coffee.name,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

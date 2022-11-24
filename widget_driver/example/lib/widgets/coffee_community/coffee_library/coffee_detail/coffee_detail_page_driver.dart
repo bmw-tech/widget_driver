@@ -14,6 +14,16 @@ class CoffeeDetailPageDriver extends WidgetDriver {
     _coffee = context.read<Coffee>();
   }
 
+  @DriverProperty(TestCoffee.testCoffeeName)
+  String get coffeeName {
+    return _coffee.name;
+  }
+
+  @DriverProperty(TestCoffee.testCoffeeDescription)
+  String get coffeeDescription {
+    return _coffee.description;
+  }
+
   @DriverProperty(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
     return _coffee.imageUrl;
