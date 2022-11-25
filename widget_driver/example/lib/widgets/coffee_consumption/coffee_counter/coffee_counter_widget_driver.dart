@@ -12,21 +12,19 @@ part 'coffee_counter_widget_driver.g.dart';
 @Driver()
 class CoffeeCounterWidgetDriver extends WidgetDriver {
   final CoffeeConsumptionService _consumptionService;
-  late final Localization _localization;
+  final Localization _localization;
 
   StreamSubscription? _subscription;
 
-  CoffeeCounterWidgetDriver({
+  CoffeeCounterWidgetDriver(
+    BuildContext context, {
     CoffeeConsumptionService? consumptionService,
-  }) : _consumptionService = consumptionService ?? GetIt.I.get<CoffeeConsumptionService>() {
+  })  : _consumptionService = consumptionService ?? GetIt.I.get<CoffeeConsumptionService>(),
+        _localization = context.read<Localization>(),
+        super(context) {
     _subscription = _consumptionService.counterStream.listen((event) {
       notifyWidget();
     });
-  }
-
-  @override
-  void setUpFromBuildContext(BuildContext context) {
-    _localization = context.read<Localization>();
   }
 
   @DriverProperty('Consumed coffees')

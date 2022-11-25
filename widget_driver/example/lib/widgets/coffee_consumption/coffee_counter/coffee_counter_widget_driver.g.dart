@@ -6,6 +6,16 @@ part of 'coffee_counter_widget_driver.dart';
 // WidgetDriverGenerator
 // **************************************************************************
 
+/// You can use this typedef as a base class for your DrivableWidget
+///
+/// ```dart
+/// class MyCustomWidget extends $CoffeeCounterDrivableWidget {
+///     ...
+/// }
+/// ```
+typedef $CoffeeCounterDrivableWidget = DrivableWidget<CoffeeCounterWidgetDriver,
+    $CoffeeCounterWidgetDriverProvider>;
+
 class _$TestCoffeeCounterWidgetDriver extends TestDriver
     implements CoffeeCounterWidgetDriver {
   @override
@@ -30,8 +40,8 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver
 class $CoffeeCounterWidgetDriverProvider
     extends WidgetDriverProvider<CoffeeCounterWidgetDriver> {
   @override
-  CoffeeCounterWidgetDriver buildDriver() {
-    return CoffeeCounterWidgetDriver();
+  CoffeeCounterWidgetDriver buildDriver(BuildContext context) {
+    return CoffeeCounterWidgetDriver(context);
   }
 
   @override
@@ -39,6 +49,3 @@ class $CoffeeCounterWidgetDriverProvider
     return _$TestCoffeeCounterWidgetDriver();
   }
 }
-
-typedef $CoffeeCounterDrivableWidget = DrivableWidget<CoffeeCounterWidgetDriver,
-    $CoffeeCounterWidgetDriverProvider>;

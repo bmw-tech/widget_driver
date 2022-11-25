@@ -6,6 +6,16 @@ part of 'coffee_community_page_driver.dart';
 // WidgetDriverGenerator
 // **************************************************************************
 
+/// You can use this typedef as a base class for your DrivableWidget
+///
+/// ```dart
+/// class MyCustomWidget extends $CoffeeCommunityPageDrivableWidget {
+///     ...
+/// }
+/// ```
+typedef $CoffeeCommunityPageDrivableWidget = DrivableWidget<
+    CoffeeCommunityPageDriver, $CoffeeCommunityPageDriverProvider>;
+
 class _$TestCoffeeCommunityPageDriver extends TestDriver
     implements CoffeeCommunityPageDriver {
   @override
@@ -15,8 +25,8 @@ class _$TestCoffeeCommunityPageDriver extends TestDriver
 class $CoffeeCommunityPageDriverProvider
     extends WidgetDriverProvider<CoffeeCommunityPageDriver> {
   @override
-  CoffeeCommunityPageDriver buildDriver() {
-    return CoffeeCommunityPageDriver();
+  CoffeeCommunityPageDriver buildDriver(BuildContext context) {
+    return CoffeeCommunityPageDriver(context);
   }
 
   @override
@@ -24,6 +34,3 @@ class $CoffeeCommunityPageDriverProvider
     return _$TestCoffeeCommunityPageDriver();
   }
 }
-
-typedef $CoffeeCommunityPageDrivableWidget = DrivableWidget<
-    CoffeeCommunityPageDriver, $CoffeeCommunityPageDriverProvider>;

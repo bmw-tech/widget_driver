@@ -10,18 +10,17 @@ part 'log_in_out_button_driver.g.dart';
 
 @Driver()
 class LogInOutButtonDriver extends WidgetDriver {
-  late AuthService _authService;
+  final AuthService _authService;
+  final Localization _localization;
   StreamSubscription? _subscription;
-  late final Localization _localization;
 
-  @override
-  void setUpFromBuildContext(BuildContext context) {
-    _authService = context.read<AuthService>();
+  LogInOutButtonDriver(BuildContext context)
+      : _authService = context.read<AuthService>(),
+        _localization = context.read<Localization>(),
+        super(context) {
     _subscription = _authService.isLoggedInStream.listen((_) {
       notifyWidget();
     });
-
-    _localization = context.read<Localization>();
   }
 
   @DriverProperty('Log in')

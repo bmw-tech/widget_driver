@@ -13,20 +13,26 @@ class CoffeeService {
 
   Future<List<Coffee>> getAllCoffees() async {
     _isFetchingStreamController.add(true);
+    try {
+      final response = await http.get(Uri.parse('https://api.sampleapis.com/coffee/hot')).timeout(
+            const Duration(seconds: 5),
+          );
 
-    final response = await http.get(Uri.parse('https://api.sampleapis.com/coffee/hot'));
-
-    if (response.statusCode == 200) {
-      Iterable iterable = json.decode(response.body);
-      _coffeeList = List<Coffee>.from(iterable.map((itemJson) => Coffee.fromJson(itemJson)));
-      _coffeeList.retainWhere((coffee) {
-        // Only keep coffees with valid imageUrl
-        final uri = Uri.parse(coffee.imageUrl);
-        return uri.hasScheme;
-      });
-    } else {
+      if (response.statusCode == 200) {
+        Iterable iterable = json.decode(response.body);
+        _coffeeList = List<Coffee>.from(iterable.map((itemJson) => Coffee.fromJson(itemJson)));
+        _coffeeList.retainWhere((coffee) {
+          // Only keep coffees with valid imageUrl
+          final uri = Uri.parse(coffee.imageUrl);
+          return uri.hasScheme;
+        });
+      } else {
+        // ignore: avoid_print
+        print('Failed to fetch coffees');
+      }
+    } catch (error) {
       // ignore: avoid_print
-      print('Failed to fetch coffees');
+      print('Failed to fetch coffees with error: $error');
     }
 
     _isFetchingStreamController.add(false);

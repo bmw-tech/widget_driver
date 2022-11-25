@@ -6,6 +6,16 @@ part of 'coffee_detail_page_driver.dart';
 // WidgetDriverGenerator
 // **************************************************************************
 
+/// You can use this typedef as a base class for your DrivableWidget
+///
+/// ```dart
+/// class MyCustomWidget extends $CoffeeDetailPageDrivableWidget {
+///     ...
+/// }
+/// ```
+typedef $CoffeeDetailPageDrivableWidget
+    = DrivableWidget<CoffeeDetailPageDriver, $CoffeeDetailPageDriverProvider>;
+
 class _$TestCoffeeDetailPageDriver extends TestDriver
     implements CoffeeDetailPageDriver {
   @override
@@ -21,8 +31,8 @@ class _$TestCoffeeDetailPageDriver extends TestDriver
 class $CoffeeDetailPageDriverProvider
     extends WidgetDriverProvider<CoffeeDetailPageDriver> {
   @override
-  CoffeeDetailPageDriver buildDriver() {
-    return CoffeeDetailPageDriver();
+  CoffeeDetailPageDriver buildDriver(BuildContext context) {
+    return CoffeeDetailPageDriver(context);
   }
 
   @override
@@ -30,6 +40,3 @@ class $CoffeeDetailPageDriverProvider
     return _$TestCoffeeDetailPageDriver();
   }
 }
-
-typedef $CoffeeDetailPageDrivableWidget
-    = DrivableWidget<CoffeeDetailPageDriver, $CoffeeDetailPageDriverProvider>;

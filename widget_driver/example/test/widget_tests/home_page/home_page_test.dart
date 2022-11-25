@@ -56,7 +56,7 @@ void main() {
       // Try changing the title and verify it updates correctly
       when(() => mockHomePageDriver.title).thenReturn(mockOtherTitle);
       mockHomePageDriver.notifyWidget();
-      await tester.pumpAndSettle();
+      await tester.pumpWidget(homePage);
 
       expect(find.text(mockTitle), findsNothing);
       expect(find.text(mockOtherTitle), findsOneWidget);

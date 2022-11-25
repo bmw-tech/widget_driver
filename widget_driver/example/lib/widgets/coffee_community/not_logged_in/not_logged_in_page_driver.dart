@@ -7,12 +7,11 @@ part 'not_logged_in_page_driver.g.dart';
 
 @Driver()
 class NotLoggedInPageDriver extends WidgetDriver {
-  late final Localization _localization;
+  final Localization _localization;
 
-  @override
-  void setUpFromBuildContext(BuildContext context) {
-    _localization = context.read<Localization>();
-  }
+  NotLoggedInPageDriver(BuildContext context)
+      : _localization = context.read<Localization>(),
+        super(context);
 
   @DriverProperty('Not logged in')
   String get notLoggedInText => _localization.notLoggedIn;

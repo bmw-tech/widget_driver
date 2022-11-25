@@ -6,6 +6,16 @@ part of 'home_page_driver.dart';
 // WidgetDriverGenerator
 // **************************************************************************
 
+/// You can use this typedef as a base class for your DrivableWidget
+///
+/// ```dart
+/// class MyCustomWidget extends $HomePageDrivableWidget {
+///     ...
+/// }
+/// ```
+typedef $HomePageDrivableWidget
+    = DrivableWidget<HomePageDriver, $HomePageDriverProvider>;
+
 class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
   @override
   String get title => 'Coffee Demo App';
@@ -20,8 +30,8 @@ class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
 
 class $HomePageDriverProvider extends WidgetDriverProvider<HomePageDriver> {
   @override
-  HomePageDriver buildDriver() {
-    return HomePageDriver();
+  HomePageDriver buildDriver(BuildContext context) {
+    return HomePageDriver(context);
   }
 
   @override
@@ -29,6 +39,3 @@ class $HomePageDriverProvider extends WidgetDriverProvider<HomePageDriver> {
     return _$TestHomePageDriver();
   }
 }
-
-typedef $HomePageDrivableWidget
-    = DrivableWidget<HomePageDriver, $HomePageDriverProvider>;

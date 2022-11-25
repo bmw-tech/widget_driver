@@ -6,6 +6,16 @@ part of 'my_app_driver.dart';
 // WidgetDriverGenerator
 // **************************************************************************
 
+/// You can use this typedef as a base class for your DrivableWidget
+///
+/// ```dart
+/// class MyCustomWidget extends $MyAppDrivableWidget {
+///     ...
+/// }
+/// ```
+typedef $MyAppDrivableWidget
+    = DrivableWidget<MyAppDriver, $MyAppDriverProvider>;
+
 class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
   @override
   String get appTitle => 'Coffee Demo App';
@@ -13,8 +23,8 @@ class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
 
 class $MyAppDriverProvider extends WidgetDriverProvider<MyAppDriver> {
   @override
-  MyAppDriver buildDriver() {
-    return MyAppDriver();
+  MyAppDriver buildDriver(BuildContext context) {
+    return MyAppDriver(context);
   }
 
   @override
@@ -22,6 +32,3 @@ class $MyAppDriverProvider extends WidgetDriverProvider<MyAppDriver> {
     return _$TestMyAppDriver();
   }
 }
-
-typedef $MyAppDrivableWidget
-    = DrivableWidget<MyAppDriver, $MyAppDriverProvider>;

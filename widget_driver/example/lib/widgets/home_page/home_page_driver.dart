@@ -11,14 +11,12 @@ class HomePageDriver extends WidgetDriver {
   final HomePageAppTabs _appTabs;
   late final Localization _localization;
 
-  HomePageDriver({
+  HomePageDriver(
+    BuildContext context, {
     HomePageAppTabs? appTabs,
-  }) : _appTabs = appTabs ?? HomePageAppTabs();
-
-  @override
-  void setUpFromBuildContext(BuildContext context) {
-    _localization = context.read<Localization>();
-  }
+  })  : _appTabs = appTabs ?? HomePageAppTabs(),
+        _localization = context.read<Localization>(),
+        super(context);
 
   @DriverProperty('Coffee Demo App')
   String get title => _localization.appTitle;
