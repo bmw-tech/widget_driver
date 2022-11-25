@@ -33,72 +33,63 @@ abstract class DrivableWidget<Driver extends WidgetDriver, DriverProvider extend
 
 class _DriverWidgetState<Driver extends WidgetDriver, DriverProvider extends WidgetDriverProvider<Driver>>
     extends State<DrivableWidget<Driver, DriverProvider>> {
-  late Driver _driver;
-  bool _didCallSetUpOnDriver = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _initWidgetDriver();
-  }
+  Driver? _driver;
 
   @override
   void dispose() {
-    _driver.dispose();
+    _driver?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _updateWidgetDriverForTestEnvIfNeeded();
-
-    if (!_didCallSetUpOnDriver) {
-      _driver.setUpFromBuildContext(context);
-      _didCallSetUpOnDriver = true;
-    }
-
-    widget._widgetDriverContainer.instance = _driver;
+    final driver = _getDriverAndSetupUpIfNeeded(context);
+    widget._widgetDriverContainer.instance = driver;
     return widget.build(context);
   }
 
-  void _initWidgetDriver() {
-    if (widget._environmentChecker.isRunningInTestEnvironment()) {
-      _driver = widget.driverProvider.buildTestDriver();
-    } else {
-      _driver = widget.driverProvider.buildDriver();
+  Driver _getDriverAndSetupUpIfNeeded(BuildContext context) {
+    // The driver was already created. Nothing more to do. Just return it.
+    if (_driver != null) {
+      return _driver!;
     }
 
-    _driver.addListener(() {
+    Driver driver;
+    if (_isRunningInTestEnvironment()) {
+      driver = _getTestDriver(context);
+    } else {
+      driver = _getRealDriver(context);
+    }
+
+    driver.addListener(() {
       if (mounted) {
         setState(() {});
       }
     });
-    widget._widgetDriverContainer.instance = _driver;
+
+    _driver = driver;
+    return driver;
   }
 
-  void _updateWidgetDriverForTestEnvIfNeeded() {
-    // If we are not in a test environment, then just return,
-    // since then we don't want to run any mock logic.
-    if (widget._environmentChecker.isRunningInTestEnvironment() == false) {
-      return;
-    }
+  bool _isRunningInTestEnvironment() {
+    return widget._environmentChecker.isRunningInTestEnvironment();
+  }
 
+  Driver _getRealDriver(BuildContext context) {
+    return widget.driverProvider.buildDriver(context);
+  }
+
+  Driver _getTestDriver(BuildContext context) {
     // Check if we have an injected MockDriver for the current type.
     // If it exists and it was not already assinged as current driver,
     // then update the current driver.
     final mockDriver = MockDriverProvider.of<Driver>(context);
-    if (mockDriver != null && !identical(_driver, mockDriver)) {
-      // Dispose the old driver
-      _driver.dispose();
-
-      // Assign the new driver and hook up listener again
-      _driver = mockDriver;
-      _driver.addListener(() {
-        if (mounted) {
-          setState(() {});
-        }
-      });
+    if (mockDriver != null) {
+      return mockDriver;
     }
+
+    // There was no mocked driver. Then just return the hard coded TestDriver.
+    return widget.driverProvider.buildTestDriver();
   }
 }
 

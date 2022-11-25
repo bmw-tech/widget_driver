@@ -7,12 +7,11 @@ part 'coffee_detail_page_driver.g.dart';
 
 @Driver()
 class CoffeeDetailPageDriver extends WidgetDriver {
-  late final Coffee _coffee;
+  final Coffee _coffee;
 
-  @override
-  void setUpFromBuildContext(BuildContext context) {
-    _coffee = context.read<Coffee>();
-  }
+  CoffeeDetailPageDriver(BuildContext context)
+      : _coffee = context.read<Coffee>(),
+        super(context);
 
   @DriverProperty(TestCoffee.testCoffeeName)
   String get coffeeName {

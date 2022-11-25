@@ -13,6 +13,29 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
 
     final classBuffer = StringBuffer();
     final driverClassName = visitor.className;
+    final providerClassName = '\$${driverClassName}Provider';
+
+    //###################################
+    // Start - typedef generation
+    //###################################
+
+    final postfix = "DrivableWidget";
+    String typedefName = driverClassName.replaceAll("WidgetDriver", postfix);
+    if (typedefName == driverClassName) {
+      typedefName = driverClassName.replaceAll("Driver", postfix);
+    }
+    if (typedefName == driverClassName) {
+      typedefName = "${typedefName}${postfix}";
+    }
+
+    classBuffer.writeln('/// You can use this typedef as a base class for your DrivableWidget');
+    classBuffer.writeln('///');
+    classBuffer.writeln('/// ```dart');
+    classBuffer.writeln('/// class MyCustomWidget extends \$${typedefName} {');
+    classBuffer.writeln('///     ...');
+    classBuffer.writeln('/// }');
+    classBuffer.writeln('/// ```');
+    classBuffer.writeln('typedef \$${typedefName} = DrivableWidget<${driverClassName}, ${providerClassName}>;');
 
     //###################################
     // Start - TestDriver generation
@@ -29,13 +52,11 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
     // Start - DriverProvider generation
     //###################################
 
-    final providerClassName = '\$${driverClassName}Provider';
-
     classBuffer.writeln('class $providerClassName extends WidgetDriverProvider<$driverClassName> {');
 
     classBuffer.writeln('@override');
-    classBuffer.writeln('$driverClassName buildDriver() {');
-    classBuffer.writeln('return $driverClassName();');
+    classBuffer.writeln('$driverClassName buildDriver(BuildContext context) {');
+    classBuffer.writeln('return $driverClassName(context);');
     classBuffer.writeln('}');
 
     classBuffer.writeln('@override');
@@ -44,21 +65,6 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
     classBuffer.writeln('}');
 
     classBuffer.writeln('}');
-
-    //###################################
-    // Start - typedef generation
-    //###################################
-
-    final postfix = "DrivableWidget";
-    String typedefName = driverClassName.replaceAll("WidgetDriver", postfix);
-    if (typedefName == driverClassName) {
-      typedefName = driverClassName.replaceAll("Driver", postfix);
-    }
-    if (typedefName == driverClassName) {
-      typedefName = "${typedefName}${postfix}";
-    }
-
-    classBuffer.writeln('typedef \$${typedefName} = DrivableWidget<${driverClassName}, ${providerClassName}>;');
 
     return classBuffer.toString();
   }

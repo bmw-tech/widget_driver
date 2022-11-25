@@ -7,7 +7,7 @@ abstract class WidgetDriver<FC extends FlowCoordinator> {
   FC? flowCoordinator;
   final ValueNotifier<bool> _widgetNotifier = ValueNotifier<bool>(true);
 
-  void setUpFromBuildContext(BuildContext context) {}
+  WidgetDriver(BuildContext context);
 
   @nonVirtual
   void notifyWidget() {
@@ -30,8 +30,6 @@ class TestDriver {
   dynamic noSuchMethod(Invocation invocation) {
     return super.noSuchMethod(invocation);
   }
-
-  void setUpFromBuildContext(BuildContext context) {}
 
   void addListener(VoidCallback listener) {}
 

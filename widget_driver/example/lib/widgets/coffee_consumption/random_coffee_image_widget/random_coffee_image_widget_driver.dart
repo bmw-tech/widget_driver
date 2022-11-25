@@ -11,16 +11,14 @@ part 'random_coffee_image_widget_driver.g.dart';
 @Driver()
 class RandomCoffeeImageWidgetDriver extends WidgetDriver {
   final CoffeeImageService _coffeeImageService;
-  late final Localization _localization;
+  final Localization _localization;
 
-  RandomCoffeeImageWidgetDriver({
+  RandomCoffeeImageWidgetDriver(
+    BuildContext context, {
     CoffeeImageService? coffeeImageService,
-  }) : _coffeeImageService = coffeeImageService ?? GetIt.I.get<CoffeeImageService>();
-
-  @override
-  void setUpFromBuildContext(BuildContext context) {
-    _localization = context.read<Localization>();
-  }
+  })  : _coffeeImageService = coffeeImageService ?? GetIt.I.get<CoffeeImageService>(),
+        _localization = context.read<Localization>(),
+        super(context);
 
   @DriverProperty(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
