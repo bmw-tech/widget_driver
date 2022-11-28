@@ -9,4 +9,7 @@ dependencies:
   widget_driver:
     path: ../widget_driver/
   mocktail: ^0.3.0
+  meta: ^1.7.0
   test: ^1.16.0
+  flutter_test:
+    sdk: flutter
