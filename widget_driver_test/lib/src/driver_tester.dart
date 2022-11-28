@@ -30,7 +30,6 @@ class DriverTester<T extends WidgetDriver> {
     var completer = Completer<void>();
     _completers.add(_CompleterContainer(completer, expectedCount, requireExactNumberOfCalls));
 
-    _lastWaitForNotifyWidgetCount = _notifyWidgetsCallCount;
     _validateCompleters();
 
     return _widgetTester.runAsync(() async {
@@ -38,6 +37,25 @@ class DriverTester<T extends WidgetDriver> {
         timeout,
         onTimeout: () {
           throw 'waitForNotifyWidget timed out! Not enough calls to `notifyWidget()` received';
+        },
+      );
+    });
+  }
+
+  Future<void> verifyNoMoreCallsToNotifyWidget({
+    Duration timeout = const Duration(seconds: 1),
+  }) {
+    var completer = Completer<void>();
+    return _widgetTester.runAsync(() async {
+      await completer.future.timeout(
+        timeout,
+        onTimeout: () {
+          // Now check if we got any more calls to `notifyWidget`
+          if (_lastWaitForNotifyWidgetCount < _notifyWidgetsCallCount) {
+            final extraCalls = _notifyWidgetsCallCount - _lastWaitForNotifyWidgetCount;
+            final errorString = 'Still received calls to `notifyWidget()`. $extraCalls extra calls received.';
+            throw errorString;
+          }
         },
       );
     });
@@ -59,6 +77,7 @@ for false or investigate why you got these extra calls
           completerContainer.completer.completeError(errorString);
           return true;
         } else {
+          _lastWaitForNotifyWidgetCount = neededCallsToNotifyWidget;
           completerContainer.completer.complete();
           return true;
         }

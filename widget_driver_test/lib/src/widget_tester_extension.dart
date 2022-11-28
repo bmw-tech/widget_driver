@@ -8,7 +8,7 @@ typedef WidgetBuilder = Widget Function(Widget driverWidget);
 
 extension Driver on WidgetTester {
   Future<DriverTester<T>> getDriverTester<T extends WidgetDriver>({
-    required T Function(BuildContext) driverBuilder,
+    required T Function(BuildContext context) driverBuilder,
     WidgetBuilder? parentWidgetBuilder,
   }) async {
     T? driver;
