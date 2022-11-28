@@ -12,14 +12,14 @@ import 'package:mocktail/mocktail.dart';
 class MockHomePageDriver extends MockDriver implements HomePageDriver {}
 
 void main() {
-  group("HomePage:", () {
+  group('HomePage:', () {
     late Widget homePage;
     late MockHomePageDriver mockHomePageDriver;
 
     setUp(() {
       // Setup the default values for MockDriver for HomePage
       mockHomePageDriver = MockHomePageDriver();
-      when(() => mockHomePageDriver.title).thenReturn("Hey this is a mocked title");
+      when(() => mockHomePageDriver.title).thenReturn('Hey this is a mocked title');
       when(() => mockHomePageDriver.numberOfTabs).thenReturn(3);
       when(() => mockHomePageDriver.appTabs).thenReturn([
         AppTabType.consumption,
@@ -36,15 +36,15 @@ void main() {
       );
     });
 
-    testWidgets("Contains a TabController", (WidgetTester tester) async {
+    testWidgets('Contains a TabController', (WidgetTester tester) async {
       await tester.pumpWidget(homePage);
       final tabControllerFinder = find.byType(DefaultTabController);
       expect(tabControllerFinder, findsOneWidget);
     });
 
-    testWidgets("Has correct title", (WidgetTester tester) async {
-      const mockTitle = "Hey this is a mocked title";
-      const mockOtherTitle = "Some other title";
+    testWidgets('Has correct title', (WidgetTester tester) async {
+      const mockTitle = 'Hey this is a mocked title';
+      const mockOtherTitle = 'Some other title';
 
       when(() => mockHomePageDriver.title).thenReturn(mockTitle);
 
@@ -62,7 +62,7 @@ void main() {
       expect(find.text(mockOtherTitle), findsOneWidget);
     });
 
-    testWidgets("TabController has correct amount of tabs", (WidgetTester tester) async {
+    testWidgets('TabController has correct amount of tabs', (WidgetTester tester) async {
       const mockAppTabs = [
         AppTabType.consumption,
         AppTabType.community,
@@ -92,7 +92,7 @@ void main() {
       expect(tabController.length, 2);
     });
 
-    testWidgets("TabController shows correct TabBarView when changing tab", (
+    testWidgets('TabController shows correct TabBarView when changing tab', (
       WidgetTester tester,
     ) async {
       const mockAppTabs = [AppTabType.consumption, AppTabType.community];
@@ -111,7 +111,7 @@ void main() {
       // Grab TabController and tap first tab and verify it shows correct widget
       TabBar tabController = find.byType(TabBar).first.evaluate().single.widget as TabBar;
       await tester.tap(find.byWidget(tabController.tabs[0]));
-      await tester.pumpAndSettle();
+      await tester.pumpWidget(homePage);
 
       expect(find.byType(firstTabWidgetType), findsOneWidget);
       expect(find.byType(secondTabWidgetType), findsNothing);
