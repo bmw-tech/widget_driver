@@ -9,14 +9,12 @@ class CoffeeConsumptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 30),
-          CoffeeCounterWidget(),
-          const SizedBox(height: 30),
-          RandomCoffeeImageWidget(),
-        ],
-      ),
+      child: Column(children: [
+        const SizedBox(height: 30),
+        CoffeeCounterWidget(),
+        const SizedBox(height: 30),
+        RandomCoffeeImageWidget(),
+      ]),
     );
   }
 }
