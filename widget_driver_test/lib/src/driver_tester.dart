@@ -3,7 +3,15 @@ import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+/// This is a helper class which makes it easier to test your [WidgetDriver]s.
+/// It provides you with the actual `driver` and it has helper methods which you can
+/// use to verify that the `notifyWidgets()` is called corretly.
+///
+/// E.g. you might expect that when some service emits a new state, then your [WidgetDriver]
+/// should trigger the `notifyWidgets()` and have new values for its properties.
+/// The [DriverTester] will make it easier for you to verify these things.
 class DriverTester<T extends WidgetDriver> {
+  /// The [WidgetDriver] which you are testing.
   final T driver;
 
   final WidgetTester _widgetTester;
@@ -20,6 +28,18 @@ class DriverTester<T extends WidgetDriver> {
     });
   }
 
+  /// Call this method with an `await` to make sure that your tests waits until the
+  /// expected amounts of calls to `notifyWidgets()` have been triggered.
+  ///
+  /// [numberOfCalls] defaults to '1'. But you can set this to the expected amount.
+  /// As soon as the expected amount of `notifyWidgets()` calls have been received, then the method will continue.
+  ///
+  /// If the method never gets the expected amount of calls, then it will throw and break your test.
+  /// You can use the [timeout] to control how long the method will wait. By default this is set to 1 seconds.
+  ///
+  /// Finally you can also control that you didnt get too many calls to `notifyWidgets()`.
+  /// If you set the [requireExactNumberOfCalls] to `true`, then this method will verify that you got exactly
+  /// [numberOfCalls] amount of calls and not more.
   Future<void> waitForNotifyWidget({
     int numberOfCalls = 1,
     Duration timeout = const Duration(seconds: 1),
@@ -42,6 +62,10 @@ class DriverTester<T extends WidgetDriver> {
     });
   }
 
+  /// Use this method to verify that no more calls to `notifyWidgets()` are made.
+  /// The method will according to the [timeout] you specify. (defaults to 1 seconds).
+  /// If any call to `notifyWidgets()` is made during this time
+  /// then the method will throw and and break your test.
   Future<void> verifyNoMoreCallsToNotifyWidget({
     Duration timeout = const Duration(seconds: 1),
   }) {

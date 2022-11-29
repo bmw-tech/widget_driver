@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../widget_driver.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 /// A widget you can use to provide a mock driver to your [DrivableWidget]s when you are testing them
 ///
