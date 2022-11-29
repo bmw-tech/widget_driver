@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 import 'mock_driver_provider.dart';
-import 'utils/flutter_runtime_environment_checker.dart';
+import 'utils/flutter_runtime_environment_info.dart';
 import 'widget_driver.dart';
 import 'widget_driver_provider.dart';
 
@@ -10,19 +10,27 @@ export 'package:flutter/widgets.dart' show BuildContext;
 
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
+/// A base class for widgets which can be driven by a WidgetDriver.
 abstract class DrivableWidget<Driver extends WidgetDriver, DriverProvider extends WidgetDriverProvider<Driver>>
     extends StatefulWidget {
   DrivableWidget({
     Key? key,
-    FlutterRuntimeEnvironmentChecker? environmentChecker,
-  })  : _environmentChecker = environmentChecker ?? FlutterRuntimeEnvironmentChecker(),
+    FlutterRuntimeEnvironmentInfo? environmentInfo,
+  })  : _environmentInfo = environmentInfo ?? FlutterRuntimeEnvironmentInfo(),
         super(key: key);
 
+  /// The provider which knows how to create the Driver for this widget.
   DriverProvider get driverProvider;
 
-  final FlutterRuntimeEnvironmentChecker _environmentChecker;
-  final _widgetDriverContainer = _WidgetDriverContainer<Driver>();
+  /// The driver which drives this widget.
+  ///
+  /// Your widgets should use the `driver` to access any type of dynamic data.
+  /// The idea is to put all your business logic in the driver and only have
+  /// the declarative UI definition inside the widget code.
   Driver get driver => _widgetDriverContainer.instance!;
+
+  final FlutterRuntimeEnvironmentInfo _environmentInfo;
+  final _widgetDriverContainer = _WidgetDriverContainer<Driver>();
 
   Widget build(BuildContext context);
 
@@ -41,6 +49,7 @@ class _DriverWidgetState<Driver extends WidgetDriver, DriverProvider extends Wid
     super.dispose();
   }
 
+  /// Describes the part of the user interface represented by this widget.
   @override
   Widget build(BuildContext context) {
     final driver = _getDriverAndSetupUpIfNeeded(context);
@@ -72,7 +81,7 @@ class _DriverWidgetState<Driver extends WidgetDriver, DriverProvider extends Wid
   }
 
   bool _isRunningInTestEnvironment() {
-    return widget._environmentChecker.isRunningInTestEnvironment();
+    return widget._environmentInfo.isRunningInTestEnvironment();
   }
 
   Driver _getRealDriver(BuildContext context) {
