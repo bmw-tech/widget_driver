@@ -65,23 +65,28 @@ import 'flow_coordinator.dart';
 /// ```
 abstract class WidgetDriver<FC extends FlowCoordinator> {
   FC? flowCoordinator;
-  final ValueNotifier<bool> _widgetNotifier = ValueNotifier<bool>(true);
+  ValueNotifier<bool>? _widgetNotifier = ValueNotifier<bool>(true);
 
   WidgetDriver(BuildContext context);
 
   @nonVirtual
   void notifyWidget() {
-    final value = _widgetNotifier.value;
-    _widgetNotifier.value = !value;
+    if (_widgetNotifier != null) {
+      final value = _widgetNotifier!.value;
+      _widgetNotifier?.value = !value;
+    }
   }
 
   @mustCallSuper
   void dispose() {
-    _widgetNotifier.dispose();
+    _widgetNotifier?.dispose();
+    _widgetNotifier = null;
   }
 
   void addListener(VoidCallback listener) {
-    _widgetNotifier.addListener(listener);
+    if (_widgetNotifier != null) {
+      _widgetNotifier!.addListener(listener);
+    }
   }
 }
 
