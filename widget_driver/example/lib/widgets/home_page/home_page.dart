@@ -16,8 +16,7 @@ class HomePage extends $HomePageDrivableWidget {
         appBar: AppBar(
           bottom: TabBar(
             tabs: [
-              for (var appTab in driver.appTabs)
-                Tab(icon: Icon(appTab.iconData)),
+              for (var appTab in driver.appTabs) Tab(icon: Icon(appTab.iconData)),
             ],
           ),
           title: Text(driver.title),
@@ -25,8 +24,7 @@ class HomePage extends $HomePageDrivableWidget {
         ),
         body: TabBarView(
           children: [
-            for (var appTab in driver.appTabs)
-              HomePageTabBuilder.tabForType(appTab),
+            for (var appTab in driver.appTabs) HomePageTabBuilder.tabForType(appTab),
           ],
         ),
       ),

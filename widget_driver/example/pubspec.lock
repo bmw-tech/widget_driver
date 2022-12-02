@@ -105,7 +105,7 @@ packages:
       name: cached_network_image
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "3.2.2"
+    version: "3.2.3"
   cached_network_image_platform_interface:
     dependency: transitive
     description:
@@ -360,7 +360,7 @@ packages:
       name: mime
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   mocktail:
     dependency: "direct dev"
     description:
@@ -582,7 +582,7 @@ packages:
       name: sqflite
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "2.2.0+3"
+    version: "2.2.1"
   sqflite_common:
     dependency: transitive
     description:
@@ -736,7 +736,7 @@ packages:
       name: win32
       url: "https://mobile20unpubfrontdoor.azurefd.net"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   xdg_directories:
     dependency: transitive
     description:
