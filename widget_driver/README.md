@@ -4,6 +4,9 @@ A Flutter presentation layer framework, which will clean up your
 widget code and make your widgets testable without a need for thousands of mock objects.  
 Let's go driving! 🚙💨
 
+| Supported platforms: | Android | iOS |
+|---------------------|---------|-----|
+
 ---
 
 ## Features
@@ -231,16 +234,17 @@ Here is a demo of how the final product looks like
 
 <p>
   <img src="doc/resources/counter_widget_demo.gif?raw=true"
-    alt="An animated image of the iOS in-app purchase UI" height="400"/>
+  height="400"/>
 </p>
 
-## `WidgetDriver` benefits
+## Guidelines
 
-`WidgetDriver` gives you two big benefits
+`WidgetDriver` gives you two big benefits. But you only gain these benefits if you follow these guidelines.
 
-### One
+### Guideline One
 
-You move out Business Logic out from the Widgets!
+Move out Business Logic out from the Widgets!  
+That logic should now instead go inside the `WidgetDriver`.
 
 It is **NOT** the job of a Widget to create and combine dependencies!  
 The `Driver` is the place where you want to create/resolve dependencies and combine them.  
@@ -248,14 +252,17 @@ The `Driver` has access to the `BuildContext` which was used to create your widg
 
 The widget is **ONLY** interested in creating UI and reacting to interactions from the user.
 
-### Two
+### Guideline Two
 
 Thanks to the `TestDrivers` which get auto-created for you when running unit tests,  
-you do not have to mock all of your dependencies in the tests.
+you do not have to mock your dependencies in the tests.
 
 You just need to mock the `driver` used by the widget which is currently under test and that is it!
 
-More about testing and the benefits are described [here](#Demo)
+But you only get this benefit if you move the business logic out of the widget.  
+So guideline two -> Put your business logic in the `Driver`, not in the `Widget`!
+
+More about testing and the benefits are described [here](#Documentation)
 
 ## Installation
 

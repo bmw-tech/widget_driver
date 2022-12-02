@@ -1,16 +1,32 @@
-# example
+# WidgetDriver - example app
 
-A new Flutter project.
+This is an example app that showcases how you can use the WidgetDriver framework.  
 
-## Getting Started
+It is a fairly advanced example app that tries to replicate a real app scenario.
 
-This project is a starting point for a Flutter application.
+Many of these example apps just demonstrates a non-real use-case where you store app state directly in the view/view-model/bloc.
 
-A few resources to get you started if this is your first Flutter project:
+This can be confusing since it guides developes to put their important business logic state directly in the view/view-model/bloc.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Therefore this app tries to act like a real life application. With business logic and state places inside a service layer. The presentation layer then consumes these services.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## Preview of the app
+
+<p>
+<img src="doc/resources/example_app_demo_1.gif?raw=true"
+height="400"/>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="doc/resources/example_app_demo_2.gif?raw=true"
+height="400"/>
+</p>
+
+## App architecture
+
+The app is using the `WidgetDrivers` to drive the widgets.  
+The `Drivers` don't keep any state themselves. They get their data from a service layer and then use/combine these to drive and update the widgets.
+
+## Testing
+
+The example app also showcases how you can test your widgets and `Drivers`. Check out the existing tests [here](test) to get inspiration on how you can set up your tests.
