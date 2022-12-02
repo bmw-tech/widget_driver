@@ -13,7 +13,7 @@ class Coffee {
     return Coffee(
       name: json['title'],
       description: json['description'],
-      imageUrl: json['image'],
+      imageUrl: json['image'] ?? "",
     );
   }
 }
