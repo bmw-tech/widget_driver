@@ -27,6 +27,14 @@ height="400"/>
 The app is using the `WidgetDrivers` to drive the widgets.  
 The `Drivers` don't keep any state themselves. They get their data from a service layer and then use/combine these to drive and update the widgets.
 
+The app uses two approaches to provide dependencies to the `Drivers`.  
+The reason for this is to showcase that you go either way. Just pick the path which works best for your project.
+
+If you prefer passing dependencies via the BuildContext then go that path.
+Or if you like using some Dependency injection framework then that path works just as good.
+
+The example app will show you how to use both approaches.
+
 ## Testing
 
 The example app also showcases how you can test your widgets and `Drivers`. Check out the existing tests [here](test) to get inspiration on how you can set up your tests.
