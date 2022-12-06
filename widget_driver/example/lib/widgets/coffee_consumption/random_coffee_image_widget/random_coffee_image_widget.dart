@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import '../../custom_widgets/cached_network_image.dart';
 import 'random_coffee_image_widget_driver.dart';
 
-class RandomCoffeeImageWidget extends $RandomCoffeeImageDrivableWidget {
+class RandomCoffeeImageWidget
+    extends DrivableWidget<RandomCoffeeImageWidgetDriver> {
   RandomCoffeeImageWidget({Key? key}) : super(key: key);
 
   @override
@@ -21,5 +23,6 @@ class RandomCoffeeImageWidget extends $RandomCoffeeImageDrivableWidget {
   }
 
   @override
-  $RandomCoffeeImageWidgetDriverProvider get driverProvider => $RandomCoffeeImageWidgetDriverProvider();
+  WidgetDriverProvider<RandomCoffeeImageWidgetDriver> get driverProvider =>
+      $RandomCoffeeImageWidgetDriverProvider();
 }

@@ -11,7 +11,7 @@ export 'package:flutter/widgets.dart' show BuildContext;
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
 /// A base class for widgets which can be driven by a WidgetDriver.
-abstract class DrivableWidget<Driver extends WidgetDriver, DriverProvider extends WidgetDriverProvider<Driver>>
+abstract class DrivableWidget<Driver extends WidgetDriver>
     extends StatefulWidget {
   DrivableWidget({
     Key? key,
@@ -20,7 +20,7 @@ abstract class DrivableWidget<Driver extends WidgetDriver, DriverProvider extend
         super(key: key);
 
   /// The provider which knows how to create the Driver for this widget.
-  DriverProvider get driverProvider;
+  WidgetDriverProvider<Driver> get driverProvider;
 
   /// The driver which drives this widget.
   ///
@@ -36,11 +36,11 @@ abstract class DrivableWidget<Driver extends WidgetDriver, DriverProvider extend
 
   @nonVirtual
   @override
-  State<DrivableWidget<Driver, DriverProvider>> createState() => _DriverWidgetState<Driver, DriverProvider>();
+  State<DrivableWidget<Driver>> createState() => _DriverWidgetState<Driver>();
 }
 
-class _DriverWidgetState<Driver extends WidgetDriver, DriverProvider extends WidgetDriverProvider<Driver>>
-    extends State<DrivableWidget<Driver, DriverProvider>> {
+class _DriverWidgetState<Driver extends WidgetDriver>
+    extends State<DrivableWidget<Driver>> {
   Driver? _driver;
 
   @override

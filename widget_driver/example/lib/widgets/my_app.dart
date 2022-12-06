@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import 'home_page/home_page.dart';
 import 'my_app_driver.dart';
 
-class MyApp extends $MyAppDrivableWidget {
+class MyApp extends DrivableWidget<MyAppDriver> {
   MyApp({Key? key}) : super(key: key);
 
   @override
@@ -18,5 +19,6 @@ class MyApp extends $MyAppDrivableWidget {
   }
 
   @override
-  $MyAppDriverProvider get driverProvider => $MyAppDriverProvider();
+  WidgetDriverProvider<MyAppDriver> get driverProvider =>
+      $MyAppDriverProvider();
 }
