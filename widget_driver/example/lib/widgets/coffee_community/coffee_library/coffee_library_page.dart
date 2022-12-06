@@ -1,9 +1,10 @@
 import 'package:example/widgets/coffee_community/coffee_library/coffee_row.dart';
 import 'package:flutter/material.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import 'coffee_library_page_driver.dart';
 
-class CoffeeLibraryPage extends $CoffeeLibraryPageDrivableWidget {
+class CoffeeLibraryPage extends DrivableWidget<CoffeeLibraryPageDriver> {
   CoffeeLibraryPage({Key? key}) : super(key: key);
 
   @override
@@ -31,5 +32,6 @@ class CoffeeLibraryPage extends $CoffeeLibraryPageDrivableWidget {
   }
 
   @override
-  $CoffeeLibraryPageDriverProvider get driverProvider => $CoffeeLibraryPageDriverProvider();
+  WidgetDriverProvider<CoffeeLibraryPageDriver> get driverProvider =>
+      $CoffeeLibraryPageDriverProvider();
 }

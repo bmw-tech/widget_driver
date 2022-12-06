@@ -1,9 +1,10 @@
 import 'package:example/widgets/coffee_community/coffee_library/coffee_detail/coffee_detail_page_driver.dart';
 import 'package:flutter/material.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import '../../../custom_widgets/cached_network_image.dart';
 
-class CoffeeDetailPage extends $CoffeeDetailPageDrivableWidget {
+class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
   CoffeeDetailPage({Key? key}) : super(key: key);
 
   @override
@@ -25,5 +26,6 @@ class CoffeeDetailPage extends $CoffeeDetailPageDrivableWidget {
   }
 
   @override
-  $CoffeeDetailPageDriverProvider get driverProvider => $CoffeeDetailPageDriverProvider();
+  WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider =>
+      $CoffeeDetailPageDriverProvider();
 }

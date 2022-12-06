@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import 'log_in_out_button_driver.dart';
 
-class LogInOutButton extends $LogInOutButtonDrivableWidget {
+class LogInOutButton extends DrivableWidget<LogInOutButtonDriver> {
   LogInOutButton({Key? key}) : super(key: key);
 
   @override
@@ -26,5 +27,6 @@ class LogInOutButton extends $LogInOutButtonDrivableWidget {
   }
 
   @override
-  $LogInOutButtonDriverProvider get driverProvider => $LogInOutButtonDriverProvider();
+  WidgetDriverProvider<LogInOutButtonDriver> get driverProvider =>
+      $LogInOutButtonDriverProvider();
 }

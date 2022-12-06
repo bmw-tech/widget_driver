@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import 'coffee_counter_widget_driver.dart';
 
-class CoffeeCounterWidget extends $CoffeeCounterDrivableWidget {
+class CoffeeCounterWidget extends DrivableWidget<CoffeeCounterWidgetDriver> {
   CoffeeCounterWidget({Key? key}) : super(key: key);
 
   @override
@@ -27,5 +28,6 @@ class CoffeeCounterWidget extends $CoffeeCounterDrivableWidget {
   }
 
   @override
-  $CoffeeCounterWidgetDriverProvider get driverProvider => $CoffeeCounterWidgetDriverProvider();
+  WidgetDriverProvider<CoffeeCounterWidgetDriver> get driverProvider =>
+      $CoffeeCounterWidgetDriverProvider();
 }

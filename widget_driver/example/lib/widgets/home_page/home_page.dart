@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import 'home_page_driver.dart';
 import 'log_in_out_button/log_in_out_button.dart';
 import 'tabs/home_page_tabs.dart';
 import 'tabs/home_page_tabs_builder.dart';
 
-class HomePage extends $HomePageDrivableWidget {
+class HomePage extends DrivableWidget<HomePageDriver> {
   HomePage({Key? key}) : super(key: key);
 
   @override
@@ -16,7 +17,8 @@ class HomePage extends $HomePageDrivableWidget {
         appBar: AppBar(
           bottom: TabBar(
             tabs: [
-              for (var appTab in driver.appTabs) Tab(icon: Icon(appTab.iconData)),
+              for (var appTab in driver.appTabs)
+                Tab(icon: Icon(appTab.iconData)),
             ],
           ),
           title: Text(driver.title),
@@ -24,7 +26,8 @@ class HomePage extends $HomePageDrivableWidget {
         ),
         body: TabBarView(
           children: [
-            for (var appTab in driver.appTabs) HomePageTabBuilder.tabForType(appTab),
+            for (var appTab in driver.appTabs)
+              HomePageTabBuilder.tabForType(appTab),
           ],
         ),
       ),
@@ -32,5 +35,6 @@ class HomePage extends $HomePageDrivableWidget {
   }
 
   @override
-  $HomePageDriverProvider get driverProvider => $HomePageDriverProvider();
+  WidgetDriverProvider<HomePageDriver> get driverProvider =>
+      $HomePageDriverProvider();
 }

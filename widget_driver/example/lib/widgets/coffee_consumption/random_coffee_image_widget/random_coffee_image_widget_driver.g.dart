@@ -6,16 +6,6 @@ part of 'random_coffee_image_widget_driver.dart';
 // WidgetDriverGenerator
 // **************************************************************************
 
-/// You can use this typedef as a base class for your DrivableWidget
-///
-/// ```dart
-/// class MyCustomWidget extends $RandomCoffeeImageDrivableWidget {
-///     ...
-/// }
-/// ```
-typedef $RandomCoffeeImageDrivableWidget = DrivableWidget<
-    RandomCoffeeImageWidgetDriver, $RandomCoffeeImageWidgetDriverProvider>;
-
 class _$TestRandomCoffeeImageWidgetDriver extends TestDriver
     implements RandomCoffeeImageWidgetDriver {
   @override
