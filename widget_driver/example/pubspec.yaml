@@ -27,7 +27,7 @@ dev_dependencies:
   widget_driver_test:
     path: ../../widget_driver_test/
   build_runner:
-  a_widget_driver_generator:
+  widget_driver_generator:
     path: ../../widget_driver_generator/
 
 flutter:
