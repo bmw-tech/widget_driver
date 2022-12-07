@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:build/src/builder/build_step.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
@@ -15,6 +17,14 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
     final classBuffer = StringBuffer();
     final driverClassName = visitor.className;
     final providerClassName = '\$${driverClassName}Provider';
+
+    //###################################
+    // Start - Package version generation
+    //###################################
+
+    final packageVersionString = await _getPackageVersionString();
+    classBuffer.writeln(
+        '// This file was generated with widget_driver_generator $packageVersionString\n');
 
     //###################################
     // Start - TestDriver generation
@@ -48,5 +58,14 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
     classBuffer.writeln('}');
 
     return classBuffer.toString();
+  }
+
+  /// Grabs the version string from the pubspec.yaml
+  Future<String> _getPackageVersionString() async {
+    final file = File('pubspec.yaml');
+    final pubspecString = await file.readAsString();
+    final exp = RegExp(r'version: .+');
+    final match = exp.firstMatch(pubspecString)!;
+    return match[0]!;
   }
 }

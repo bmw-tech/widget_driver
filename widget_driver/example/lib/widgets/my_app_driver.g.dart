@@ -6,6 +6,8 @@ part of 'my_app_driver.dart';
 // WidgetDriverGenerator
 // **************************************************************************
 
+// This file was generated with widget_driver_generator version: 1.0.0+1
+
 class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
   @override
   String get appTitle => 'Coffee Demo App';
