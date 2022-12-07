@@ -6,9 +6,9 @@ It is a fairly advanced example app that tries to replicate a real app scenario.
 
 Many of these example apps just demonstrates a non-real use-case where you store app state directly in the view/view-model/bloc.
 
-This can be confusing since it guides developes to put their important business logic state directly in the view/view-model/bloc.
+This can be confusing since it guides developers to put their important business logic state directly in the view/view-model/bloc.
 
-Therefore this app tries to act like a real life application. With business logic and state places inside a service layer. The presentation layer then consumes these services.
+Therefore this app tries to act like a real life application. With business logic and state placed inside a service layer. The presentation layer then consumes these services.
 
 ---
 
@@ -31,9 +31,17 @@ The app uses two approaches to provide dependencies to the `Drivers`.
 The reason for this is to showcase that you go either way. Just pick the path which works best for your project.
 
 If you prefer passing dependencies via the BuildContext then go that path.
-Or if you like using some Dependency injection framework then that path works just as good.
+Or if you like using some dependency injection framework then that path works just as good.
 
 The example app will show you how to use both approaches.
+
+### Generating the code
+
+To generate the needed `WidgetDriver` code then run this command from the root folder of the example app:
+
+```shell
+flutter pub run build_runner build
+```
 
 ## Testing
 

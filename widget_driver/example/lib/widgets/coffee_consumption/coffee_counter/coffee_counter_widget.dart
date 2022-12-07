@@ -18,10 +18,12 @@ class CoffeeCounterWidget extends DrivableWidget<CoffeeCounterWidgetDriver> {
           onPressed: driver.consumeCoffee,
           child: Text(driver.consumeCoffeeButtonText),
         ),
-        const SizedBox(width: 30),
-        ElevatedButton(
-          onPressed: driver.resetConsumption,
-          child: Text(driver.resetCoffeeButtonText),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: ElevatedButton(
+            onPressed: driver.resetConsumption,
+            child: Text(driver.resetCoffeeButtonText),
+          ),
         )
       ],
     );
