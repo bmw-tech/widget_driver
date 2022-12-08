@@ -1,6 +1,8 @@
 name: widget_driver_annotation
 description: Annotations for WidgetDriver
 version: 0.0.1
+repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver_annotation
+issue_tracker: https://github.com/bmw-tech/widget_driver/issues
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
