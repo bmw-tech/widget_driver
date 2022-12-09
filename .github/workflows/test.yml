@@ -11,9 +11,8 @@ jobs:
         channel: 'stable'
     - name: Flutter version
       run: flutter --version
-    - name: cd widget_driver_annotation
-      run: cd widget_driver_annotation
-    - name: Flutter pub get widget_driver_annotation
-      run: flutter pub get 
-    - name: Flutter test widget_driver_annotation
-      run: flutter test
+    - name: Test widget_driver_annotation
+      run: |
+        cd widget_driver_annotation
+        flutter pub get 
+        flutter test
