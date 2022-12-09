@@ -1,5 +1,5 @@
 name: test-my-app
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   drive:
     runs-on: ubuntu-latest
