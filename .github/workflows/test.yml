@@ -9,7 +9,9 @@ jobs:
       with:
         flutter-version: '2.10.5'
         channel: 'stable'
-    - run: flutter --version
-    - run: cd widget_driver_annotations
-    - run: flutter pub get
-    - run: flutter test
+    - name: Flutter version
+      run: flutter --version
+    - name: Test widget_driver_annotation
+      run: cd widget_driver_annotation
+      run: flutter pub get
+      run: flutter test
