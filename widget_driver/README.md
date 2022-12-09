@@ -159,7 +159,7 @@ As soon as your `Driver` has new data to display, then you want to call the `not
 
       But in your `widgetTests` these values are used when your widget is rendered as a child-widget. This helps you to test widgets in isolation, without caring about which dependencies all your child widgets need. 
 
-      For a more in-depth documentation about `TestDrivers` read [here](doc/Testing.md).
+      For a more in-depth documentation about `TestDrivers` read [here](doc/testing.md).
 
 Thats it! Wohoo! 🥳  
 Now we can continue to the next step!
@@ -168,7 +168,7 @@ Now we can continue to the next step!
 
 Now it is time to generate some code so that we get our `TestDriver` and `WidgetDriverProvider` set up for us.  
 *If you prefer to do this the old fashioned way without code generation, then that is also possible. 
-Read more about that [here](doc/DriversWithoutGeneration.md)*
+Read more about that [here](doc/drivers_without_generation.md)*
 
 At the root of your flutter project, run this command:
 
@@ -308,7 +308,7 @@ When you keep business logic in your widgets, then the parent widgets will need 
 
 So please follow guideline two -> Put your business logic in the `Driver`, not in the `Widget`!
 
-More about testing and the benefits are described [here](doc/Testing.md)
+More about testing and the benefits are described [here](doc/testing.md)
 
 ## Installation
 
@@ -344,8 +344,8 @@ For e.g. if you choose to use [Provider](https://pub.dev/packages/provider), the
 ## Documentation
 
 - [WidgetDrivers](doc/WidgetDrivers.md)
-- [DrivableWidgets](doc/DrivableWidgets.md)
-- [Testing](doc/Testing.md)
-- [Code generation](doc/CodeGeneration.md)
-- [Using WidgetDrivers without code generation](doc/DriversWithoutGeneration.md)
+- [DrivableWidgets](doc/drivable_widgets.md)
+- [Testing](doc/testing.md)
+- [Code generation](doc/code_generation.md)
+- [Using WidgetDrivers without code generation](doc/drivers_without_generation.md)
 - Contribution guide

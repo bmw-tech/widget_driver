@@ -126,7 +126,7 @@ The `default_value` should be the default value which you want to use when this 
 For methods you add `@DriverAction()`.  
 This is needed so that any potential parent widget when tested can call these methods without crashing.
 
-After you are done creating your `driver` you need to run the generator so that the `testDrivers` gets created. Read more [here](CodeGeneration.md) about running the generators.
+After you are done creating your `driver` you need to run the generator so that the `testDrivers` gets created. Read more [here](code_generation.md) about running the generators.
 
 **Updating the widget.**  
 So now you have your dependencies and they have emitted some new state and you want to update your widget. But how?!
