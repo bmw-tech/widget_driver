@@ -33,7 +33,11 @@ But if you need/want to import it then import it into your pubspec `dependencies
 
 - [Source code](widget_driver_test)
 
-Contains helper classes to support with mocking your TestDrivers.
+Contains helper classes/methods to support with:
+
+- Testing your DrivableWidget
+- Testing your Drivers
+- Mocking your TestDrivers
 
 Import it into your pubspec `dev_dependencies:` section.
 
