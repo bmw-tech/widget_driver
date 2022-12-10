@@ -1,7 +1,7 @@
 # WidgetDriver
 
 A Flutter presentation layer framework, which will clean up your  
-widget code and make your widgets testable without a need for thousands of mock objects.  
+widget code and make your widgets testable without the need for thousands of mock objects.  
 Let's go driving! 🚙💨
 
 The `WidgetDriver` framework is built up on different dart packages. The core package which contains the actual framework is the `widget_driver`. Then there are some helper packages which support with code generation and making testing easier.
