@@ -46,7 +46,7 @@ By design, the `WidgetDriver` framework gives your widget a single `driver`. It 
 
 And it solves your testing issue also! For each `driver` the framework also creates a `testDriver`. These `testDrivers` provide hard coded default values which are used in widget tests.
 
-So if some parent widget is using your widget, then that parent widget does not need to mock any data for your widget. It will just use its `testDriver` when running tests. Wohoo!
+So if some parent widget is using your widget, then that parent widget does not need to mock any data for your widget. It will just use its `testDriver` when running tests. Wohoo! 
 
 ### Core concepts
 
