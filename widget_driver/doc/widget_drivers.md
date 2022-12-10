@@ -42,7 +42,7 @@ And even better would be if this thing somehow would not need to be mocked by pa
 
 ## `WidgetDriver` to the rescue 🚙
 
-By design, the `WidgetDriver` framework gives your widget a single `driver`. It does not give you two, and it does not give you an option to create a `driver` yourself. It just provides your widgets with a `driver` property. And as soon as the driver gets new data, your widget will update and grab the latest version of that data.
+By design, the `WidgetDriver` framework gives your widget a single `driver`. It does not give you two, and it does not give you an option to create a `driver` yourself. It just provides your widgets with a `driver` property. The `driver` decides when the widget should update and which data it should get.
 
 And it solves your testing issue also! For each `driver` the framework also creates a `testDriver`. These `testDrivers` provide hard coded default values which are used in widget tests.
 
