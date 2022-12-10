@@ -137,6 +137,6 @@ So for this to work, make sure that you first have all the correct data in place
 
 ### Life cycle
 
-Your `driver` lives together with the widgets which it drives. As soon as that widget gets put on screen, the `driver` gets created. If that widget gets remove from the screen then your `driver` gets disposed.
+Your `driver` lives together with the widget it drives. As soon as that widget gets put on screen, the `driver` gets created. If that widget gets remove from the screen then your `driver` gets disposed.
 
 At this point you could do some clean up in your `driver`. Just override the `void dispose()` method and put your clean up code there.
