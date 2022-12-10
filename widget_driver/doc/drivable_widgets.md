@@ -43,7 +43,8 @@ So how do you create a `DrivableWidget`? Well that is pretty easy. Just extend `
 MyCoolWidget extends DrivableWidget<MyCoolWidgetDriver> {}
 ```
 
-Pro tip: Since you need the type of your `WidgetDriver` as input to your `DrivableWidget`, it is generally a good idea to first create your `Driver`.
+Pro tip: Since you need the type of your `WidgetDriver` as input to your `DrivableWidget`,
+it is generally a good idea to create your `Driver` first.
 
 After you defined your `DrivableWidget` then your IDE will provide you with some placeholder code which looks like this:
 

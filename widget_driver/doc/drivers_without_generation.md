@@ -1,19 +1,21 @@
 # Drivers Without Generation
 
-You do not need to use code generation to use `WidgetDrivers`. You can just as well create all the needed code manually. It is just a bit more manual work for you 😅
+You do not need to use code generation to use `WidgetDriver`. You can just as well create all
+the needed code manually. It is just a bit more manual work for you 😅
 
-It is actually not so much code you have to create for each `driver`. But as you project grows it still adds up.
+It actually isn't so much code you have to create for each `Driver`. But as you project grows it still adds up.
 
-*So the recommendation would still be to use code generation.*
+*So our recommendation is to use code generation.*
 
 ## What do I need to do
 
 You just need two extra classes!  
-Except for the actual `WidgetDriver` you need to create a `TestDriver` version of your `Driver`. And you need to create a `WidgetDriverProvider` which can create an instance for your `driver` and `testDriver`.
+Except for the actual `WidgetDriver` you need to create a `TestDriver` version of your `Driver`. 
+And you need to create a `WidgetDriverProvider` which can create an instance for your `Driver` and `TestDriver`.
 
 ### Creating the TestDriver
 
-The `TestDriver` is used when your widget is created during widgetTests. It cannot have any dependencies to any instance of something. It should just contain hard coded values. *(It can contain static values from some other type.)*
+The `TestDriver` is used when your widget is created during widget tests. It can't have any dependencies to any instance of something. It should just contain hard coded values. *(It can contain static values from some other type.)*
 
 Your `TestDriver` needs to extend the `TestDriver` type and implement your `Driver` type. Here is an example of how to define it:
 
@@ -51,9 +53,9 @@ class MyCoolWidgetDriverProvider
 }
 ```
 
-The `WidgetDriverProvider` has two methods which you need to override. The `buildDriver` and `buildTestDriver`. In the `buildDriver` you create an instance of your real `driver` and return it.
+The `WidgetDriverProvider` has two methods which you need to override. The `buildDriver(BuildContext context)` and `buildTestDriver()`. In the `buildDriver(...)` you create an instance of your real `driver` and return it.
 
-And in the `buildTestDriver` you create and instance of your `testDriver` and return it. Makes sense right 😁
+And in the `buildTestDriver()` you create and instance of your `testDriver` and return it. Makes sense right 😁
 
 ### Using your manually created code
 

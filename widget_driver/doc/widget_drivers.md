@@ -30,7 +30,7 @@ In this example these two blocs are driving the widget. If they emit new states 
 
 Now this might seem like a perfectly fine approach but it has one big issue. You are putting business logic in the widget.
 
-This breaks the separation of concern. The widget is a ui component. Its responsibility is to specify the UI. It should not specify UI and make business decisions.
+This breaks the separation of concern. The widget is a ui component. Its responsibility is to specify the UI. It should not make business decisions.
 
 Another issue with this approach is that it makes testing tougher. In your `widgetTests` you now need to test that the correct widgets are on the screen, and **also** that the two blocs behave correctly together.
 
@@ -110,7 +110,7 @@ There are three important concepts here.
 
 1. The dependencies are loaded/crated/resolved in the constructor of the `driver`.
 1. All the properties/methods which the driver wants to expose to the widgets needs to be annotated and given default values.
-1. Whenever important data has changed in the `driver` you need to call `notifyWidget()`
+1. Whenever important data has changed in the `driver` and you want the widget to update: call `notifyWidget()`
 
 **Let's start talking about the dependencies.**  
 Any type of dependencies which your `driver` needs to be able to give your widget the correct data has to be loaded/crated/resolved in the constructor of the `driver`.
@@ -131,7 +131,7 @@ After you are done creating your `driver` you need to run the generator so that 
 **Updating the widget.**  
 So now you have your dependencies and they have emitted some new state and you want to update your widget. But how?!
 
-Easy, you just call `notifyWidget()`. This will force your widget to call its `build` method again and update. Then it will just read the latest values from your `driver`.
+That's easy: Just call `notifyWidget()`. This will force your widget to call its `build` method again and redraw using the latest values from your `driver`.
 
 So for this to work, make sure that you first have all the correct data in place in your `driver` before calling `notifyWidget()`. Because as soon as you call `notifyWidget()` the widget will get updated.
 
