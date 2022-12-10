@@ -29,7 +29,7 @@ Don't grab data directly in the widget from some other data source like a `BLoC`
 
 If there is data which your widget needs from some other source, then put the logic which grabs that data in the `driver`. The `driver` has access to the BuildContext and can easily resolve that data. And then the widget can access it via the `driver`.
 
-The important part why you need to **always** go via the `driver` when you grab data from other sources, is so that you can easily test your widget!
+The important part why you need to **always** go via the `driver`: When you would grab data from other sources, you can not test your widget so easily any more!
 
 If you always use the `driver` as a data provider in your widget, then when you test your widget, that data will be provided via the `TestDriver` and you do not need to mock it!
 
