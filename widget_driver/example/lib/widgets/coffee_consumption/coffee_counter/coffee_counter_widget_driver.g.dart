@@ -8,8 +8,7 @@ part of 'coffee_counter_widget_driver.dart';
 
 // This file was generated with widget_driver_generator version: 1.0.0+1
 
-class _$TestCoffeeCounterWidgetDriver extends TestDriver
-    implements CoffeeCounterWidgetDriver {
+class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounterWidgetDriver {
   @override
   String get descriptionText => 'Consumed coffees';
 
@@ -29,8 +28,7 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver
   void resetConsumption() {}
 }
 
-class $CoffeeCounterWidgetDriverProvider
-    extends WidgetDriverProvider<CoffeeCounterWidgetDriver> {
+class $CoffeeCounterWidgetDriverProvider extends WidgetDriverProvider<CoffeeCounterWidgetDriver> {
   @override
   CoffeeCounterWidgetDriver buildDriver(BuildContext context) {
     return CoffeeCounterWidgetDriver(context);

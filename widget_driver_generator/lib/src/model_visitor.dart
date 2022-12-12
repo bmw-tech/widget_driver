@@ -51,7 +51,7 @@ class AnnotationVisitor extends SimpleElementVisitor<void> {
       final value = _getValueForElement(element, "DriverAction");
       classBuffer.writeln('\n');
       classBuffer.writeln('@override');
-      if (value.length > 0) {
+      if (value.isNotEmpty) {
         classBuffer.writeln('${element.toString()} {');
         classBuffer.writeln('return $value;');
         classBuffer.writeln('}');

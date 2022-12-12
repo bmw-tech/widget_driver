@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 class CachedNetworkImage extends StatelessWidget {
   final String imageUrl;
 
-  const CachedNetworkImage({Key? key, required this.imageUrl})
-      : super(key: key);
+  const CachedNetworkImage({Key? key, required this.imageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +15,7 @@ class CachedNetworkImage extends StatelessWidget {
           child: SizedBox(
             width: 60.0,
             height: 60.0,
-            child: CircularProgressIndicator(
-                strokeWidth: 6, value: downloadProgress.progress),
+            child: CircularProgressIndicator(strokeWidth: 6, value: downloadProgress.progress),
           ),
         );
       },
