@@ -48,7 +48,7 @@ Just focus on the current widget under test, and forget about all other child wi
 
 Let's get started and create our first `WidgetDriver`!
 
-### counter_widget_driver.dart
+### 1: counter_widget_driver.dart
 
 ```dart
 part 'counter_widget_driver.g.dart';
@@ -159,16 +159,16 @@ As soon as your `Driver` has new data to display, then you want to call the `not
 
       But in your `widgetTests` these values are used when your widget is rendered as a child-widget. This helps you to test widgets in isolation, without caring about which dependencies all your child widgets need. 
 
-      For a more in-depth documentation about `TestDrivers` read [here](#Documentation).
+      For a more in-depth documentation about `TestDrivers` read [here](doc/testing.md).
 
 Thats it! Wohoo! 🥳  
 Now we can continue to the next step!
 
-### Code generation
+### 2: Code generation
 
 Now it is time to generate some code so that we get our `TestDriver` and `WidgetDriverProvider` set up for us.  
 *If you prefer to do this the old fashioned way without code generation, then that is also possible. 
-Read more about that [here](#Documentation)*
+Read more about that [here](doc/drivers_without_generation.md)*
 
 At the root of your flutter project, run this command:
 
@@ -178,7 +178,7 @@ flutter pub run build_runner build
 
 When the build runner completes then we are ready to start building our widget
 
-### counter_widget.dart
+### 3: counter_widget.dart
 
 ```dart
 class CounterWidget extends DrivableWidget<CounterWidgetDriver> {
@@ -253,7 +253,7 @@ Let's go over what happens:
     Text(driver.counterTitle),
     ```
 
-### Handling updates to data in WidgetDriver
+### 4: Handling updates to data in WidgetDriver
 
 But what if my data changes? How do I update the widget? Do I need a `builder`? Or a `context.watch`?
 
@@ -308,7 +308,7 @@ When you keep business logic in your widgets, then the parent widgets will need 
 
 So please follow guideline two -> Put your business logic in the `Driver`, not in the `Widget`!
 
-More about testing and the benefits are described [here](#Documentation)
+More about testing and the benefits are described [here](doc/testing.md)
 
 ## Installation
 
@@ -330,13 +330,22 @@ dev_dependencies:
 Please see this [example app](example) for inspiration on how to use `WidgetDrivers` in your app.  
 The app also contains examples on how you can test your `DrivableWidgets` and their `Drivers`.
 
+## WidgetDriver and State Management
+
+`WidgetDriver` is **NOT** a state management framework/library.  
+It is a presentation layer framework. It gives structure and organization to the code which drives your widgets.
+
+But the application state should not be stored in the `Driver`! It is not the owner of state. Think of `Drivers` as `ViewModels`. They take in state and transform it and then provide a tailor made version of it to the widget. E.g. the driver might get in a `Date` object which it then transforms into a string representation and gives this string to the widget.
+
+So the `Drivers` will need to access state somehow. [Here](https://docs.flutter.dev/development/data-and-backend/state-mgmt/options) is a list of recommended state management approaches. **BUT** just make sure to use these state management systems in the `Driver`.
+
+For e.g. if you choose to use [Provider](https://pub.dev/packages/provider), then don't use your `Provider` in the widgets. So don't use `context.watch<T>()`. Instead you then want to use the `Providers` in your `Driver`. See the [example app](example/) for inspiration on how to do this.
+
 ## Documentation
 
-(This part is still under construction. Clickable links will come soon)
-
-- WidgetDrivers
-- DrivableWidgets
-- Testing
-- Code generation
-- Using WidgetDrivers without code generation
+- [WidgetDrivers](doc/widget_drivers.md)
+- [DrivableWidgets](doc/drivable_widgets.md)
+- [Testing](doc/testing.md)
+- [Code generation](doc/code_generation.md)
+- [Using WidgetDrivers without code generation](doc/drivers_without_generation.md)
 - Contribution guide

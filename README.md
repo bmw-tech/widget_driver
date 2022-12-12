@@ -1,14 +1,18 @@
 # WidgetDriver
 
-Provides a MVVM-style presentation layer framework for Flutter which can `drive` your `widgets`. 🚙💨
+A Flutter presentation layer framework, which will clean up your  
+widget code and make your widgets testable without the need for thousands of mock objects.  
+Let's go driving! 🚙💨
 
-**NOTE: This package is still in BETA.**
+The `WidgetDriver` framework is built up on different dart packages. The core package which contains the actual framework is the `widget_driver`. Then there are some helper packages which support with code generation and making testing easier.
+
+Here is an overview of all the packages:
 
 ## widget_driver
 
 - [Source code](widget_driver)
 
-The core package which provides the WidgetDriver framework.
+The core package which provides the `WidgetDriver` framework.
 
 Import it into your pubspec `dependencies:` section.
 
@@ -16,7 +20,7 @@ Import it into your pubspec `dependencies:` section.
 
 - [Source code](widget_driver_generator)
 
-The package providing generators to automate the creation of your TestDrivers.
+The package providing generators to automate the creation of your `TestDrivers` and `WidgetDriverProviders`.
 
 Import it into your pubspec `dev_dependencies:` section.
 
@@ -33,7 +37,11 @@ But if you need/want to import it then import it into your pubspec `dependencies
 
 - [Source code](widget_driver_test)
 
-Contains helper classes to support with mocking your TestDrivers.
+Contains helper classes/methods to support with:
+
+- Testing your `DrivableWidgets`
+- Testing your `WidgetDrivers`
+- Mocking your `TestDrivers`
 
 Import it into your pubspec `dev_dependencies:` section.
 
@@ -41,4 +49,4 @@ Import it into your pubspec `dev_dependencies:` section.
 
 - [Source code](widget_driver/example)
 
-A Flutter example app showing how to set up all dependencies and how to use the WidgetDriver framework.
+A Flutter example app showing how to set up all dependencies and how to use the WidgetDriver framework and how to test your widgets and drivers.
