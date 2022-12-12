@@ -24,7 +24,7 @@ MyCoolWidget extends DrivableWidget<MyCoolWidgetDriver> {
 }
 ```
 
-The `driver` is the place you go to to get data.  
+The `driver` is the place you go to get data.  
 Don't grab data directly in the widget from some other data source like a `BLoC` or `Provider` or something.
 
 If there is data which your widget needs from some other source, then put the logic which grabs that data in the `driver`. The `driver` has access to the BuildContext and can easily resolve that data. And then the widget can access it via the `driver`.

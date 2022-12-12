@@ -160,7 +160,7 @@ Here we have a driver which has an internal dependency to a some auth service. W
 
 We want to verify that the driver really calls `notifyWidgets()` and to do this we can use a helper function on the driverTester.
 
-There are two functions which helps us here.  
+There are two functions which help us here.  
 First the `waitForNotifyWidget` will wait until the specified number of calls to `notifyWidgets()` have been reached. If you never get enough calls, then the `waitForNotifyWidget` will timeout and your test will fail. You can pass in the timeout duration as a parameter to the method. It defaults to 1 seconds.
 
 Second, you can use the `verifyNoMoreCallsToNotifyWidget` to wait and check that no more calls are made to the `notifyWidgets()`. You can control how long the method will wait and check for call by passing in a timeout duration to the method. The default value is 1 second.

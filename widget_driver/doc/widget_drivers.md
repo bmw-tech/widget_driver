@@ -30,7 +30,7 @@ In this example these two blocs are driving the widget. If they emit new states 
 
 Now this might seem like a perfectly fine approach but it has one big issue. You are putting business logic in the widget.
 
-This breaks the separation of concern. The widget is a ui component. Its responsibility is to specify the UI. It should not make business decisions.
+This breaks the separation of concern. The widget is an UI component. Its responsibility is to specify the UI. It should not make business decisions.
 
 Another issue with this approach is that it makes testing tougher. In your `widgetTests` you now need to test that the correct widgets are on the screen, and **also** that the two blocs behave correctly together.
 
@@ -108,12 +108,12 @@ class CounterWidgetDriver extends WidgetDriver {
 
 There are three important concepts here.
 
-1. The dependencies are loaded/crated/resolved in the constructor of the `driver`.
+1. The dependencies are loaded/created/resolved in the constructor of the `driver`.
 1. All the properties/methods which the driver wants to expose to the widgets needs to be annotated and given default values.
 1. Whenever important data has changed in the `driver` and you want the widget to update: call `notifyWidget()`
 
 **Let's start talking about the dependencies.**  
-Any type of dependencies which your `driver` needs to be able to give your widget the correct data has to be loaded/crated/resolved in the constructor of the `driver`.
+Any type of dependencies which your `driver` needs to be able to give your widget the correct data has to be loaded/created/resolved in the constructor of the `driver`.
 
 You get two option here for how to resolve these dependencies. Either you can grab them out of the `BuildContext` (for example if you are using the `Provider` package). Or you can use some DI package like `get_it` and then just grab the dependencies from the DI container.
 
