@@ -10,7 +10,6 @@ PROJECT_FOLDERS=("widget_driver" "widget_driver_generator" "widget_driver_test")
 function run_tests() {
     current_dir=$(pwd)
     cd $1
-    flutter pub get
     flutter test --coverage --no-pub --no-test-assets --no-track-widget-creation --no-sound-null-safety || exit $?
     cd $current_dir
 }

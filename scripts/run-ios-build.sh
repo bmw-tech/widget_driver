@@ -8,7 +8,6 @@ TAG_COLOR="\n${GREEN}${TAG}${NC}"
 
 function run_ios_build() {
     echo -e "$TAG_COLOR Building iOS Example app"
-    make prepare
     cd widget_driver/example/ios
     pod repo update
     pod install 

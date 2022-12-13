@@ -8,7 +8,7 @@ TAG_COLOR="\n${GREEN}${TAG}${NC}"
 
 function run_android_build() {
     echo -e "$TAG_COLOR Building Android Example app"
-    make prepare
+    make install
     cd widget_driver/example
     flutter build apk --debug --no-tree-shake-icons $1
     echo -e "$TAG_COLOR Example app succesufully built"

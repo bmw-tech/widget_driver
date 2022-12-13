@@ -50,3 +50,23 @@ Import it into your pubspec `dev_dependencies:` section.
 - [Source code](widget_driver/example)
 
 A Flutter example app showing how to set up all dependencies and how to use the WidgetDriver framework and how to test your widgets and drivers.
+
+## Start developing
+
+`Makefile` file located in the repository root can give you an insight of all available targets which can help you in your 
+
+Following `Makefile` targets are available in the project:
+
+```bash
+all                  Run all steps including building the Android and iOS
+build                Run all steps including building the Android and iOS example apps from the widget_driver project
+build_android        Run the Android build of the example app (located inside `widget_driver/example`) without deploying to any device
+build_ios            Run the iOS build of the example app (located inside `widget_driver/example`) without deploying to any device
+clean                Clean all the cache and dependencies from dart modules.
+format               Format all Dart files in the project with the line length set to 120
+help                 Show all commands
+install              Fetch all dependencies for all packages
+lint                 Run flutter lint in all projects
+quality              Run only linter and tests
+test                 Run all tests in all projects
+```

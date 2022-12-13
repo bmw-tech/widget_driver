@@ -11,17 +11,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-function run_prepare() {
-    flutter pub get 
-}
-
-function fetch_pods() {
-    current_dir=$(pwd)
-    echo -e "$TAG_COLOR Running pod install"
-    cd "widget_driver/example/ios"
-    pod repo update
-    pod install
-    cd $current_dir
+function run_install() {
+    flutter pub get $@
 }
 
 if [[ $# -eq 0 ]] 
@@ -31,10 +22,9 @@ if [[ $# -eq 0 ]]
         do
             echo -e "$TAG_COLOR Preparing: $project_folder"
             cd $project_folder
-            run_prepare $project_folder
+            run_install $project_folder
             cd ..
         done
-        fetch_pods $@
        
 else
     project_folder=$1
@@ -42,4 +32,3 @@ else
     cd $project_folder
     run_flutter_lint $project_folder
 fi
-
