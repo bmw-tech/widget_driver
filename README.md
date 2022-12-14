@@ -53,9 +53,9 @@ A Flutter example app showing how to set up all dependencies and how to use the 
 
 ## contribute
 
-Once you think you're done coding, open a Pull request onto `master`. PRs can only be merged with a green pipeline. 
-To start the pipeline, you need to apply the `ready for pipeline` label to your PR. This will signify to the pipeline to run the desired checks. 
-If you want to emulate running the pipeline on your machine, please see the `Makefile` or [here](.github/workflows).
+So you're thinking about supporting us and contributing to the WidgetDriver package. That's great 😀
+
+The first step is to read our [contributing guide](CONTRIBUTING.md).
 
 ### helpful commands
 
