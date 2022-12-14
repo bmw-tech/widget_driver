@@ -3,7 +3,7 @@ We use github actions to check if the code is sound and in the format we expect 
 It is possible to run the actions locally with [act](https://github.com/nektos/act).
 To run the `check-code-quality` action use the following command:
 ```
-act -j check-code-quality
+act -r -j check-code-quality
 ```
 On your first run you will be asked which image size you want to use. 
 Our pipeline actions have requirements that are not automatically met by the micro image, so please use at least the medium image.
