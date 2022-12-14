@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:build/src/builder/build_step.dart';
+import 'package:build/build.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
@@ -9,8 +9,7 @@ import 'model_visitor.dart';
 
 class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
   @override
-  Future<String> generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) async {
+  Future<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
     final visitor = ModelVisitor();
     element.visitChildren(visitor);
 
@@ -23,17 +22,15 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
     //###################################
 
     final packageVersionString = await _getPackageVersionString();
-    classBuffer.writeln(
-        '// This file was generated with widget_driver_generator $packageVersionString\n');
+    classBuffer.writeln('// This file was generated with widget_driver_generator $packageVersionString\n');
 
     //###################################
     // Start - TestDriver generation
     //###################################
 
-    final testDriverClassName = '_\$Test${driverClassName}';
+    final testDriverClassName = '_\$Test$driverClassName';
 
-    classBuffer.writeln(
-        'class $testDriverClassName extends TestDriver implements $driverClassName {');
+    classBuffer.writeln('class $testDriverClassName extends TestDriver implements $driverClassName {');
     final annotationVisitor = AnnotationVisitor(classBuffer);
     element.visitChildren(annotationVisitor);
     classBuffer.writeln('}');
@@ -42,8 +39,7 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
     // Start - DriverProvider generation
     //###################################
 
-    classBuffer.writeln(
-        'class $providerClassName extends WidgetDriverProvider<$driverClassName> {');
+    classBuffer.writeln('class $providerClassName extends WidgetDriverProvider<$driverClassName> {');
 
     classBuffer.writeln('@override');
     classBuffer.writeln('$driverClassName buildDriver(BuildContext context) {');

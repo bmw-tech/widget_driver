@@ -25,8 +25,7 @@ void main() {
 
       when(() => mockLocalization.logIn).thenReturn('Log in');
       when(() => mockLocalization.logOut).thenReturn('Log out');
-      when(() => mockAuthService.isLoggedInStream)
-          .thenAnswer((_) => isLoggedInStreamController.stream);
+      when(() => mockAuthService.isLoggedInStream).thenAnswer((_) => isLoggedInStreamController.stream);
     });
 
     testWidgets('Shows correct button text', (WidgetTester tester) async {
@@ -51,8 +50,7 @@ void main() {
       expect(driver.buttonText, equals('Log out'));
     });
 
-    testWidgets('Handles log in/out toggle button correctly',
-        (WidgetTester tester) async {
+    testWidgets('Handles log in/out toggle button correctly', (WidgetTester tester) async {
       when(() => mockAuthService.isLoggedIn).thenReturn(false);
 
       final driverTester = await tester.getDriverTester<LogInOutButtonDriver>(
@@ -78,8 +76,7 @@ void main() {
       verify(() => mockAuthService.logOut()).called(1);
     });
 
-    testWidgets('When isLoggedInStream emits then notifyWidgets is called',
-        (WidgetTester tester) async {
+    testWidgets('When isLoggedInStream emits then notifyWidgets is called', (WidgetTester tester) async {
       final driverTester = await tester.getDriverTester<LogInOutButtonDriver>(
           driverBuilder: (context) => LogInOutButtonDriver(context),
           parentWidgetBuilder: (driverWidget) {
@@ -96,8 +93,7 @@ void main() {
       isLoggedInStreamController.add(false);
 
       // Wait for the driver to receive 2 notifyWidget calls.
-      await driverTester.waitForNotifyWidget(
-          numberOfCalls: 2, requireExactNumberOfCalls: true);
+      await driverTester.waitForNotifyWidget(numberOfCalls: 2, requireExactNumberOfCalls: true);
       // Verify no more calls to `notifyWidget`
       await driverTester.verifyNoMoreCallsToNotifyWidget();
     });

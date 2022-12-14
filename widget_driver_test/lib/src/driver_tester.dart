@@ -19,7 +19,7 @@ class DriverTester<T extends WidgetDriver> {
   int _notifyWidgetsCallCount = 0;
   int _lastWaitForNotifyWidgetCount = 0;
 
-  List<_CompleterContainer> _completers = [];
+  final List<_CompleterContainer> _completers = [];
 
   DriverTester(this.driver, WidgetTester widgetTester) : _widgetTester = widgetTester {
     driver.addListener(() {
@@ -55,6 +55,7 @@ class DriverTester<T extends WidgetDriver> {
     return _widgetTester.runAsync(() async {
       await completer.future.timeout(
         timeout,
+        // ignore: void_checks
         onTimeout: () {
           throw 'waitForNotifyWidget timed out! Not enough calls to `notifyWidget()` received';
         },
