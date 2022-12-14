@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Fail if pipeline label was not set
-        if: ${{ github.event.label.name != 'ready for pipeline' }}
+        if: ${{ !contains( github.event.pull_request.labels.*.name, 'ready for pipeline') }}
         run: |
           echo "please set the label 'ready for pipeline' to start the pipeline"
           failure()
