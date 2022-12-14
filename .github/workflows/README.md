@@ -10,5 +10,5 @@ Our pipeline actions have requirements that are not automatically met by the mic
 The default used image can also be changed in your `~/.actrc` file. 
 Furthermore there is the option to specify the image used by setting it as a parameter:
 ```
-act -j check-code-quality -P ubuntu-latest=catthehacker/ubuntu:act-latest 
+act -r -j check-code-quality -P ubuntu-latest=catthehacker/ubuntu:act-latest 
 ```
