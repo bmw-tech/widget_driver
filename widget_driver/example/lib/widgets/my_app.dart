@@ -19,6 +19,5 @@ class MyApp extends DrivableWidget<MyAppDriver> {
   }
 
   @override
-  WidgetDriverProvider<MyAppDriver> get driverProvider =>
-      $MyAppDriverProvider();
+  WidgetDriverProvider<MyAppDriver> get driverProvider => $MyAppDriverProvider();
 }

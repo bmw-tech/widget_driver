@@ -57,7 +57,7 @@ extension Driver on WidgetTester {
 class _DriverContainerWidget<T extends WidgetDriver> extends StatelessWidget {
   final void Function(BuildContext) _driverBuilder;
 
-  _DriverContainerWidget({
+  const _DriverContainerWidget({
     Key? key,
     required void Function(BuildContext) builder,
   })  : _driverBuilder = builder,

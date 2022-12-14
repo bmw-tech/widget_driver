@@ -8,8 +8,7 @@ part of 'random_coffee_image_widget_driver.dart';
 
 // This file was generated with widget_driver_generator version: 1.0.0+1
 
-class _$TestRandomCoffeeImageWidgetDriver extends TestDriver
-    implements RandomCoffeeImageWidgetDriver {
+class _$TestRandomCoffeeImageWidgetDriver extends TestDriver implements RandomCoffeeImageWidgetDriver {
   @override
   String get coffeeImageUrl => TestCoffee.testCoffeeImageUrl;
 
@@ -20,8 +19,7 @@ class _$TestRandomCoffeeImageWidgetDriver extends TestDriver
   void updateRandomImage() {}
 }
 
-class $RandomCoffeeImageWidgetDriverProvider
-    extends WidgetDriverProvider<RandomCoffeeImageWidgetDriver> {
+class $RandomCoffeeImageWidgetDriverProvider extends WidgetDriverProvider<RandomCoffeeImageWidgetDriver> {
   @override
   RandomCoffeeImageWidgetDriver buildDriver(BuildContext context) {
     return RandomCoffeeImageWidgetDriver(context);

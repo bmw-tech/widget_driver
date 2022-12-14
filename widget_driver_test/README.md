@@ -84,7 +84,7 @@ testWidgets('Some driver test', (WidgetTester tester) async {
 ```
 
 As you can see, you create the `Driver` by calling `tester.getDriverTester(...)`.  
-This will return you a `DriverTester`. You use this driverTester to test your driver. 
+This will return you a `DriverTester`. You use this driverTester to test your driver.
 
 In this example, we are creating a driver called `MyWidgetDriver`. It has some internal dependencies which it resolves from the `BuildContext` (`SomeService` and `AnotherService`) and one dependency which gets passed in as a parameter to the constructor.
 
