@@ -4,8 +4,7 @@ import 'package:widget_driver/widget_driver.dart';
 import '../../custom_widgets/cached_network_image.dart';
 import 'random_coffee_image_widget_driver.dart';
 
-class RandomCoffeeImageWidget
-    extends DrivableWidget<RandomCoffeeImageWidgetDriver> {
+class RandomCoffeeImageWidget extends DrivableWidget<RandomCoffeeImageWidgetDriver> {
   RandomCoffeeImageWidget({Key? key}) : super(key: key);
 
   @override
@@ -23,6 +22,5 @@ class RandomCoffeeImageWidget
   }
 
   @override
-  WidgetDriverProvider<RandomCoffeeImageWidgetDriver> get driverProvider =>
-      $RandomCoffeeImageWidgetDriverProvider();
+  WidgetDriverProvider<RandomCoffeeImageWidgetDriver> get driverProvider => $RandomCoffeeImageWidgetDriverProvider();
 }
