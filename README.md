@@ -51,13 +51,13 @@ Import it into your pubspec `dev_dependencies:` section.
 
 A Flutter example app showing how to set up all dependencies and how to use the WidgetDriver framework and how to test your widgets and drivers.
 
-## Contribute
+## contribute
 
 Once you think you're done coding, open a Pull request onto `master`. PRs can only be merged with a green pipeline. 
 To start the pipeline, you need to apply the `ready for pipeline` label to your PR. This will signify to the pipeline to run the desired checks. 
 If you want to emulate running the pipeline on your machine, please see the `Makefile` or [here](.github/workflows).
 
-### Start developing
+### helpful commands
 
 `Makefile` file located in the repository root can give you an insight of all available targets which can help you in your development.
 
