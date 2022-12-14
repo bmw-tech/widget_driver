@@ -1,11 +1,10 @@
 name: check-code-quality
 on:
   push:
-    branches:
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-    types:
-      - labeled
+    types: ["labeled", "opened", "synchronize", "reopened"]
 
 jobs:
   check-code-quality:
