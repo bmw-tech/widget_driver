@@ -4,6 +4,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+    types: ["labeled", "opened", "synchronize", "reopened"]
 
 jobs:
   check-code-quality:
@@ -11,7 +12,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Fail if pipeline label was not set
-        if: ${{ !contains( github.event.pull_request.labels.*.name, 'ready for pipeline') }}
+        if: ${{ !contains( github.event.pull_request.labels.*.name, 'ready for pipeline') && github.ref_name != 'master' }}
         run: |
           echo "please set the label 'ready for pipeline' to start the pipeline"
           failure()
