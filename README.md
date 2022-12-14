@@ -53,7 +53,7 @@ A Flutter example app showing how to set up all dependencies and how to use the 
 
 ## Start developing
 
-`Makefile` file located in the repository root can give you an insight of all available targets which can help you in your 
+`Makefile` file located in the repository root can give you an insight of all available targets which can help you in your development.
 
 Following `Makefile` targets are available in the project:
 
