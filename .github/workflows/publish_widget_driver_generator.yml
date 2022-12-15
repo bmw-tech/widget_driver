@@ -1,0 +1,29 @@
+name: Publish widget_driver_generator to pub.dev
+on:
+  workflow_dispatch:
+    branches:
+      - master
+
+jobs:
+  publish_widget_driver_generator:
+    runs-on: ubuntu-latest
+    container:
+      image: google/dart:latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup credentials
+        run: |
+          mkdir -p ~/.pub-cache 
+          cat <<EOF > ~/.pub-cache/credentials.json
+          {
+            "accessToken":"${{ secrets.PUB_DEV_ACCESS_TOKEN }}",
+            "refreshToken":"${{ secrets.PUB_DEV_REFRESH_TOKEN }}",
+            "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+            "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+            "expiration": 1570721159347
+          }
+          EOF
+      - name: Publish package
+        run: |
+          cd widget_driver_generator
+          pub publish

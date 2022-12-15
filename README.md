@@ -51,13 +51,13 @@ Import it into your pubspec `dev_dependencies:` section.
 
 A Flutter example app showing how to set up all dependencies and how to use the WidgetDriver framework and how to test your widgets and drivers.
 
-## contribute
+## Contribute
 
 Once you think you're done coding, open a Pull request onto `master`. PRs can only be merged with a green pipeline. 
 To start the pipeline, you need to apply the `ready for pipeline` label to your PR. This will signify to the pipeline to run the desired checks. 
 If you want to emulate running the pipeline on your machine, please see the `Makefile` or [here](.github/workflows).
 
-### helpful commands
+### Helpful commands
 
 `Makefile` file located in the repository root can give you an insight of all available targets which can help you in your development.
 
@@ -76,3 +76,7 @@ lint                 Run flutter lint in all projects
 quality              Run only linter and tests
 test                 Run all tests in all projects
 ```
+
+### publish to pub.dev
+
+To make the plugins accessible, we want to publish them to pub.dev. For each plugin, `publish-PLUGIN.yaml` contains a job that deploys it to pub.dev. They are triggered manually.
