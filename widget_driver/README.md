@@ -1,5 +1,8 @@
 # WidgetDriver
 
+[![check-code-quality](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml/badge.svg?branch=master)](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml)
+[![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
+
 A Flutter presentation layer framework, which will clean up your  
 widget code and make your widgets testable without a need for thousands of mock objects.  
 Let's go driving! 🚙💨
