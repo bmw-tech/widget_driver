@@ -51,13 +51,13 @@ Import it into your pubspec `dev_dependencies:` section.
 
 A Flutter example app showing how to set up all dependencies and how to use the WidgetDriver framework and how to test your widgets and drivers.
 
-## contribute
+## Contribute
 
 So you're thinking about supporting us and contributing to the WidgetDriver package. That's great 😀
 
 The first step is to read our [contributing guide](CONTRIBUTING.md).
 
-### helpful commands
+### Helpful commands
 
 `Makefile` file located in the repository root can give you an insight of all available targets which can help you in your development.
 
@@ -76,3 +76,7 @@ lint                 Run flutter lint in all projects
 quality              Run only linter and tests
 test                 Run all tests in all projects
 ```
+
+### publish to pub.dev
+
+To make the plugins accessible, we want to publish them to pub.dev. For each plugin, `publish-PLUGIN.yaml` contains a job that deploys it to pub.dev. They are triggered manually.

@@ -8,8 +8,7 @@ environment:
   sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
-  widget_driver:
-    path: ../widget_driver/
+  widget_driver: 0.0.1
   mocktail: ^0.3.0
   meta: ^1.7.0
   test: ^1.16.0

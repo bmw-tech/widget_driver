@@ -1,5 +1,8 @@
 .DEFAULT_GOAL    := help
 
+publish: ## publish all projects to pub.dev
+	bash scripts/run-publish.sh
+
 clean:	## Clean all the cache and dependencies from dart modules.
 	bash scripts/run-clean.sh
 
