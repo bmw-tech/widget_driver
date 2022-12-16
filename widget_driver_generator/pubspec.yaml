@@ -10,6 +10,7 @@ environment:
 dependencies:
   build:
   source_gen:
+  analyzer:
   widget_driver_annotation: 0.0.1
 
 dev_dependencies:
