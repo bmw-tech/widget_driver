@@ -352,4 +352,4 @@ For e.g. if you choose to use [Provider](https://pub.dev/packages/provider), the
 - [Testing](doc/testing.md)
 - [Code generation](doc/code_generation.md)
 - [Using WidgetDrivers without code generation](doc/drivers_without_generation.md)
-- Contribution guide
+- [Contribution guide](../CONTRIBUTING.md)
