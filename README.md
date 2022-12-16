@@ -11,7 +11,7 @@ The `WidgetDriver` framework is built up on different dart packages. The core pa
 
 Here is an overview of all the packages:
 
-## widget_driver
+## widget_driver  [![pub package](https://img.shields.io/pub/v/widget_driver.svg)](https://pub.dev/packages/widget_driver)
 
 - [Source code](widget_driver)
 
@@ -19,7 +19,7 @@ The core package which provides the `WidgetDriver` framework.
 
 Import it into your pubspec `dependencies:` section.
 
-## widget_driver_generator
+## widget_driver_generator [![pub package](https://img.shields.io/pub/v/widget_driver_generator.svg)](https://pub.dev/packages/widget_driver_generator)
 
 - [Source code](widget_driver_generator)
 
@@ -27,7 +27,7 @@ The package providing generators to automate the creation of your `TestDrivers` 
 
 Import it into your pubspec `dev_dependencies:` section.
 
-## widget_driver_annotation
+## widget_driver_annotation [![pub package](https://img.shields.io/pub/v/widget_driver_annotation.svg)](https://pub.dev/packages/widget_driver_annotation)
 
 - [Source code](widget_driver_annotation)
 
@@ -36,7 +36,7 @@ The annotation package which has no dependencies.
 You do not need to import this since the `widget_driver` package already imports it for you.  
 But if you need/want to import it then import it into your pubspec `dependencies:` section.
 
-## widget_driver_test
+## widget_driver_test [![pub package](https://img.shields.io/pub/v/widget_driver_test.svg)](https://pub.dev/packages/widget_driver_test)
 
 - [Source code](widget_driver_test)
 
