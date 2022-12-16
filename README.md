@@ -78,6 +78,6 @@ quality              Run only linter and tests
 test                 Run all tests in all projects
 ```
 
-### publish to pub.dev
+### Publish to pub.dev
 
-To make the plugins accessible, we want to publish them to pub.dev. The `publish_all_packages.yml` contains a job that deploys all four plugins to pub.dev. This job is triggered manually. If you want to check first if it's safe to publish the plugins, you can run `dart pub publish --dry-run` in the root of each project.  
+To make the plugins accessible, we want to publish them to pub.dev. [publish_all_packages.yml](.github/workflows/publish_all_packages.yml) contains a job that deploys all four plugins to pub.dev. This job is named `Publish all packages to pub.dev` and is triggered manually. If you want to check first if it's safe to publish the plugins, you can run `dart pub publish --dry-run` in the root of each plugin.  
