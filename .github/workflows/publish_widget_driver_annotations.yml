@@ -1,8 +1,5 @@
 name: Publish widget_driver_annotations to pub.dev
-on:
-  workflow_dispatch:
-    branches:
-      - master
+on: [workflow_dispatch]
 
 jobs:
   publish_widget_driver_annotations:
