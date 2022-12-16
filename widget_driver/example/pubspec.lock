@@ -705,30 +705,30 @@ packages:
   widget_driver:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      name: widget_driver
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   widget_driver_annotation:
     dependency: transitive
     description:
-      path: "../../widget_driver_annotation"
-      relative: true
-    source: path
+      name: widget_driver_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   widget_driver_generator:
     dependency: "direct dev"
     description:
-      path: "../../widget_driver_generator"
-      relative: true
-    source: path
+      name: widget_driver_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   widget_driver_test:
     dependency: "direct dev"
     description:
-      path: "../../widget_driver_test"
-      relative: true
-    source: path
+      name: widget_driver_test
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   win32:
     dependency: transitive

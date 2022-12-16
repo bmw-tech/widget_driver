@@ -1,5 +1,9 @@
 # WidgetDriver generator
 
+[![pub package](https://img.shields.io/pub/v/widget_driver_generator.svg)](https://pub.dev/packages/widget_driver_generator)
+[![check-code-quality](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml/badge.svg?branch=master)](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml)
+[![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
+
 This is a helper package that supports the `widget_driver` package and generates the bootstrapping code needed to get your `Drivers` fully set up.
 
 ---
