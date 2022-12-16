@@ -1,11 +1,11 @@
-name: Publish widget_driver_generator to pub.dev
+name: Publish all packages to pub.dev
 on:
   workflow_dispatch:
     branches:
       - master
 
 jobs:
-  publish_widget_driver_generator:
+  publish_all_packages:
     runs-on: ubuntu-latest
     container:
       image: google/dart:latest
@@ -24,6 +24,4 @@ jobs:
           }
           EOF
       - name: Publish package
-        run: |
-          cd widget_driver_generator
-          pub publish
+        run: bash scripts/run-publish.sh
