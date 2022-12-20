@@ -12,15 +12,15 @@ import 'flow_coordinator.dart';
 /// Instead each widget has its own `Driver`.
 ///
 /// The `Driver` provides all dynamic data to the widget via public properties.
-/// If these properties depend on some external dependency, then these dependencies are resovled inside the `Driver` and not in the widget.
+/// If these properties depend on some external dependency, then these dependencies are resolved inside the `Driver` and not in the widget.
 ///
 /// E.g. if a text in a widget depends on wether the user is logged in or not, then that `AuthService`
-/// is not resolved in the widget. But instead the `Driver` resovles it and listens to changes on it.
+/// is not resolved in the widget. But instead the `Driver` resolves it and listens to changes on it.
 /// And as soon as a change occurs, then the `Driver` will call its `notifyWidget()` method which will trigger the widget to update.
 ///
 ///
 /// One more benefit which the `WidgetDriver` gives you is easier/better widget testing.
-/// Ususally when you test your widgets, then you need to provide mocked values to any dependency which any of your child widgets have.
+/// Usually when you test your widgets, then you need to provide mocked values to any dependency which any of your child widgets have.
 /// This really clutters your widget test code since most of the code will end up being to define mocks.
 /// It also creates tight coupling since any change you make in a child widget might end up breaking all your parent widget tests.
 ///

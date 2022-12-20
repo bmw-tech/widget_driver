@@ -88,7 +88,7 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
 
   Driver _getTestDriver(BuildContext context) {
     // Check if we have an injected MockDriver for the current type.
-    // If it exists and it was not already assinged as current driver,
+    // If it exists and it was not already assigned as current driver,
     // then update the current driver.
     final mockDriver = MockDriverProvider.of<Driver>(context);
     if (mockDriver != null) {

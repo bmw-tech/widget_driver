@@ -1,3 +1,7 @@
+## 0.0.2
+
+* Adds unit test for framework code
+
 ## 0.0.1
 
 * Initial release.
