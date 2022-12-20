@@ -90,6 +90,18 @@ abstract class WidgetDriver<FC extends FlowCoordinator> {
   }
 }
 
+/// A base class for the test version of the WidgetDrivers.
+///
+/// When you create a test driver version of your driver,
+/// then extend this `TestDriver` and implement your driver interface.
+///
+/// Here is an example of how you would do this:
+///
+/// ```dart
+/// class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
+///     ...
+/// }
+/// ```
 class TestDriver {
   @override
   dynamic noSuchMethod(Invocation invocation) {
