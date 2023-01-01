@@ -4,7 +4,7 @@ import 'package:widget_driver/src/utils/platform_environment.dart';
 void main() {
   group('PlatformEnvironment:', () {
     late Map<String, String> _mockEnvironment;
-    late GetEnvironment _mockGetEnvironment;
+    late EnvironmentCallback _mockGetEnvironment;
 
     setUp(() {
       _mockEnvironment = {};

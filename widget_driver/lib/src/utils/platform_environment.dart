@@ -10,7 +10,9 @@ extension WebPlatformInfo on Platform {
   static bool get isWeb => kIsWeb;
 }
 
-typedef GetEnvironment = Map<String, String> Function();
+/// A callback which provides the current runtime environment as a 'Map<String, String>'
+/// where the key is the name of an environment variable and the value is its current value.
+typedef EnvironmentCallback = Map<String, String> Function();
 
 /// A wrapper class around [Platform.environment] for getting
 /// information about the environment for the current platform process.
@@ -22,11 +24,11 @@ typedef GetEnvironment = Map<String, String> Function();
 /// made when running as `Web`.
 class PlatformEnvironment {
   final bool _isWeb;
-  final GetEnvironment _getEnvironment;
+  final EnvironmentCallback _getEnvironment;
 
   PlatformEnvironment({
     bool? isWeb,
-    GetEnvironment? getEnvironment,
+    EnvironmentCallback? getEnvironment,
   })  : _isWeb = isWeb ?? WebPlatformInfo.isWeb,
         _getEnvironment = getEnvironment ?? (() => Platform.environment);
 
