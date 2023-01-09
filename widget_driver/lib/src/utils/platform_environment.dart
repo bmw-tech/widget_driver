@@ -41,6 +41,6 @@ class PlatformEnvironment {
   }
 
   bool _platformSupportsEnvironmentVariables() {
-    return !_isWeb; 
+    return !_isWeb;
   }
 }
