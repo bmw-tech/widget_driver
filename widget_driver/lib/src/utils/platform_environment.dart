@@ -33,18 +33,14 @@ class PlatformEnvironment {
         _getEnvironment = getEnvironment ?? (() => Platform.environment);
 
   bool containsKey(Object? key) {
-    if (_doesPlatformSupportEnvironmentVariables()) {
+    if (_platformSupportsEnvironmentVariables()) {
       return _getEnvironment().containsKey(key);
     } else {
       return false;
     }
   }
 
-  bool _doesPlatformSupportEnvironmentVariables() {
-    if (_isWeb) {
-      return false;
-    } else {
-      return true;
-    }
+  bool _platformSupportsEnvironmentVariables() {
+    return !_isWeb; 
   }
 }
