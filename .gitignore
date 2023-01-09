@@ -31,4 +31,4 @@ migrate_working_dir/
 build/
 
 # Coverage
-**/coverage/lcov.info
+**/coverage/
