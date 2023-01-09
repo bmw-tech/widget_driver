@@ -12,7 +12,7 @@ void main() {
     });
 
     group('When not web:', () {
-      test('Returns true when environment contains key', () {
+      test('Calling containsKey(...) returns true for defined environment keys', () {
         _mockEnvironment = {'SomeKey': 'SomeValue'};
         final platformEnvironment = PlatformEnvironment(
           isWeb: false,
@@ -21,7 +21,7 @@ void main() {
         expect(platformEnvironment.containsKey('SomeKey'), true);
       });
 
-      test('Returns false when environment does not contains key', () {
+      test('Calling containsKey(...) returns false for not defined environment keys', () {
         _mockEnvironment = {'SomeOtherKey': 'SomeOtherValue'};
         final platformEnvironment = PlatformEnvironment(
           isWeb: false,
@@ -32,7 +32,7 @@ void main() {
     });
 
     group('When web:', () {
-      test('Returns false even when environment contains key', () {
+      test('Calling containsKey(...) returns false even for defined environment keys', () {
         _mockEnvironment = {'SomeKey': 'SomeValue'};
         final platformEnvironment = PlatformEnvironment(
           isWeb: true,
@@ -43,7 +43,7 @@ void main() {
         expect(platformEnvironment.containsKey('SomeKey'), false);
       });
 
-      test('Returns false when environment does not contains key', () {
+      test('Calling containsKey(...) returns false for not defined environment keys', () {
         _mockEnvironment = {'SomeOtherKey': 'SomeOtherValue'};
         final platformEnvironment = PlatformEnvironment(
           isWeb: true,
