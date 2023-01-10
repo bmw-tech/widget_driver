@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 import 'mock_driver_provider.dart';
-import 'utils/flutter_runtime_environment_info.dart';
+import 'utils/runtime_environment_info.dart';
 import 'widget_driver.dart';
 import 'widget_driver_provider.dart';
 
@@ -14,8 +14,8 @@ export 'package:flutter/widgets.dart' show BuildContext;
 abstract class DrivableWidget<Driver extends WidgetDriver> extends StatefulWidget {
   DrivableWidget({
     Key? key,
-    FlutterRuntimeEnvironmentInfo? environmentInfo,
-  })  : _environmentInfo = environmentInfo ?? FlutterRuntimeEnvironmentInfo(),
+    RuntimeEnvironmentInfo? environmentInfo,
+  })  : _environmentInfo = environmentInfo ?? RuntimeEnvironmentInfo(),
         super(key: key);
 
   /// The provider which knows how to create the Driver for this widget.
@@ -28,7 +28,7 @@ abstract class DrivableWidget<Driver extends WidgetDriver> extends StatefulWidge
   /// the declarative UI definition inside the widget code.
   Driver get driver => _widgetDriverContainer.instance!;
 
-  final FlutterRuntimeEnvironmentInfo _environmentInfo;
+  final RuntimeEnvironmentInfo _environmentInfo;
   final _widgetDriverContainer = _WidgetDriverContainer<Driver>();
 
   Widget build(BuildContext context);
@@ -88,7 +88,7 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
 
   Driver _getTestDriver(BuildContext context) {
     // Check if we have an injected MockDriver for the current type.
-    // If it exists and it was not already assinged as current driver,
+    // If it exists and it was not already assigned as current driver,
     // then update the current driver.
     final mockDriver = MockDriverProvider.of<Driver>(context);
     if (mockDriver != null) {
