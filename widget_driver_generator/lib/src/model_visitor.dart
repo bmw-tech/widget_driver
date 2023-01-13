@@ -62,7 +62,8 @@ class AnnotationVisitor extends SimpleElementVisitor<void> {
   }
 
   bool _hasValidAnnotation(Element element, Type type) {
-    final annotation = TypeChecker.fromRuntime(type).firstAnnotationOfExact(element);
+    final annotation =
+        TypeChecker.fromRuntime(type).firstAnnotationOfExact(element);
     return annotation != null;
   }
 
