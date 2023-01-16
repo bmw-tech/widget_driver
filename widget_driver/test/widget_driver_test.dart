@@ -77,7 +77,7 @@ void main() {
       1: Deploy new version of `widget_driver`
       2: Deploy new version of `widget_driver_test`
       3: Add this code back.
-
+      
     group('Lifecycle:', () {
       testWidgets('Calls dispose when driver gets deallocated', (WidgetTester tester) async {
         bool disposeWasCalled = false;
@@ -96,6 +96,22 @@ void main() {
         await tester.pumpWidget(const SizedBox.shrink());
 
         expect(disposeWasCalled, true);
+      });
+
+      testWidgets('Does not call dispose when the driver never gets deallocated', (WidgetTester tester) async {
+        bool disposeWasCalled = false;
+
+        final driverTester = await tester.getDriverTester(
+          driverBuilder: (context) => ConcreteWidgetDriver(context),
+        );
+        final driver = driverTester.driver;
+        driver.disposedCallback = () {
+          disposeWasCalled = true;
+        };
+
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        expect(disposeWasCalled, false);
       });
     });
     */
