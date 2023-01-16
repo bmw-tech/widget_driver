@@ -3,6 +3,7 @@ import 'package:widget_driver/widget_driver.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../widget_driver_test.dart';
+import 'utils/test_drivable_widget.dart';
 
 typedef WidgetBuilder = Widget Function(Widget driverWidget);
 
@@ -18,7 +19,7 @@ extension Driver on WidgetTester {
   /// Optionally you can also provide a [parentWidgetBuilder], this is useful if your
   /// driver needs to resolve dependencies via the [BuildContext].
   /// If that is the case, then the [parentWidgetBuilder] should create a widget which includes
-  /// those depdendencies. E.g. if you are using the `Provider` package, then your code might look like this:
+  /// those dependencies. E.g. if you are using the `Provider` package, then your code might look like this:
   ///
   /// ```dart
   /// final driverTester = await tester.getDriverTester<LogInOutButtonDriver>(
@@ -38,34 +39,15 @@ extension Driver on WidgetTester {
     required T Function(BuildContext context) driverBuilder,
     WidgetBuilder? parentWidgetBuilder,
   }) async {
-    T? driver;
-    Widget driverWidget = _DriverContainerWidget<T>(
-      builder: (context) {
-        driver = driverBuilder(context);
-      },
+    TestDrivableWidget<T> drivableWidget = TestDrivableWidget<T>(
+      driverBuilder: driverBuilder,
     );
-    Widget widget = driverWidget;
+    Widget widget = drivableWidget;
     if (parentWidgetBuilder != null) {
-      widget = parentWidgetBuilder(driverWidget);
+      widget = parentWidgetBuilder(drivableWidget);
     }
     await pumpWidget(widget);
 
-    return DriverTester<T>(driver!, this);
-  }
-}
-
-class _DriverContainerWidget<T extends WidgetDriver> extends StatelessWidget {
-  final void Function(BuildContext) _driverBuilder;
-
-  const _DriverContainerWidget({
-    Key? key,
-    required void Function(BuildContext) builder,
-  })  : _driverBuilder = builder,
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    _driverBuilder(context);
-    return const Placeholder();
+    return DriverTester<T>(drivableWidget.driver, this);
   }
 }
