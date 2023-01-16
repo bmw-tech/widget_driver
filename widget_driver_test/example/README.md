@@ -28,4 +28,4 @@ void main() {
 }
 ```
 
-To learn more about `WidgetDrivers` then please read the documentation for [widget_driver](https://github.com/bmw-tech/widget_driver) and check tests for example app there.
+To learn more about `WidgetDrivers`, please read the documentation for [widget_driver](https://github.com/bmw-tech/widget_driver) and check tests for example app there.
