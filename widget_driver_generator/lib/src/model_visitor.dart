@@ -1,8 +1,9 @@
-import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/visitor.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
 
+/// Inspect classes and get className and fields out of them
 class ModelVisitor extends SimpleElementVisitor<void> {
   String className = "";
   final fields = <String, dynamic>{};
@@ -20,6 +21,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
   }
 }
 
+/// Inspect Driver-related annotations and generate TestDriver with overrides based on default values
 class AnnotationVisitor extends SimpleElementVisitor<void> {
   AnnotationVisitor(this.classBuffer);
 
