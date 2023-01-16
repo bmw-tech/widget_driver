@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import 'package:build/build.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
 
 import 'model_visitor.dart';
 
+/// Generates TestDrivers and WidgetDriverProviders based on annotations
 class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
   @override
   Future<String> generateForAnnotatedElement(
