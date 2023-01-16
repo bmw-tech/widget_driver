@@ -1,6 +1,6 @@
 name: widget_driver_test
-description: Test helpers for WidgetDriver
-version: 0.0.2
+description: Contains helper classes/methods for DrivableWidgets, WidgetDrivers, helps with TestDrivers mocking
+version: 0.0.3
 repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver_test
 issue_tracker: https://github.com/bmw-tech/widget_driver/issues
 
