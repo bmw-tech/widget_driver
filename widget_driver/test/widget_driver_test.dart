@@ -8,7 +8,8 @@ import '../../widget_driver_test/lib/widget_driver_test.dart';
 void main() {
   group('WidgetDriver:', () {
     group('Updating:', () {
-      testWidgets('Never calling notifyWidget never triggers listener to emit', (WidgetTester tester) async {
+      testWidgets('Never calling notifyWidget never triggers listener to emit',
+          (WidgetTester tester) async {
         int numberOfDriverListenersEmits = 0;
 
         final driverTester = await tester.getDriverTester(
@@ -24,7 +25,8 @@ void main() {
         expect(numberOfDriverListenersEmits, equals(0));
       });
 
-      testWidgets('Calling notifyWidget once triggers listener to emit once', (WidgetTester tester) async {
+      testWidgets('Calling notifyWidget once triggers listener to emit once',
+          (WidgetTester tester) async {
         int numberOfDriverListenersEmits = 0;
 
         final driverTester = await tester.getDriverTester(
@@ -42,7 +44,8 @@ void main() {
         expect(numberOfDriverListenersEmits, equals(1));
       });
 
-      testWidgets('Calling notifyWidget three times triggers listener to emit three times',
+      testWidgets(
+          'Calling notifyWidget three times triggers listener to emit three times',
           (WidgetTester tester) async {
         int numberOfDriverListenersEmits = 0;
 

@@ -25,7 +25,8 @@ import 'package:mocktail/mocktail.dart';
 ///   child: HomePage(),
 /// );
 /// ```
-class MockDriver<FC extends FlowCoordinator> extends Mock implements WidgetDriver<FC> {
+class MockDriver<FC extends FlowCoordinator> extends Mock
+    implements WidgetDriver<FC> {
   VoidCallback? listener;
 
   MockDriver() {

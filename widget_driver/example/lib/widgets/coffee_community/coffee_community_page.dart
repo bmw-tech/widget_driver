@@ -18,5 +18,6 @@ class CoffeeCommunityPage extends DrivableWidget<CoffeeCommunityPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<CoffeeCommunityPageDriver> get driverProvider => $CoffeeCommunityPageDriverProvider();
+  WidgetDriverProvider<CoffeeCommunityPageDriver> get driverProvider =>
+      $CoffeeCommunityPageDriverProvider();
 }

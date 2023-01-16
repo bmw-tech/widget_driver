@@ -30,5 +30,6 @@ class CoffeeCounterWidget extends DrivableWidget<CoffeeCounterWidgetDriver> {
   }
 
   @override
-  WidgetDriverProvider<CoffeeCounterWidgetDriver> get driverProvider => $CoffeeCounterWidgetDriverProvider();
+  WidgetDriverProvider<CoffeeCounterWidgetDriver> get driverProvider =>
+      $CoffeeCounterWidgetDriverProvider();
 }

@@ -27,5 +27,6 @@ class LogInOutButton extends DrivableWidget<LogInOutButtonDriver> {
   }
 
   @override
-  WidgetDriverProvider<LogInOutButtonDriver> get driverProvider => $LogInOutButtonDriverProvider();
+  WidgetDriverProvider<LogInOutButtonDriver> get driverProvider =>
+      $LogInOutButtonDriverProvider();
 }
