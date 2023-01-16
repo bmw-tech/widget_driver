@@ -8,7 +8,8 @@ part of 'coffee_detail_page_driver.dart';
 
 // This file was generated with widget_driver_generator version: 1.0.0+1
 
-class _$TestCoffeeDetailPageDriver extends TestDriver implements CoffeeDetailPageDriver {
+class _$TestCoffeeDetailPageDriver extends TestDriver
+    implements CoffeeDetailPageDriver {
   @override
   String get coffeeName => TestCoffee.testCoffeeName;
 
@@ -19,7 +20,8 @@ class _$TestCoffeeDetailPageDriver extends TestDriver implements CoffeeDetailPag
   String get coffeeImageUrl => TestCoffee.testCoffeeImageUrl;
 }
 
-class $CoffeeDetailPageDriverProvider extends WidgetDriverProvider<CoffeeDetailPageDriver> {
+class $CoffeeDetailPageDriverProvider
+    extends WidgetDriverProvider<CoffeeDetailPageDriver> {
   @override
   CoffeeDetailPageDriver buildDriver(BuildContext context) {
     return CoffeeDetailPageDriver(context);
