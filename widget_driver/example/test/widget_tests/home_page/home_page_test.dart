@@ -19,7 +19,8 @@ void main() {
     setUp(() {
       // Setup the default values for MockDriver for HomePage
       mockHomePageDriver = MockHomePageDriver();
-      when(() => mockHomePageDriver.title).thenReturn('Hey this is a mocked title');
+      when(() => mockHomePageDriver.title)
+          .thenReturn('Hey this is a mocked title');
       when(() => mockHomePageDriver.numberOfTabs).thenReturn(3);
       when(() => mockHomePageDriver.appTabs).thenReturn([
         AppTabType.consumption,
@@ -62,7 +63,8 @@ void main() {
       expect(find.text(mockOtherTitle), findsOneWidget);
     });
 
-    testWidgets('TabController has correct amount of tabs', (WidgetTester tester) async {
+    testWidgets('TabController has correct amount of tabs',
+        (WidgetTester tester) async {
       const mockAppTabs = [
         AppTabType.consumption,
         AppTabType.community,
@@ -73,22 +75,28 @@ void main() {
         AppTabType.consumption,
       ];
 
-      when(() => mockHomePageDriver.numberOfTabs).thenReturn(mockAppTabs.length);
+      when(() => mockHomePageDriver.numberOfTabs)
+          .thenReturn(mockAppTabs.length);
       when(() => mockHomePageDriver.appTabs).thenReturn(mockAppTabs);
 
       await tester.pumpWidget(homePage);
 
-      DefaultTabController tabController =
-          find.byType(DefaultTabController).evaluate().single.widget as DefaultTabController;
+      DefaultTabController tabController = find
+          .byType(DefaultTabController)
+          .evaluate()
+          .single
+          .widget as DefaultTabController;
       expect(tabController.length, 3);
 
       // Try changing the appTabs and verify it updates correctly
-      when(() => mockHomePageDriver.numberOfTabs).thenReturn(mockOtherAppTabs.length);
+      when(() => mockHomePageDriver.numberOfTabs)
+          .thenReturn(mockOtherAppTabs.length);
       when(() => mockHomePageDriver.appTabs).thenReturn(mockOtherAppTabs);
       mockHomePageDriver.notifyWidget();
       await tester.pumpAndSettle();
 
-      tabController = find.byType(DefaultTabController).evaluate().single.widget as DefaultTabController;
+      tabController = find.byType(DefaultTabController).evaluate().single.widget
+          as DefaultTabController;
       expect(tabController.length, 2);
     });
 
@@ -96,12 +104,15 @@ void main() {
       WidgetTester tester,
     ) async {
       const mockAppTabs = [AppTabType.consumption, AppTabType.community];
-      when(() => mockHomePageDriver.numberOfTabs).thenReturn(mockAppTabs.length);
+      when(() => mockHomePageDriver.numberOfTabs)
+          .thenReturn(mockAppTabs.length);
       when(() => mockHomePageDriver.appTabs).thenReturn(mockAppTabs);
 
       // Grab the generated widget for each appTab index
-      final firstTabWidgetType = HomePageTabBuilder.tabForType(mockAppTabs[0]).runtimeType;
-      final secondTabWidgetType = HomePageTabBuilder.tabForType(mockAppTabs[1]).runtimeType;
+      final firstTabWidgetType =
+          HomePageTabBuilder.tabForType(mockAppTabs[0]).runtimeType;
+      final secondTabWidgetType =
+          HomePageTabBuilder.tabForType(mockAppTabs[1]).runtimeType;
 
       // Verify that the AppTabs for different indices are different
       expect(firstTabWidgetType, isNot(equals(secondTabWidgetType)));
@@ -109,7 +120,8 @@ void main() {
       await tester.pumpWidget(homePage);
 
       // Grab TabController and tap first tab and verify it shows correct widget
-      TabBar tabController = find.byType(TabBar).first.evaluate().single.widget as TabBar;
+      TabBar tabController =
+          find.byType(TabBar).first.evaluate().single.widget as TabBar;
       await tester.tap(find.byWidget(tabController.tabs[0]));
       await tester.pumpWidget(homePage);
 

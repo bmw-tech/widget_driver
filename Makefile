@@ -9,8 +9,8 @@ clean:	## Clean all the cache and dependencies from dart modules.
 install: ## Fetch all dependencies for all packages
 	bash scripts/run-install.sh
 
-format: ## Format all Dart files in the project with the line length set to 120
-	dart format -l 120 .
+format: ## Format all Dart files in the project
+	dart format .
 
 lint: ## Run flutter lint in all projects
 	bash scripts/run-flutter-lint.sh

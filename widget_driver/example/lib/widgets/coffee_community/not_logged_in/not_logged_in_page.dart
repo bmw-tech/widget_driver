@@ -12,5 +12,6 @@ class NotLoggedInPage extends DrivableWidget<NotLoggedInPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<NotLoggedInPageDriver> get driverProvider => $NotLoggedInPageDriverProvider();
+  WidgetDriverProvider<NotLoggedInPageDriver> get driverProvider =>
+      $NotLoggedInPageDriverProvider();
 }
