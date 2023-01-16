@@ -16,7 +16,8 @@ class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
   int get numberOfTabs => 2;
 
   @override
-  List<AppTabType> get appTabs => [AppTabType.consumption, AppTabType.community];
+  List<AppTabType> get appTabs =>
+      [AppTabType.consumption, AppTabType.community];
 }
 
 class $HomePageDriverProvider extends WidgetDriverProvider<HomePageDriver> {

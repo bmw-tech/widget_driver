@@ -23,5 +23,6 @@ class TestDrivableWidget<T extends WidgetDriver> extends DrivableWidget<T> {
   }
 
   @override
-  WidgetDriverProvider<T> get driverProvider => TestWidgetDriverProvider<T>(driverBuilder: _driverBuilder);
+  WidgetDriverProvider<T> get driverProvider =>
+      TestWidgetDriverProvider<T>(driverBuilder: _driverBuilder);
 }

@@ -8,7 +8,8 @@ part of 'log_in_out_button_driver.dart';
 
 // This file was generated with widget_driver_generator version: 1.0.0+1
 
-class _$TestLogInOutButtonDriver extends TestDriver implements LogInOutButtonDriver {
+class _$TestLogInOutButtonDriver extends TestDriver
+    implements LogInOutButtonDriver {
   @override
   String get buttonText => 'Log in';
 
@@ -16,7 +17,8 @@ class _$TestLogInOutButtonDriver extends TestDriver implements LogInOutButtonDri
   void toggleLogInOut() {}
 }
 
-class $LogInOutButtonDriverProvider extends WidgetDriverProvider<LogInOutButtonDriver> {
+class $LogInOutButtonDriverProvider
+    extends WidgetDriverProvider<LogInOutButtonDriver> {
   @override
   LogInOutButtonDriver buildDriver(BuildContext context) {
     return LogInOutButtonDriver(context);
