@@ -19,10 +19,10 @@ function run_flutter_lint() {
 
     if [ "$1" == "--no-exit" ]; then
         echo -e "$TAG_COLOR Running Dart formatter - No exit \n"
-        dart format . || exit $?
+        dart format . -l 120 || exit $?
     else
         echo -e "$TAG_COLOR Running Dart formatter - Set Exit \n"
-        dart format . --set-exit-if-changed || exit $?
+        dart format . --set-exit-if-changed -l 120 || exit $?
     fi
 }
 

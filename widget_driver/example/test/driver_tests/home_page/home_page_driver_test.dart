@@ -24,8 +24,7 @@ void main() {
       when(() => mockLocalization.appTitle).thenReturn('Some title');
 
       final driverTester = await tester.getDriverTester<HomePageDriver>(
-          driverBuilder: (context) =>
-              HomePageDriver(context, appTabs: mockHomePageAppTabs),
+          driverBuilder: (context) => HomePageDriver(context, appTabs: mockHomePageAppTabs),
           parentWidgetBuilder: (driverWidget) {
             return Provider<Localization>.value(
               value: mockLocalization,
@@ -45,8 +44,7 @@ void main() {
       when(() => mockHomePageAppTabs.tabs).thenReturn([AppTabType.consumption]);
 
       final driverTester = await tester.getDriverTester<HomePageDriver>(
-          driverBuilder: (context) =>
-              HomePageDriver(context, appTabs: mockHomePageAppTabs),
+          driverBuilder: (context) => HomePageDriver(context, appTabs: mockHomePageAppTabs),
           parentWidgetBuilder: (driverWidget) {
             return Provider<Localization>.value(
               value: mockLocalization,
@@ -59,12 +57,10 @@ void main() {
       expect(driver.numberOfTabs, equals(1));
       expect(driver.appTabs, equals([AppTabType.consumption]));
 
-      when(() => mockHomePageAppTabs.tabs)
-          .thenReturn([AppTabType.consumption, AppTabType.community]);
+      when(() => mockHomePageAppTabs.tabs).thenReturn([AppTabType.consumption, AppTabType.community]);
 
       expect(driver.numberOfTabs, equals(2));
-      expect(driver.appTabs,
-          equals([AppTabType.consumption, AppTabType.community]));
+      expect(driver.appTabs, equals([AppTabType.consumption, AppTabType.community]));
     });
   });
 }

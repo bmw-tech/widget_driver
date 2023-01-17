@@ -16,8 +16,7 @@ class RandomCoffeeImageWidgetDriver extends WidgetDriver {
   RandomCoffeeImageWidgetDriver(
     BuildContext context, {
     CoffeeImageService? coffeeImageService,
-  })  : _coffeeImageService =
-            coffeeImageService ?? GetIt.I.get<CoffeeImageService>(),
+  })  : _coffeeImageService = coffeeImageService ?? GetIt.I.get<CoffeeImageService>(),
         _localization = context.read<Localization>(),
         super(context);
 

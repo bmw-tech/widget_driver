@@ -49,8 +49,7 @@ class CoffeeRow extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10),
               child: Text(
                 coffee.name,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
           ],

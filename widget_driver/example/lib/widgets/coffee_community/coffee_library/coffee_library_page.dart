@@ -32,6 +32,5 @@ class CoffeeLibraryPage extends DrivableWidget<CoffeeLibraryPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<CoffeeLibraryPageDriver> get driverProvider =>
-      $CoffeeLibraryPageDriverProvider();
+  WidgetDriverProvider<CoffeeLibraryPageDriver> get driverProvider => $CoffeeLibraryPageDriverProvider();
 }
