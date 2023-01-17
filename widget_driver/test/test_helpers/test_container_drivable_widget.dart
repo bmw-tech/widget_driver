@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+/// This is a Driver used by the unit tests.
+/// Since `WidgetDriver` is just an abstract interface we
+/// need some concrete instance which we can use in our tests.
+/// This is the driver which is driving the `TestContainerDrivableWidget`.
 class TestContainerDriver extends WidgetDriver {
   TestContainerDriver(BuildContext context) : super(context);
 
@@ -13,6 +17,9 @@ class TestContainerDriver extends WidgetDriver {
   }
 }
 
+/// This is the TestDriver version of the `TestContainerDriver`.
+/// This driver will be created by the `TestContainerDrivableWidget` when
+/// the we are running in a test environment.
 class TestContainerTestDriver extends TestDriver
     implements TestContainerDriver {
   @override
@@ -25,6 +32,8 @@ class TestContainerTestDriver extends TestDriver
   void aTestMethod() {}
 }
 
+/// This is the provider used by `TestContainerDrivableWidget`
+/// to create the correct drivers for it.
 class TestContainerDriverProvider
     extends WidgetDriverProvider<TestContainerDriver> {
   @override
@@ -38,6 +47,10 @@ class TestContainerDriverProvider
   }
 }
 
+/// This is a DrivableWidget used by the unit tests.
+/// Since `DrivableWidget` is just an abstract interface we
+/// need some concrete instance which we can use in our tests.
+/// The driver which drives this widget is a `TestContainerDriver`.
 class TestContainerDrivableWidget extends DrivableWidget<TestContainerDriver> {
   TestContainerDrivableWidget({
     Key? key,
