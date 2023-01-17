@@ -13,7 +13,7 @@ void main() {
         int numberOfDriverListenersEmits = 0;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => ConcreteWidgetDriver(context),
+          driverBuilder: (context) => _ConcreteWidgetDriver(context),
         );
         final driver = driverTester.driver;
         driver.addListener(() {
@@ -30,7 +30,7 @@ void main() {
         int numberOfDriverListenersEmits = 0;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => ConcreteWidgetDriver(context),
+          driverBuilder: (context) => _ConcreteWidgetDriver(context),
         );
         final driver = driverTester.driver;
         driver.addListener(() {
@@ -50,7 +50,7 @@ void main() {
         int numberOfDriverListenersEmits = 0;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => ConcreteWidgetDriver(context),
+          driverBuilder: (context) => _ConcreteWidgetDriver(context),
         );
         final driver = driverTester.driver;
         driver.addListener(() {
@@ -74,7 +74,7 @@ void main() {
         bool disposeWasCalled = false;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => ConcreteWidgetDriver(context),
+          driverBuilder: (context) => _ConcreteWidgetDriver(context),
         );
         final driver = driverTester.driver;
         driver.disposedCallback = () {
@@ -94,7 +94,7 @@ void main() {
         bool disposeWasCalled = false;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => ConcreteWidgetDriver(context),
+          driverBuilder: (context) => _ConcreteWidgetDriver(context),
         );
         final driver = driverTester.driver;
         driver.disposedCallback = () {
@@ -110,7 +110,7 @@ void main() {
 
   group('TestDriver Base Class:', () {
     test('Adding listener and calling `notifyWidget` does nothing', () async {
-      final testDriver = ConcreteTestDriver();
+      final testDriver = _ConcreteTestDriver();
       bool addListenerWasCalled = false;
       testDriver.addListener(() {
         addListenerWasCalled = true;
@@ -125,7 +125,7 @@ void main() {
       bool disposeWasCalled = false;
 
       final driverTester = await tester.getDriverTester(
-        driverBuilder: (context) => ConcreteTestDriver(),
+        driverBuilder: (context) => _ConcreteTestDriver(),
       );
       final driver = driverTester.driver;
       driver.disposedCallback = () {
@@ -143,7 +143,7 @@ void main() {
         (WidgetTester tester) async {
       bool didThrowNoSuchMethodError = false;
       final driverTester = await tester.getDriverTester(
-        driverBuilder: (context) => ConcreteTestDriver(),
+        driverBuilder: (context) => _ConcreteTestDriver(),
       );
       final driver = driverTester.driver;
       try {
@@ -160,10 +160,10 @@ void main() {
 /// Since the `WidgetDriver` is abstract, we cannot create an instance of it.
 /// To be able to create an instance of the driver which we can use for testing,
 /// we create a `ConcreteWidgetDriver` which is only used in these tests.
-class ConcreteWidgetDriver extends WidgetDriver {
+class _ConcreteWidgetDriver extends WidgetDriver {
   VoidCallback? disposedCallback;
 
-  ConcreteWidgetDriver(BuildContext context) : super(context);
+  _ConcreteWidgetDriver(BuildContext context) : super(context);
 
   void someEmptyFunction() {}
 
@@ -176,7 +176,7 @@ class ConcreteWidgetDriver extends WidgetDriver {
   }
 }
 
-class ConcreteTestDriver extends TestDriver implements ConcreteWidgetDriver {
+class _ConcreteTestDriver extends TestDriver implements _ConcreteWidgetDriver {
   @override
   VoidCallback? disposedCallback;
 }
