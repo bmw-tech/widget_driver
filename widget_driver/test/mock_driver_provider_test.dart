@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-class _MockTestContainerDriver extends Mock implements _TestContainerDriver {}
+import 'test_helpers/test_container_drivable_widget.dart';
+
+class _MockTestContainerDriver extends Mock implements TestContainerDriver {}
 
 void main() {
   group('MockDriverProvider:', () {
@@ -11,14 +13,15 @@ void main() {
 
     setUp(() {
       _mockTestContainerDriver = _MockTestContainerDriver();
+      when(() => _mockTestContainerDriver.didCallTestMethod).thenReturn(false);
     });
 
     testWidgets('Verify that mocked driver overrides real driver property',
         (WidgetTester tester) async {
       when(() => _mockTestContainerDriver.aTestText).thenReturn("A mock text");
 
-      final testContainerWidget = _TestContainerDrivableWidget();
-      final mockDriverProvider = MockDriverProvider<_TestContainerDriver>(
+      final testContainerWidget = TestContainerDrivableWidget();
+      final mockDriverProvider = MockDriverProvider<TestContainerDriver>(
         value: _mockTestContainerDriver,
         child: testContainerWidget,
       );
@@ -32,14 +35,12 @@ void main() {
         (WidgetTester tester) async {
       final mockedDriver = _MockTestContainerDriver();
 
-      final testContainerWidget = _TestContainerDrivableWidget();
-      final mockDriverProviderInitial =
-          MockDriverProvider<_TestContainerDriver>(
+      final testContainerWidget = TestContainerDrivableWidget();
+      final mockDriverProviderInitial = MockDriverProvider<TestContainerDriver>(
         value: mockedDriver,
         child: testContainerWidget,
       );
-      final mockDriverProviderUpdated =
-          MockDriverProvider<_TestContainerDriver>(
+      final mockDriverProviderUpdated = MockDriverProvider<TestContainerDriver>(
         value: mockedDriver,
         child: testContainerWidget,
       );
@@ -55,14 +56,12 @@ void main() {
       final mockedDriverInitial = _MockTestContainerDriver();
       final mockedDriverUpdated = _MockTestContainerDriver();
 
-      final testContainerWidget = _TestContainerDrivableWidget();
-      final mockDriverProviderInitial =
-          MockDriverProvider<_TestContainerDriver>(
+      final testContainerWidget = TestContainerDrivableWidget();
+      final mockDriverProviderInitial = MockDriverProvider<TestContainerDriver>(
         value: mockedDriverInitial,
         child: testContainerWidget,
       );
-      final mockDriverProviderUpdated =
-          MockDriverProvider<_TestContainerDriver>(
+      final mockDriverProviderUpdated = MockDriverProvider<TestContainerDriver>(
         value: mockedDriverUpdated,
         child: testContainerWidget,
       );
@@ -73,35 +72,4 @@ void main() {
       expect(shouldNotify, true);
     });
   });
-}
-
-class _TestContainerDriver extends WidgetDriver {
-  _TestContainerDriver(BuildContext context) : super(context);
-
-  String get aTestText => 'A test text';
-}
-
-class _TestContainerDriverProvider
-    extends WidgetDriverProvider<_TestContainerDriver> {
-  @override
-  _TestContainerDriver buildDriver(BuildContext context) {
-    return _TestContainerDriver(context);
-  }
-
-  @override
-  _TestContainerDriver buildTestDriver() {
-    throw UnimplementedError();
-  }
-}
-
-class _TestContainerDrivableWidget
-    extends DrivableWidget<_TestContainerDriver> {
-  @override
-  Widget build(BuildContext context) {
-    return Text(driver.aTestText);
-  }
-
-  @override
-  WidgetDriverProvider<_TestContainerDriver> get driverProvider =>
-      _TestContainerDriverProvider();
 }
