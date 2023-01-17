@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.0.3
+
+* Breaking change: Removes old annotation -> `Driver`, `DriverProperty`, `DriverAction`.  
+Replaces them with more descriptive annotations -> `GenerateTestDriver`, `TestDriverDefaultValue`.
+* Adds support for having annotations which generate code returning `Futures`  
+For that, use the new `TestDriverDefaultFutureValue`
+
 ## 0.0.1
 
 * Initial release.
