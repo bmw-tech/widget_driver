@@ -8,14 +8,12 @@ part of 'coffee_community_page_driver.dart';
 
 // This file was generated with widget_driver_generator version: 1.0.0+1
 
-class _$TestCoffeeCommunityPageDriver extends TestDriver
-    implements CoffeeCommunityPageDriver {
+class _$TestCoffeeCommunityPageDriver extends TestDriver implements CoffeeCommunityPageDriver {
   @override
   bool get isLoggedIn => false;
 }
 
-class $CoffeeCommunityPageDriverProvider
-    extends WidgetDriverProvider<CoffeeCommunityPageDriver> {
+class $CoffeeCommunityPageDriverProvider extends WidgetDriverProvider<CoffeeCommunityPageDriver> {
   @override
   CoffeeCommunityPageDriver buildDriver(BuildContext context) {
     return CoffeeCommunityPageDriver(context);

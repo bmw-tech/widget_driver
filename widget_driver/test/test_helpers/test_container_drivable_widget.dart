@@ -20,8 +20,7 @@ class TestContainerDriver extends WidgetDriver {
 /// This is the TestDriver version of the `TestContainerDriver`.
 /// This driver will be created by the `TestContainerDrivableWidget` when
 /// the we are running in a test environment.
-class TestContainerTestDriver extends TestDriver
-    implements TestContainerDriver {
+class TestContainerTestDriver extends TestDriver implements TestContainerDriver {
   @override
   String get aTestText => 'TestDriver test text';
 
@@ -34,8 +33,7 @@ class TestContainerTestDriver extends TestDriver
 
 /// This is the provider used by `TestContainerDrivableWidget`
 /// to create the correct drivers for it.
-class TestContainerDriverProvider
-    extends WidgetDriverProvider<TestContainerDriver> {
+class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriver> {
   @override
   TestContainerDriver buildDriver(BuildContext context) {
     return TestContainerDriver(context);
@@ -68,6 +66,5 @@ class TestContainerDrivableWidget extends DrivableWidget<TestContainerDriver> {
   }
 
   @override
-  WidgetDriverProvider<TestContainerDriver> get driverProvider =>
-      TestContainerDriverProvider();
+  WidgetDriverProvider<TestContainerDriver> get driverProvider => TestContainerDriverProvider();
 }

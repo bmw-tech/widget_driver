@@ -32,8 +32,7 @@ class MockDriverProvider<Driver extends WidgetDriver> extends InheritedWidget {
   /// Resolves the mocked driver out from the [BuildContext].
   /// If no mocked driver was provided, then it returns `null`
   static Driver? of<Driver extends WidgetDriver>(BuildContext context) {
-    final mockProvider = context
-        .dependOnInheritedWidgetOfExactType<MockDriverProvider<Driver>>();
+    final mockProvider = context.dependOnInheritedWidgetOfExactType<MockDriverProvider<Driver>>();
     return mockProvider?._value;
   }
 

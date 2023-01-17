@@ -19,8 +19,7 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
   CoffeeCounterWidgetDriver(
     BuildContext context, {
     CoffeeConsumptionService? consumptionService,
-  })  : _consumptionService =
-            consumptionService ?? GetIt.I.get<CoffeeConsumptionService>(),
+  })  : _consumptionService = consumptionService ?? GetIt.I.get<CoffeeConsumptionService>(),
         _localization = context.read<Localization>(),
         super(context) {
     _subscription = _consumptionService.counterStream.listen((event) {

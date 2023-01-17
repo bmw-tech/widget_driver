@@ -4,8 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:widget_driver/widget_driver.dart';
 import 'test_helpers/test_container_drivable_widget.dart';
 
-class _MockRuntimeEnvironmentInfo extends Mock
-    implements RuntimeEnvironmentInfo {}
+class _MockRuntimeEnvironmentInfo extends Mock implements RuntimeEnvironmentInfo {}
 
 void main() {
   group('DrivableWidget:', () {
@@ -15,10 +14,8 @@ void main() {
       _mockRuntimeEnvironmentInfo = _MockRuntimeEnvironmentInfo();
     });
 
-    testWidgets('Uses real driver when not in test environment',
-        (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment())
-          .thenReturn(false);
+    testWidgets('Uses real driver when not in test environment', (WidgetTester tester) async {
+      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
       final testContainerDrivableWidget = TestContainerDrivableWidget(
         environmentInfo: _mockRuntimeEnvironmentInfo,
@@ -29,10 +26,8 @@ void main() {
       expect(driver.runtimeType, TestContainerDriver);
     });
 
-    testWidgets('Uses test driver when in test environment',
-        (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment())
-          .thenReturn(true);
+    testWidgets('Uses test driver when in test environment', (WidgetTester tester) async {
+      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(true);
 
       final testContainerDrivableWidget = TestContainerDrivableWidget(
         environmentInfo: _mockRuntimeEnvironmentInfo,
@@ -44,8 +39,7 @@ void main() {
     });
 
     testWidgets('Can access its driver', (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment())
-          .thenReturn(false);
+      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
       final testContainerDrivableWidget = TestContainerDrivableWidget(
         environmentInfo: _mockRuntimeEnvironmentInfo,
@@ -56,11 +50,8 @@ void main() {
       expect(driver.aTestText, 'A test text');
     });
 
-    testWidgets(
-        'Calling `aTestMethod` on driver makes widget reload with new data',
-        (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment())
-          .thenReturn(false);
+    testWidgets('Calling `aTestMethod` on driver makes widget reload with new data', (WidgetTester tester) async {
+      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
       final testContainerDrivableWidget = TestContainerDrivableWidget(
         environmentInfo: _mockRuntimeEnvironmentInfo,

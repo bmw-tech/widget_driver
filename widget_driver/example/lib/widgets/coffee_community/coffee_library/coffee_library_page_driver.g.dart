@@ -8,8 +8,7 @@ part of 'coffee_library_page_driver.dart';
 
 // This file was generated with widget_driver_generator version: 1.0.0+1
 
-class _$TestCoffeeLibraryPageDriver extends TestDriver
-    implements CoffeeLibraryPageDriver {
+class _$TestCoffeeLibraryPageDriver extends TestDriver implements CoffeeLibraryPageDriver {
   @override
   bool get isFetching => false;
 
@@ -22,8 +21,7 @@ class _$TestCoffeeLibraryPageDriver extends TestDriver
   }
 }
 
-class $CoffeeLibraryPageDriverProvider
-    extends WidgetDriverProvider<CoffeeLibraryPageDriver> {
+class $CoffeeLibraryPageDriverProvider extends WidgetDriverProvider<CoffeeLibraryPageDriver> {
   @override
   CoffeeLibraryPageDriver buildDriver(BuildContext context) {
     return CoffeeLibraryPageDriver(context);

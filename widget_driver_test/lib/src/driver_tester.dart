@@ -21,8 +21,7 @@ class DriverTester<T extends WidgetDriver> {
 
   final List<_CompleterContainer> _completers = [];
 
-  DriverTester(this.driver, WidgetTester widgetTester)
-      : _widgetTester = widgetTester {
+  DriverTester(this.driver, WidgetTester widgetTester) : _widgetTester = widgetTester {
     driver.addListener(() {
       _notifyWidgetsCallCount += 1;
       _validateCompleters();
@@ -49,8 +48,7 @@ class DriverTester<T extends WidgetDriver> {
     int expectedCount = _lastWaitForNotifyWidgetCount + numberOfCalls;
 
     var completer = Completer<void>();
-    _completers.add(_CompleterContainer(
-        completer, expectedCount, requireExactNumberOfCalls));
+    _completers.add(_CompleterContainer(completer, expectedCount, requireExactNumberOfCalls));
 
     _validateCompleters();
 
@@ -79,10 +77,8 @@ class DriverTester<T extends WidgetDriver> {
         onTimeout: () {
           // Now check if we got any more calls to `notifyWidget`
           if (_lastWaitForNotifyWidgetCount < _notifyWidgetsCallCount) {
-            final extraCalls =
-                _notifyWidgetsCallCount - _lastWaitForNotifyWidgetCount;
-            final errorString =
-                'Still received calls to `notifyWidget()`. $extraCalls extra calls received.';
+            final extraCalls = _notifyWidgetsCallCount - _lastWaitForNotifyWidgetCount;
+            final errorString = 'Still received calls to `notifyWidget()`. $extraCalls extra calls received.';
             throw errorString;
           }
         },
@@ -92,16 +88,12 @@ class DriverTester<T extends WidgetDriver> {
 
   void _validateCompleters() {
     _completers.removeWhere((completerContainer) {
-      final requireExactNumberOfCalls =
-          completerContainer.requireExactNumberOfCalls;
-      final neededCallsToNotifyWidget =
-          completerContainer.minCallsToNotifyWidget;
+      final requireExactNumberOfCalls = completerContainer.requireExactNumberOfCalls;
+      final neededCallsToNotifyWidget = completerContainer.minCallsToNotifyWidget;
 
       if (neededCallsToNotifyWidget <= _notifyWidgetsCallCount) {
-        if (requireExactNumberOfCalls &&
-            neededCallsToNotifyWidget < _notifyWidgetsCallCount) {
-          final extraCalls =
-              _notifyWidgetsCallCount - neededCallsToNotifyWidget;
+        if (requireExactNumberOfCalls && neededCallsToNotifyWidget < _notifyWidgetsCallCount) {
+          final extraCalls = _notifyWidgetsCallCount - neededCallsToNotifyWidget;
           final errorString = '''
 Received too many calls to `notifyWidget()`. 
 $extraCalls extra calls received. Either set `requireExactNumberOfCalls` 

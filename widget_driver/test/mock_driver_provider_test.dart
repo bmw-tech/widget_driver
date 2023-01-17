@@ -16,8 +16,7 @@ void main() {
       when(() => _mockTestContainerDriver.didCallTestMethod).thenReturn(false);
     });
 
-    testWidgets('Verify that mocked driver overrides real driver property',
-        (WidgetTester tester) async {
+    testWidgets('Verify that mocked driver overrides real driver property', (WidgetTester tester) async {
       when(() => _mockTestContainerDriver.aTestText).thenReturn("A mock text");
 
       final testContainerWidget = TestContainerDrivableWidget();
@@ -31,8 +30,7 @@ void main() {
       expect(find.text('A mock text'), findsOneWidget);
     });
 
-    testWidgets('Should not notify child widgets when driver is the same',
-        (WidgetTester tester) async {
+    testWidgets('Should not notify child widgets when driver is the same', (WidgetTester tester) async {
       final mockedDriver = _MockTestContainerDriver();
 
       final testContainerWidget = TestContainerDrivableWidget();
@@ -45,14 +43,12 @@ void main() {
         child: testContainerWidget,
       );
 
-      final shouldNotify = mockDriverProviderUpdated
-          .updateShouldNotify(mockDriverProviderInitial);
+      final shouldNotify = mockDriverProviderUpdated.updateShouldNotify(mockDriverProviderInitial);
 
       expect(shouldNotify, false);
     });
 
-    testWidgets('Should notify child widgets when driver changed',
-        (WidgetTester tester) async {
+    testWidgets('Should notify child widgets when driver changed', (WidgetTester tester) async {
       final mockedDriverInitial = _MockTestContainerDriver();
       final mockedDriverUpdated = _MockTestContainerDriver();
 
@@ -66,8 +62,7 @@ void main() {
         child: testContainerWidget,
       );
 
-      final shouldNotify = mockDriverProviderUpdated
-          .updateShouldNotify(mockDriverProviderInitial);
+      final shouldNotify = mockDriverProviderUpdated.updateShouldNotify(mockDriverProviderInitial);
 
       expect(shouldNotify, true);
     });
