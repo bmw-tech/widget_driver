@@ -1,3 +1,8 @@
+## 0.0.3
+
+* Removes `FlowCoordinators` since it is currently not used. We will add this back if it ever becomes needed.
+* Adds missing unit tests to widget_driver code. Reached 100% test coverage!
+
 ## 0.0.2
 
 * Adds unit test for framework code

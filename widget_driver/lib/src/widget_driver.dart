@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
-import 'flow_coordinator.dart';
-
 /// The [WidgetDriver] is the thing which drives your widget.
 ///
 /// This is where you put all of your business logic that is specific to a given widget.
@@ -63,8 +61,7 @@ import 'flow_coordinator.dart';
 ///     ...
 /// }
 /// ```
-abstract class WidgetDriver<FC extends FlowCoordinator> {
-  FC? flowCoordinator;
+abstract class WidgetDriver {
   ValueNotifier<bool>? _widgetNotifier = ValueNotifier<bool>(true);
 
   WidgetDriver(BuildContext context);
