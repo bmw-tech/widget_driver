@@ -66,8 +66,7 @@ void main() {
     });
 
     group('Lifecycle:', () {
-      testWidgets('Calls dispose when driver gets deallocated',
-          (WidgetTester tester) async {
+      testWidgets('Calls dispose when driver gets deallocated', (WidgetTester tester) async {
         bool disposeWasCalled = false;
 
         final driverTester = await tester.getDriverTester(
@@ -85,9 +84,7 @@ void main() {
         expect(disposeWasCalled, true);
       });
 
-      testWidgets(
-          'Does not call dispose when the driver never gets deallocated',
-          (WidgetTester tester) async {
+      testWidgets('Does not call dispose when the driver never gets deallocated', (WidgetTester tester) async {
         bool disposeWasCalled = false;
 
         final driverTester = await tester.getDriverTester(
@@ -117,8 +114,7 @@ void main() {
       expect(addListenerWasCalled, false);
     });
 
-    testWidgets('Does not call dispose when driver gets deallocated',
-        (WidgetTester tester) async {
+    testWidgets('Does not call dispose when driver gets deallocated', (WidgetTester tester) async {
       bool disposeWasCalled = false;
 
       final driverTester = await tester.getDriverTester(
@@ -136,8 +132,7 @@ void main() {
       expect(disposeWasCalled, false);
     });
 
-    testWidgets('Calling function with no placeholder implementation throws',
-        (WidgetTester tester) async {
+    testWidgets('Calling function with no placeholder implementation throws', (WidgetTester tester) async {
       bool didThrowNoSuchMethodError = false;
       final driverTester = await tester.getDriverTester(
         driverBuilder: (context) => _ConcreteTestDriver(),
