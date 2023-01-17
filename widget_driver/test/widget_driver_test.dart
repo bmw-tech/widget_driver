@@ -68,18 +68,9 @@ void main() {
       });
     });
 
-    /*
-      This test cannot run yet since it depends on a new version
-      of `widget_driver_test`. But the `widget_driver_test` needs a new 
-      version of `widget_driver` before it can be deployed :)
-
-      So the goal is:
-      1: Deploy new version of `widget_driver`
-      2: Deploy new version of `widget_driver_test`
-      3: Add this code back.
-      
     group('Lifecycle:', () {
-      testWidgets('Calls dispose when driver gets deallocated', (WidgetTester tester) async {
+      testWidgets('Calls dispose when driver gets deallocated',
+          (WidgetTester tester) async {
         bool disposeWasCalled = false;
 
         final driverTester = await tester.getDriverTester(
@@ -92,13 +83,14 @@ void main() {
 
         // Here we put a new widget in the test-screen.
         // This will remove the widget which contains our
-        /// Change this.. move this into the driverTester.. as a helper function...
         await tester.pumpWidget(const SizedBox.shrink());
 
         expect(disposeWasCalled, true);
       });
 
-      testWidgets('Does not call dispose when the driver never gets deallocated', (WidgetTester tester) async {
+      testWidgets(
+          'Does not call dispose when the driver never gets deallocated',
+          (WidgetTester tester) async {
         bool disposeWasCalled = false;
 
         final driverTester = await tester.getDriverTester(
@@ -114,7 +106,53 @@ void main() {
         expect(disposeWasCalled, false);
       });
     });
-    */
+  });
+
+  group('TestDriver Base Class:', () {
+    test('Adding listener and calling `notifyWidget` does nothing', () async {
+      final testDriver = ConcreteTestDriver();
+      bool addListenerWasCalled = false;
+      testDriver.addListener(() {
+        addListenerWasCalled = true;
+      });
+      testDriver.notifyWidget();
+      await Future.delayed(const Duration(milliseconds: 200));
+      expect(addListenerWasCalled, false);
+    });
+
+    testWidgets('Does not call dispose when driver gets deallocated',
+        (WidgetTester tester) async {
+      bool disposeWasCalled = false;
+
+      final driverTester = await tester.getDriverTester(
+        driverBuilder: (context) => ConcreteTestDriver(),
+      );
+      final driver = driverTester.driver;
+      driver.disposedCallback = () {
+        disposeWasCalled = true;
+      };
+
+      // Here we put a new widget in the test-screen.
+      // This will remove the widget which contains our
+      await tester.pumpWidget(const SizedBox.shrink());
+
+      expect(disposeWasCalled, false);
+    });
+
+    testWidgets('Calling function with no placeholder implementation throws',
+        (WidgetTester tester) async {
+      bool didThrowNoSuchMethodError = false;
+      final driverTester = await tester.getDriverTester(
+        driverBuilder: (context) => ConcreteTestDriver(),
+      );
+      final driver = driverTester.driver;
+      try {
+        driver.someEmptyFunction();
+      } on NoSuchMethodError {
+        didThrowNoSuchMethodError = true;
+      }
+      expect(didThrowNoSuchMethodError, true);
+    });
   });
 }
 
@@ -127,6 +165,8 @@ class ConcreteWidgetDriver extends WidgetDriver {
 
   ConcreteWidgetDriver(BuildContext context) : super(context);
 
+  void someEmptyFunction() {}
+
   @override
   void dispose() {
     if (disposedCallback != null) {
@@ -134,4 +174,9 @@ class ConcreteWidgetDriver extends WidgetDriver {
     }
     super.dispose();
   }
+}
+
+class ConcreteTestDriver extends TestDriver implements ConcreteWidgetDriver {
+  @override
+  VoidCallback? disposedCallback;
 }
