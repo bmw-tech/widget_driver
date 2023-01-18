@@ -7,6 +7,10 @@ Replaces them with more descriptive annotations -> `GenerateTestDriver`, `TestDr
 * Adds support for having annotations which generate code returning `Futures`  
 For that, use the new `TestDriverDefaultFutureValue`
 
+## 0.0.2
+
+* Adds example markdown file for pub.dev to give basic information about how to use the annotations.
+
 ## 0.0.1
 
 * Initial release.
