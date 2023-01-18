@@ -10,7 +10,12 @@ PROJECT_FOLDERS=("widget_driver" "widget_driver_annotation" "widget_driver_gener
 function run_tests() {
     current_dir=$(pwd)
     cd $1
-    flutter test --coverage --no-pub --no-test-assets --no-track-widget-creation --no-sound-null-safety || exit $?
+    if [ $project_folder == "widget_driver_annotation" ]; then
+        # The widget_driver_annotation is a dart package, not flutter.
+        dart test --coverage coverage || exit $?
+    else
+        flutter test --coverage --no-pub --no-test-assets --no-track-widget-creation --no-sound-null-safety || exit $?
+    fi
     cd $current_dir
 }
 
