@@ -51,6 +51,17 @@ Just focus on the current widget under test, and forget about all other child wi
 
 Let's get started and create our first `WidgetDriver`!
 
+### 1: Add a dependency to WidgetDriver
+
+In your project add a dependency to widget driver in your `pubspec.yaml` and run `flutter pub get`
+
+```dart
+  dependencies:
+    flutter:
+      sdk: flutter
+    widget_driver: ^0.0.3
+```
+
 ### 1: counter_widget_driver.dart
 
 ```dart
