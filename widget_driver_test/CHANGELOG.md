@@ -1,3 +1,7 @@
+## 0.0.3
+
+* Adds example markdown file for pub.dev to give basic information about how to use the widget_driver_test.
+
 ## 0.0.2
 
 * Fixes issue where driverTesterHelper didn't load and dispose drivers correctly.
