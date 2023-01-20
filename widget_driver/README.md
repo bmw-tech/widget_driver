@@ -47,20 +47,24 @@ Just focus on the current widget under test, and forget about all other child wi
 
 ---
 
+## Installation
+
+Update your `pubspec.yaml` with this:
+
+```yaml
+dependencies:
+  widget_driver: <latest_version>
+
+...
+
+dev_dependencies:
+  build_runner: <latest_version>
+  widget_driver_generator: <latest_version>
+```
+
 ## Usage
 
 Let's get started and create our first `WidgetDriver`!
-
-### 1: Add a dependency to WidgetDriver
-
-In your project add a dependency to widget driver in your `pubspec.yaml` and run `flutter pub get`
-
-```dart
-  dependencies:
-    flutter:
-      sdk: flutter
-    widget_driver: ^0.0.3
-```
 
 ### 1: counter_widget_driver.dart
 
@@ -116,6 +120,7 @@ Well, not really. Let's dive into what happens:
 
 1. First we just define a driver which extend the `WidgetDriver`.  
   The "`part '...'`" definition and the `@GenerateTestDriver()` annotation above it is needed later for the code generation to work.
+
     ```dart
     part 'counter_widget_driver.g.dart';
 
@@ -240,13 +245,14 @@ And **no** dependency being created or resolved!
 Let's go over what happens:
 
 1. First we name our widget `CounterWidget` and then we need to make it `drivable`! We do this by making it extend `DrivableWidget`. Pass in the name of your `Driver` as a generic type to the `DrivableWidget`.
-    
+
     ```dart
     class CounterWidget extends DrivableWidget<CounterWidgetDriver> {
     ```
 
 1. Now your `IDE` will complain and say that you are `Missing concrete implementation ...`  
     To fix this, tap the `Create 2 missing overrides`-button and voila! You get some placeholder code which looks like this:
+
     ```dart
     @override
     Widget build(BuildContext context) {
@@ -334,21 +340,6 @@ When you keep business logic in your widgets, then the parent widgets will need 
 So please follow guideline two -> Put your business logic in the `Driver`, not in the `Widget`!
 
 More about testing and the benefits are described [here](doc/testing.md)
-
-## Installation
-
-Update your `pubspec.yaml` with this:
-
-```yaml
-dependencies:
-  widget_driver: <latest_version>
-
-...
-
-dev_dependencies:
-  build_runner: <latest_version>
-  widget_driver_generator: <latest_version>
-```
 
 ## Examples
 
