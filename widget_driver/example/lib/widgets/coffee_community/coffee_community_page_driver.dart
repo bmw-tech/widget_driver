@@ -6,7 +6,7 @@ import 'package:widget_driver/widget_driver.dart';
 
 part 'coffee_community_page_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class CoffeeCommunityPageDriver extends WidgetDriver {
   final AuthService _authService;
   StreamSubscription? _subscription;
@@ -19,7 +19,7 @@ class CoffeeCommunityPageDriver extends WidgetDriver {
     });
   }
 
-  @DriverProperty(false)
+  @TestDriverDefaultValue(false)
   bool get isLoggedIn => _authService.isLoggedIn;
 
   @override
