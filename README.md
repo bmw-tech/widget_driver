@@ -67,18 +67,21 @@ The first step is to read our [contributing guide](CONTRIBUTING.md).
 Following `Makefile` targets are available in the project:
 
 ```bash
-all                  Run all steps including building the Android and iOS
-build                Run all steps including building the Android and iOS example apps from the widget_driver project
-build_android        Run the Android build of the example app (located inside `widget_driver/example`) without deploying to any device
-build_ios            Run the iOS build of the example app (located inside `widget_driver/example`) without deploying to any device
-clean                Clean all the cache and dependencies from dart modules.
-format               Format all Dart files in the project with the line length set to 120
-help                 Show all commands
-install              Fetch all dependencies for all packages
-lint                 Run flutter lint in all projects
-publish              publish all projects to pub.dev
-quality              Run only linter and tests
-test                 Run all tests in all projects
+all                         Run all steps including building the Android and iOS
+build                       Build the example Android and iOS apps from the widget_driver package
+build_android               Run the Android build of the example app (located inside `widget_driver/example`) without deploying to any device
+build_ios                   Run the iOS build of the example app (located inside `widget_driver/example`) without deploying to any device
+clean                       Clean all the cache and dependencies from dart modules.
+example_run_build_runner    Generate code for the example app inside the widget_driver folder.
+format                      Format all Dart files in the project with the line length set to 120
+help                        Show all commands
+install                     Fetch all dependencies for all packages
+lint                        Run flutter lint in all projects
+publish                     publish all projects to pub.dev
+quality                     Run only linter and tests
+test                        Run all tests in all projects
+watch                       Starts the example app and performs the hot reload in case of any change
+
 ```
 
 ### Publish to pub.dev
