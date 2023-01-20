@@ -1,21 +1,26 @@
 ### Implement a `Driver` inside your project
 
 ```dart
-@Driver()
+@GenerateTestDriver()
 class MyDriver extends WidgetDriver {
   ...
 
-  @DriverProperty(1)
+  @TestDriverDefaultValue(1)
   int get value => _someService.value;
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void doSomething() {
     ...
   }
 
-  @DriverAction('The string')
+  @TestDriverDefaultValue('The string')
   String giveMeSomeString() {
     return _someService.getSomeString();
+  }
+
+  @TestDriverDefaultFutureValue(123)
+  Future<int> giveMeSomeIntSoon() {
+    return _someService.getSomeIntSoon();
   }
 }
 ```

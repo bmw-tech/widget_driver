@@ -5,7 +5,7 @@ import '../../../../models/coffee.dart';
 
 part 'coffee_detail_page_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class CoffeeDetailPageDriver extends WidgetDriver {
   final Coffee _coffee;
 
@@ -13,17 +13,17 @@ class CoffeeDetailPageDriver extends WidgetDriver {
       : _coffee = context.read<Coffee>(),
         super(context);
 
-  @DriverProperty(TestCoffee.testCoffeeName)
+  @TestDriverDefaultValue(TestCoffee.testCoffeeName)
   String get coffeeName {
     return _coffee.name;
   }
 
-  @DriverProperty(TestCoffee.testCoffeeDescription)
+  @TestDriverDefaultValue(TestCoffee.testCoffeeDescription)
   String get coffeeDescription {
     return _coffee.description;
   }
 
-  @DriverProperty(TestCoffee.testCoffeeImageUrl)
+  @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
     return _coffee.imageUrl;
   }

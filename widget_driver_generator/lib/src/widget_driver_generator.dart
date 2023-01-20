@@ -4,17 +4,18 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
+import 'package:widget_driver_generator/src/utils/code_writer.dart';
 
 import 'model_visitor.dart';
 
 /// Generates TestDrivers and WidgetDriverProviders based on annotations
-class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
+class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
   @override
   Future<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
     final visitor = ModelVisitor();
     element.visitChildren(visitor);
 
-    final classBuffer = StringBuffer();
+    final codeWriter = CodeWriter();
     final driverClassName = visitor.className;
     final providerClassName = '\$${driverClassName}Provider';
 
@@ -23,7 +24,7 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
     //###################################
 
     final packageVersionString = await _getPackageVersionString();
-    classBuffer.writeln('// This file was generated with widget_driver_generator $packageVersionString\n');
+    codeWriter.writeCode('// This file was generated with widget_driver_generator $packageVersionString\n');
 
     //###################################
     // Start - TestDriver generation
@@ -31,30 +32,30 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<Driver> {
 
     final testDriverClassName = '_\$Test$driverClassName';
 
-    classBuffer.writeln('class $testDriverClassName extends TestDriver implements $driverClassName {');
-    final annotationVisitor = AnnotationVisitor(classBuffer);
+    codeWriter.writeCode('class $testDriverClassName extends TestDriver implements $driverClassName {');
+    final annotationVisitor = AnnotationVisitor(codeWriter: codeWriter);
     element.visitChildren(annotationVisitor);
-    classBuffer.writeln('}');
+    codeWriter.writeCode('}');
 
     //###################################
     // Start - DriverProvider generation
     //###################################
 
-    classBuffer.writeln('class $providerClassName extends WidgetDriverProvider<$driverClassName> {');
+    codeWriter.writeCode('class $providerClassName extends WidgetDriverProvider<$driverClassName> {');
 
-    classBuffer.writeln('@override');
-    classBuffer.writeln('$driverClassName buildDriver(BuildContext context) {');
-    classBuffer.writeln('return $driverClassName(context);');
-    classBuffer.writeln('}');
+    codeWriter.writeCode('@override');
+    codeWriter.writeCode('$driverClassName buildDriver(BuildContext context) {');
+    codeWriter.writeCode('return $driverClassName(context);');
+    codeWriter.writeCode('}');
 
-    classBuffer.writeln('@override');
-    classBuffer.writeln('$driverClassName buildTestDriver() {');
-    classBuffer.writeln('return $testDriverClassName();');
-    classBuffer.writeln('}');
+    codeWriter.writeCode('@override');
+    codeWriter.writeCode('$driverClassName buildTestDriver() {');
+    codeWriter.writeCode('return $testDriverClassName();');
+    codeWriter.writeCode('}');
 
-    classBuffer.writeln('}');
+    codeWriter.writeCode('}');
 
-    return classBuffer.toString();
+    return codeWriter.getAllCode();
   }
 
   /// Grabs the version string from the pubspec.yaml

@@ -8,7 +8,7 @@ import '../../../services/coffee_image_service.dart';
 
 part 'random_coffee_image_widget_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class RandomCoffeeImageWidgetDriver extends WidgetDriver {
   final CoffeeImageService _coffeeImageService;
   final Localization _localization;
@@ -20,15 +20,15 @@ class RandomCoffeeImageWidgetDriver extends WidgetDriver {
         _localization = context.read<Localization>(),
         super(context);
 
-  @DriverProperty(TestCoffee.testCoffeeImageUrl)
+  @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
     return _coffeeImageService.getRandomCoffeeImageUrl();
   }
 
-  @DriverProperty('Tap image to load a new one')
+  @TestDriverDefaultValue('Tap image to load a new one')
   String get title => _localization.randomCoffeeImageTitle;
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void updateRandomImage() {
     notifyWidget();
   }

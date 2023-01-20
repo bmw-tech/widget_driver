@@ -5,7 +5,7 @@ import '../localization/localization.dart';
 
 part 'my_app_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class MyAppDriver extends WidgetDriver {
   final Localization _localization;
 
@@ -13,6 +13,6 @@ class MyAppDriver extends WidgetDriver {
       : _localization = context.read<Localization>(),
         super(context);
 
-  @DriverProperty('Coffee Demo App')
+  @TestDriverDefaultValue('Coffee Demo App')
   String get appTitle => _localization.appTitle;
 }

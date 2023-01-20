@@ -1,7 +1,12 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
-import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
+
+import 'utils/code_writer.dart';
+import 'utils/source_code_generator.dart';
+import 'utils/element_utils.dart';
+
+typedef CodeGeneratorMethod = String Function(String codeDefinition, String returnValue);
 
 /// Inspect classes and get className and fields out of them
 class ModelVisitor extends SimpleElementVisitor<void> {
@@ -23,54 +28,48 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 
 /// Inspect Driver-related annotations and generate TestDriver with overrides based on default values
 class AnnotationVisitor extends SimpleElementVisitor<void> {
-  AnnotationVisitor(this.classBuffer);
+  final CodeWriter codeWriter;
+  final ElementUtils elementUtils;
+  final List<Type> _validAnnotationTypes = [TestDriverDefaultValue, TestDriverDefaultFutureValue];
 
-  final StringBuffer classBuffer;
+  AnnotationVisitor({required this.codeWriter, ElementUtils? elementUtils})
+      : elementUtils = elementUtils ?? ElementUtils(),
+        super();
 
   @override
   void visitFieldElement(FieldElement element) {
-    if (_hasValidAnnotation(element, DriverProperty)) {
-      final value = _getValueForElement(element, "DriverProperty");
-      classBuffer.writeln('\n');
-      classBuffer.writeln('@override');
-      classBuffer.writeln('${element.toString()} = $value;');
-    }
+    CodeGeneratorMethod storedPropertyGenerator = ((propertyDefinition, returnValue) {
+      return SourceCodeGenerator.getStoredPropertyCode(propertyDefinition, returnValue);
+    });
+    _generateAndWriteCode(element, storedPropertyGenerator);
   }
 
   @override
   void visitPropertyAccessorElement(PropertyAccessorElement element) {
-    if (_hasValidAnnotation(element, DriverProperty)) {
-      final value = _getValueForElement(element, "DriverProperty");
-      classBuffer.writeln('\n');
-      classBuffer.writeln('@override');
-      classBuffer.writeln('${element.toString()} => $value;');
-    }
+    CodeGeneratorMethod computedPropertyGenerator = ((propertyDefinition, returnValue) {
+      return SourceCodeGenerator.getComputedPropertyCode(propertyDefinition, returnValue);
+    });
+    _generateAndWriteCode(element, computedPropertyGenerator);
   }
 
   @override
   void visitMethodElement(MethodElement element) {
-    if (_hasValidAnnotation(element, DriverAction)) {
-      final value = _getValueForElement(element, "DriverAction");
-      classBuffer.writeln('\n');
-      classBuffer.writeln('@override');
-      if (value.isNotEmpty) {
-        classBuffer.writeln('${element.toString()} {');
-        classBuffer.writeln('return $value;');
-        classBuffer.writeln('}');
-      } else {
-        classBuffer.writeln('${element.toString()} {}');
-      }
+    CodeGeneratorMethod methodGenerator = ((methodDefinition, returnValue) {
+      return SourceCodeGenerator.getMethodCode(methodDefinition, returnValue);
+    });
+    _generateAndWriteCode(element, methodGenerator);
+  }
+
+  void _generateAndWriteCode(Element element, CodeGeneratorMethod codeGenerator) {
+    final validAnnotationType = elementUtils.getValidAnnotation(
+      element: element,
+      validAnnotationTypes: _validAnnotationTypes,
+    );
+    if (validAnnotationType != null) {
+      final returnValue = elementUtils.getReturnValue(element: element, annotationType: validAnnotationType);
+      final codeDefinition = elementUtils.getCodeDefinitionForElement(element);
+      codeWriter.writeCode(SourceCodeGenerator.getEmptyLineCode());
+      codeWriter.writeCode(codeGenerator(codeDefinition, returnValue));
     }
-  }
-
-  bool _hasValidAnnotation(Element element, Type type) {
-    final annotation = TypeChecker.fromRuntime(type).firstAnnotationOfExact(element);
-    return annotation != null;
-  }
-
-  String _getValueForElement(Element element, String typeName) {
-    final metaData = element.metadata.first;
-    final source = metaData.toSource();
-    return source.substring("@$typeName(".length, source.length - 1);
   }
 }

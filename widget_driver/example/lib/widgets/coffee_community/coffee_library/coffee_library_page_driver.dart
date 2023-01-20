@@ -8,7 +8,7 @@ import '../../../services/coffee_service.dart';
 
 part 'coffee_library_page_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class CoffeeLibraryPageDriver extends WidgetDriver {
   final CoffeeService _coffeeService;
   bool _isFetching = false;
@@ -28,13 +28,13 @@ class CoffeeLibraryPageDriver extends WidgetDriver {
     _getCoffees();
   }
 
-  @DriverProperty(false)
+  @TestDriverDefaultValue(false)
   bool get isFetching => _isFetching;
 
-  @DriverProperty(10)
+  @TestDriverDefaultValue(10)
   int get numberOfCoffees => _coffees.length;
 
-  @DriverAction(TestCoffee.testCoffee)
+  @TestDriverDefaultValue(TestCoffee.testCoffee)
   Coffee getCoffeeAtIndex(int index) {
     return _coffees[index];
   }

@@ -6,7 +6,7 @@ import 'tabs/home_page_tabs.dart';
 
 part 'home_page_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class HomePageDriver extends WidgetDriver {
   final HomePageAppTabs _appTabs;
   late final Localization _localization;
@@ -18,14 +18,14 @@ class HomePageDriver extends WidgetDriver {
         _localization = context.read<Localization>(),
         super(context);
 
-  @DriverProperty('Coffee Demo App')
+  @TestDriverDefaultValue('Coffee Demo App')
   String get title => _localization.appTitle;
 
-  @DriverProperty(2)
+  @TestDriverDefaultValue(2)
   int get numberOfTabs {
     return _appTabs.tabs.length;
   }
 
-  @DriverProperty([AppTabType.consumption, AppTabType.community])
+  @TestDriverDefaultValue([AppTabType.consumption, AppTabType.community])
   List<AppTabType> get appTabs => _appTabs.tabs;
 }

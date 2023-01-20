@@ -9,7 +9,7 @@ import '../../../services/coffee_consumption_service.dart';
 
 part 'coffee_counter_widget_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class CoffeeCounterWidgetDriver extends WidgetDriver {
   final CoffeeConsumptionService _consumptionService;
   final Localization _localization;
@@ -27,24 +27,24 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
     });
   }
 
-  @DriverProperty('Consumed coffees')
+  @TestDriverDefaultValue('Consumed coffees')
   String get descriptionText => _localization.consumedCoffees;
 
-  @DriverProperty('3')
+  @TestDriverDefaultValue('3')
   String get amountText => '${_consumptionService.counter}';
 
-  @DriverProperty('Consume coffee')
+  @TestDriverDefaultValue('Consume coffee')
   String get consumeCoffeeButtonText => _localization.consumeCoffees;
 
-  @DriverProperty('Reset consumption')
+  @TestDriverDefaultValue('Reset consumption')
   String get resetCoffeeButtonText => _localization.resetConsumedCoffees;
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void consumeCoffee() {
     _consumptionService.consumedOneCoffee();
   }
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void resetConsumption() {
     _consumptionService.resetConsumption();
   }

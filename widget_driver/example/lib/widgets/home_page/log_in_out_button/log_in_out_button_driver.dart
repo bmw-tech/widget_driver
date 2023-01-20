@@ -8,7 +8,7 @@ import '../../../services/auth_service.dart';
 
 part 'log_in_out_button_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class LogInOutButtonDriver extends WidgetDriver {
   final AuthService _authService;
   final Localization _localization;
@@ -23,12 +23,12 @@ class LogInOutButtonDriver extends WidgetDriver {
     });
   }
 
-  @DriverProperty('Log in')
+  @TestDriverDefaultValue('Log in')
   String get buttonText {
     return _authService.isLoggedIn ? _localization.logOut : _localization.logIn;
   }
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void toggleLogInOut() {
     if (_authService.isLoggedIn) {
       _authService.logOut();
