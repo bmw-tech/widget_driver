@@ -37,10 +37,10 @@ import 'package:widget_driver/widget_driver.dart';
 part 'this_file.g.dart';
 ```
 
-After you have organized your import statements it is time to define your `Driver`. At this point you also need to annotate your `Driver` class with the `Driver()` annotation. If you forget to do this, then you will not get any generated code.
+After you have organized your import statements it is time to define your `Driver`. At this point you also need to annotate your `Driver` class with the `GenerateTestDriver()` annotation. If you forget to do this, then you will not get any generated code.
 
 ```dart
-@Driver()
+@GenerateTestDriver()
 class MyDriver extends WidgetDriver {
   ...
 }
@@ -48,26 +48,32 @@ class MyDriver extends WidgetDriver {
 
 Now there is just one thing missing. You need to annotate all public properties and methods in your `Driver` that you want to be able to use in your widgets later.
 
-Annotate the properties with `DriverProperty({default_value})`. As a parameter to the `DriverProperty` you pass in the default value which you want the driver to give to the widget when the widget is being tested.
+Annotate the properties with `TestDriverDefaultValue({default_value})`. As a parameter to the `TestDriverDefaultValue` you pass in the default value which you want the driver to give to the widget when the widget is being tested.
 
-Annotate the methods with `DriverAction({default_return_value})`. As a parameter to the `DriverAction` you pass in the default value which you want the driver to return to the widget when the widget calls this method during tests. If the method does not return anything, then just pass nothing as a parameter.
+You also annotate your methods with `TestDriverDefaultValue({default_return_value})`. As a parameter to the `TestDriverDefaultValue` you pass in the default value which you want the driver to return to the widget when the widget calls this method during tests. If the method does not return anything, then just pass nothing as a parameter.
+If you method returns a future, then you can use the `TestDriverDefaultFutureValue` annotation instead. It will correctly generate a future with the return value you pass into it.
 
 ```dart
-@Driver()
+@GenerateTestDriver()
 class MyDriver extends WidgetDriver {
   ...
 
-  @DriverProperty(1)
+  @TestDriverDefaultValue(1)
   int get value => _someService.value;
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void doSomething() {
     ...
   }
 
-  @DriverAction('The string')
+  @TestDriverDefaultValue('The string')
   String giveMeSomeString() {
     return _someService.getSomeString();
+  }
+
+  @TestDriverDefaultFutureValue(123)
+  Future<int> giveMeSomeIntSoon() {
+    return _someService.getSomeIntSoon();
   }
 }
 ```

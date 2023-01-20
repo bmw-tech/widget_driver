@@ -1,9 +1,9 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
-import 'package:widget_driver_generator/src/utils/code_writer.dart';
-import 'package:widget_driver_generator/src/utils/source_code_generator.dart';
 
+import 'utils/code_writer.dart';
+import 'utils/source_code_generator.dart';
 import 'utils/element_utils.dart';
 
 typedef CodeGeneratorMethod = String Function(String codeDefinition, String returnValue);
@@ -28,14 +28,13 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 
 /// Inspect Driver-related annotations and generate TestDriver with overrides based on default values
 class AnnotationVisitor extends SimpleElementVisitor<void> {
+  final CodeWriter codeWriter;
+  final ElementUtils elementUtils;
+  final List<Type> _validAnnotationTypes = [TestDriverDefaultValue, TestDriverDefaultFutureValue];
+
   AnnotationVisitor({required this.codeWriter, ElementUtils? elementUtils})
       : elementUtils = elementUtils ?? ElementUtils(),
         super();
-
-  final CodeWriter codeWriter;
-  final ElementUtils elementUtils;
-
-  final List<Type> _validAnnotationTypes = [TestDriverDefaultValue, TestDriverDefaultFutureValue];
 
   @override
   void visitFieldElement(FieldElement element) {
