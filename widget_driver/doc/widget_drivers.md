@@ -63,7 +63,7 @@ Here is an example of a `Driver` which depends on some counter service and some 
 ```dart
 part 'counter_widget_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class CounterWidgetDriver extends WidgetDriver {
   final CounterService _counterService;
   final Localization _localization;
@@ -82,18 +82,18 @@ class CounterWidgetDriver extends WidgetDriver {
 
   }
 
-  @DriverProperty('The title of the counter')
+  @TestDriverDefaultValue('The title of the counter')
   String get counterTitle => _localization.counterTitle;
 
-  @DriverProperty(1)
+  @TestDriverDefaultValue(1)
   int get value => _counterService.value;
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void increment() {
     _counterService.increment();
   }
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void decrement() {
     _counterService.decrement();
   }
@@ -120,11 +120,11 @@ You get two option here for how to resolve these dependencies. Either you can gr
 **Now what about those annotations?**  
 They are needed for the `testDrivers` to be generated correctly. So for all properties and methods which you expose to the widget, you will need to add these annotations.
 
-For properties you add `@DriverProperty({default_value})`.  
+For properties and methods you add `@TestDriverDefaultValue({default_value})`.  
 The `default_value` should be the default value which you want to use when this widget is being created by other widgets under test.
 
-For methods you add `@DriverAction()`.  
-This is needed so that any potential parent widget when tested can call these methods without crashing.
+For properties and methods which returns futures, then you add `@TestDriverDefaultFutureValue({default_value})`.  
+This is needed so that the return value is wrapped inside a `Future`.
 
 After you are done creating your `driver` you need to run the generator so that the `testDrivers` gets created. Read more [here](code_generation.md) about running the generators.
 
