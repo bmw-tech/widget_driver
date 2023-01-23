@@ -123,7 +123,7 @@ They are needed for the `testDrivers` to be generated correctly. So for all prop
 For properties and methods you add `@TestDriverDefaultValue({default_value})`.  
 The `default_value` should be the default value which you want to use when this widget is being created by other widgets under test.
 
-For properties and methods which returns futures, then you add `@TestDriverDefaultFutureValue({default_value})`.  
+For properties and methods which returns futures, you have to add `@TestDriverDefaultFutureValue({default_value})`.  
 This is needed so that the return value is wrapped inside a `Future`.
 
 After you are done creating your `driver` you need to run the generator so that the `testDrivers` gets created. Read more [here](code_generation.md) about running the generators.

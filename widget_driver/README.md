@@ -223,7 +223,7 @@ class CounterWidget extends DrivableWidget<CounterWidgetDriver> {
 And voila, we are done!  
 Now check out that widget code! Isn't that clean.  
 Just focused on UI. No StreamBuilders or BuildContext being watched.  
-No business logic in you view code!
+No business logic in your view code!
 And **no** dependency being created or resolved!
 
 Let's go over what happens:
