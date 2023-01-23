@@ -34,13 +34,13 @@ import 'package:meta/meta.dart';
 ///     RandomNumberService _randomNumberService = ...;
 ///     Localization _localization = ...;
 ///
-///     @DriverProperty('123')
+///     @TestDriverDefaultValue('123')
 ///     int get randomNumber => _randomNumberService.theRandomNumber;
 ///
-///     @DriverProperty('Get new random number')
+///     @TestDriverDefaultValue('Get new random number')
 ///     String get buttonText => _localization.getRandomNumberButtonText;
 ///
-///     @DriverAction()
+///     @TestDriverDefaultValue()
 ///     void updateRandomNumber() {
 ///         _randomNumberService.generateNewRandomNumber();
 ///         notifyWidget();

@@ -15,8 +15,16 @@ class CoffeeCounterWidget extends DrivableWidget<CoffeeCounterWidgetDriver> {
         Text(driver.amountText),
         const SizedBox(height: 30),
         ElevatedButton(
-          onPressed: driver.consumeCoffee,
-          child: Text(driver.consumeCoffeeButtonText),
+          onPressed: driver.consumeCoffeeQuick,
+          child: Text(driver.consumeCoffeeQuickButtonText),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            final didConsumeSlow = await driver.consumeCoffeeSlow();
+            // ignore: avoid_print
+            print('Did consume a slow coffee: $didConsumeSlow');
+          },
+          child: Text(driver.consumeCoffeeSlowButtonText),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 10),

@@ -26,12 +26,11 @@ It effectively guides you into moving all of the business logic parts of your co
 
 ### Core features of WidgetDriver
 
--  Clear separation of concern.  
+- Clear separation of concern.  
 Business logic goes in the `Driver` and only the view logic  goes in the `Widget`
 - Better testability of your `Widgets`.  
 When you use `WidgetDriver` then you can **test your `Widgets` in isolation**!  
 You do not need to mock hundreds of child dependencies!
-
 
 ### Testing benefits
 
@@ -57,7 +56,7 @@ Let's get started and create our first `WidgetDriver`!
 ```dart
 part 'counter_widget_driver.g.dart';
 
-@Driver()
+@GenerateTestDriver()
 class CounterWidgetDriver extends WidgetDriver {
   final CounterService _counterService;
   final Localization _localization;
@@ -76,18 +75,18 @@ class CounterWidgetDriver extends WidgetDriver {
 
   }
 
-  @DriverProperty('The title of the counter')
+  @TestDriverDefaultValue('The title of the counter')
   String get counterTitle => _localization.counterTitle;
 
-  @DriverProperty(1)
+  @TestDriverDefaultValue(1)
   int get value => _counterService.value;
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void increment() {
     _counterService.increment();
   }
 
-  @DriverAction()
+  @TestDriverDefaultValue()
   void decrement() {
     _counterService.decrement();
   }
@@ -105,11 +104,11 @@ Okay wait, what was all that?! That looks very complicated!
 Well, not really. Let's dive into what happens:
 
 1. First we just define a driver which extend the `WidgetDriver`.  
-  The "`part '...'`" definition and the `@Driver()` annotation above it is needed later for the code generation to work.
+  The "`part '...'`" definition and the `@GenerateTestDriver()` annotation above it is needed later for the code generation to work.
     ```dart
     part 'counter_widget_driver.g.dart';
 
-    @Driver()
+    @GenerateTestDriver()
     class CounterWidgetDriver extends WidgetDriver {
     ```
 
@@ -117,6 +116,7 @@ Well, not really. Let's dive into what happens:
 
 1. Next, we define the dependencies which the driver needs. In our case we need access to some service which can keep track of the count and we need some localizations.  
   In the constructor of the driver we have the option to resolve these dependencies either from the `BuildContext` (for example using something like the [Provider package](https://pub.dev/packages/provider)), or we can load them using a DI package such as [get_it](https://pub.dev/packages/get_it).
+
     ```dart
     final CounterService _counterService;
     final Localization _localization;
@@ -132,7 +132,7 @@ Well, not really. Let's dive into what happens:
     }
     ```
   
-1. Now we need to add some logic where the `Driver` listens to changes from the `CounterService` and when a changes happens, then it will notify the widget that it needs to update. You do this by calling the `notifyWidget()` method in the driver. 
+1. Now we need to add some logic where the `Driver` listens to changes from the `CounterService` and when a changes happens, then it will notify the widget that it needs to update. You do this by calling the `notifyWidget()` method in the driver.
 As soon as your `Driver` has new data to display, then you want to call the `notifyWidget()`.
 
     ```dart
@@ -141,27 +141,33 @@ As soon as your `Driver` has new data to display, then you want to call the `not
     });
     ```
 
-1. Finally, we define the public API of the driver. The widget will use these to grab data for its views.  
+1. Finally, we define the public API of the driver. Your widget will use these to grab data for its views.  
 
     The annotations are used by the `TestDriver` to provide default values during testing.  
 
-    For each public property you add the `@DriverProperty({default value})`.  
-    As a parameter to this annotation you provide the default value which will be used in testing when other widgets create this widget.  
+    For each public property and method you add the `@TestDriverDefaultValue({default value})`. As a parameter to this annotation you provide the default value which will be used in testing when other widgets create this widget.  
 
-    And for your methods you add the `@DriverAction()`.
+    If you have a method or property which returns a future, then you can use the `@TestDriverDefaultFutureValue({default value})` instead. It will take the default value and return it as a future.
+
       ```dart
-      @DriverProperty(1)
+      @TestDriverDefaultValue(1)
       int get value => _counterService.value;
 
-      @DriverAction()
+      @TestDriverDefaultValue()
       void increment() {
         _counterService.increment();
+      }
+
+      // For methods which return futures, use this annotations:
+      @TestDriverDefaultFutureValue(123)
+      Future<int> getTheNextIncrement() {
+        return _counterService.getNextIncrement();
       }
       ```
 
       As mentioned, these annotations are used by the `TestDriver`, and you have to provide them! The values provided there are only used in testing. Never in any production code. Because in production you use the real business logic.
 
-      But in your `widgetTests` these values are used when your widget is rendered as a child-widget. This helps you to test widgets in isolation, without caring about which dependencies all your child widgets need. 
+      But in your `widgetTests` these values are used when your widget is rendered as a child-widget. This helps you to test widgets in isolation, without caring about which dependencies all your child widgets need.
 
       For a more in-depth documentation about `TestDrivers` read [here](doc/testing.md).
 
@@ -171,7 +177,7 @@ Now we can continue to the next step!
 ### 2: Code generation
 
 Now it is time to generate some code so that we get our `TestDriver` and `WidgetDriverProvider` set up for us.  
-*If you prefer to do this the old fashioned way without code generation, then that is also possible. 
+*If you prefer to do this the old fashioned way without code generation, then that is also possible.  
 Read more about that [here](doc/drivers_without_generation.md)*
 
 At the root of your flutter project, run this command:
@@ -217,6 +223,7 @@ class CounterWidget extends DrivableWidget<CounterWidgetDriver> {
 And voila, we are done!  
 Now check out that widget code! Isn't that clean.  
 Just focused on UI. No StreamBuilders or BuildContext being watched.  
+No business logic in your view code!
 And **no** dependency being created or resolved!
 
 Let's go over what happens:
@@ -239,10 +246,12 @@ Let's go over what happens:
     // TODO: implement driverProvider
     WidgetDriverProvider<CounterWidgetDriver> get driverProvider => throw UnimplementedError();
     ```
+
     The build method is nothing new. There you just put your widget creation code!  
     And the `driverProvider` is the thing which knows how to create your driver. Now what do you put here?  
     No worries, we generated a `DriverProvider` for you 🤩
     Just replace that line with this:
+
     ```dart
     @override
     WidgetDriverProvider<CounterWidgetDriver> get driverProvider => $CounterWidgetDriverProvider();
@@ -253,6 +262,7 @@ Let's go over what happens:
 1. And that is all you need to do!  
 
     Now your widget will automatically have access to a property called `driver`. This driver is the very same `WidgetDriver` which we defined earlier. So now you can access all the data from it and assign it to your widgets. For example you can say this:
+
     ```dart
     Text(driver.counterTitle),
     ```
@@ -271,7 +281,7 @@ This will automatically make sure that your widget get reloaded and it can consu
 Here is a demo of how the final product looks like
 
 <p>
-  <img src="doc/resources/counter_widget_demo.gif?raw=true"
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/counter_widget_demo.gif?raw=true"
   height="400"/>
 </p>
 
@@ -295,7 +305,7 @@ The `Driver` has access to the `BuildContext` which was used to create your widg
 
 The widget is **ONLY** interested in creating UI and reacting to interactions from the user.
 
-`WidgetDriver` gives you all the tools you need to stop putting business logic in the widget. 
+`WidgetDriver` gives you all the tools you need to stop putting business logic in the widget.
 
 ### Guideline Two - Testing 🔬
 

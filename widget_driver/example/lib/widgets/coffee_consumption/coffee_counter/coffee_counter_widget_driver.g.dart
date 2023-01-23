@@ -16,13 +16,21 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounte
   String get amountText => '3';
 
   @override
-  String get consumeCoffeeButtonText => 'Consume coffee';
+  String get consumeCoffeeQuickButtonText => 'Consume coffee quick';
+
+  @override
+  String get consumeCoffeeSlowButtonText => 'Consume coffee slow';
 
   @override
   String get resetCoffeeButtonText => 'Reset consumption';
 
   @override
-  void consumeCoffee() {}
+  void consumeCoffeeQuick() {}
+
+  @override
+  Future<bool> consumeCoffeeSlow() {
+    return Future.value(false);
+  }
 
   @override
   void resetConsumption() {}
