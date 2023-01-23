@@ -21,6 +21,7 @@ class CoffeeCounterWidget extends DrivableWidget<CoffeeCounterWidgetDriver> {
         ElevatedButton(
           onPressed: () async {
             final didConsumeSlow = await driver.consumeCoffeeSlow();
+            // ignore: avoid_print
             print('Did consume a slow coffee: $didConsumeSlow');
           },
           child: Text(driver.consumeCoffeeSlowButtonText),
