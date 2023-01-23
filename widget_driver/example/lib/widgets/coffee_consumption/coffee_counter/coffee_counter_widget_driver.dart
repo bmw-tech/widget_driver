@@ -15,6 +15,7 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
   final Localization _localization;
 
   StreamSubscription? _subscription;
+  bool _isCurrentlyConsuming = false;
 
   CoffeeCounterWidgetDriver(
     BuildContext context, {
@@ -33,15 +34,38 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
   @TestDriverDefaultValue('3')
   String get amountText => '${_consumptionService.counter}';
 
-  @TestDriverDefaultValue('Consume coffee')
-  String get consumeCoffeeButtonText => _localization.consumeCoffees;
+  @TestDriverDefaultValue('Consume coffee quick')
+  String get consumeCoffeeQuickButtonText => _localization.consumeCoffeeQuick;
+
+  @TestDriverDefaultValue('Consume coffee slow')
+  String get consumeCoffeeSlowButtonText =>
+      _isCurrentlyConsuming ? _localization.consumingCoffee : _localization.consumeCoffeeSlow;
 
   @TestDriverDefaultValue('Reset consumption')
   String get resetCoffeeButtonText => _localization.resetConsumedCoffees;
 
   @TestDriverDefaultValue()
-  void consumeCoffee() {
+  void consumeCoffeeQuick() {
     _consumptionService.consumedOneCoffee();
+  }
+
+  @TestDriverDefaultFutureValue(true)
+
+  /// Returns true if we could consume a coffee slow.
+  /// We cannot consume slow if we are already consuming a slow coffee.
+  Future<bool> consumeCoffeeSlow() async {
+    if (_isCurrentlyConsuming) {
+      return false;
+    }
+    _isCurrentlyConsuming = true;
+    notifyWidget();
+
+    await Future.delayed(const Duration(seconds: 2));
+    _consumptionService.consumedOneCoffee();
+
+    _isCurrentlyConsuming = false;
+    notifyWidget();
+    return true;
   }
 
   @TestDriverDefaultValue()
