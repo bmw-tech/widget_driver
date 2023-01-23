@@ -49,10 +49,9 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
     _consumptionService.consumedOneCoffee();
   }
 
-  @TestDriverDefaultFutureValue(true)
-
   /// Returns true if we could consume a coffee slow.
   /// We cannot consume slow if we are already consuming a slow coffee.
+  @TestDriverDefaultFutureValue(false)
   Future<bool> consumeCoffeeSlow() async {
     if (_isCurrentlyConsuming) {
       return false;

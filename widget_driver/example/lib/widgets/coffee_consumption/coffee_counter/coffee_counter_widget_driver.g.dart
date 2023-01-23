@@ -29,7 +29,7 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounte
 
   @override
   Future<bool> consumeCoffeeSlow() {
-    return Future.value(true);
+    return Future.value(false);
   }
 
   @override
