@@ -86,3 +86,9 @@ class TestDriverDefaultFutureValue<T> {
   final T? value;
   const TestDriverDefaultFutureValue([this.value]);
 }
+
+class DriverProvidableModel {
+  const DriverProvidableModel();
+}
+
+const driverProvidableModel = DriverProvidableModel();

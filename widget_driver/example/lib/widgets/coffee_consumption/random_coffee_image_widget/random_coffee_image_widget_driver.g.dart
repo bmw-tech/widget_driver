@@ -22,7 +22,9 @@ class _$TestRandomCoffeeImageWidgetDriver extends TestDriver implements RandomCo
 class $RandomCoffeeImageWidgetDriverProvider extends WidgetDriverProvider<RandomCoffeeImageWidgetDriver> {
   @override
   RandomCoffeeImageWidgetDriver buildDriver(BuildContext context) {
-    return RandomCoffeeImageWidgetDriver(context);
+    return RandomCoffeeImageWidgetDriver(
+      context,
+    );
   }
 
   @override

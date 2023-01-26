@@ -16,7 +16,9 @@ class _$TestNotLoggedInPageDriver extends TestDriver implements NotLoggedInPageD
 class $NotLoggedInPageDriverProvider extends WidgetDriverProvider<NotLoggedInPageDriver> {
   @override
   NotLoggedInPageDriver buildDriver(BuildContext context) {
-    return NotLoggedInPageDriver(context);
+    return NotLoggedInPageDriver(
+      context,
+    );
   }
 
   @override

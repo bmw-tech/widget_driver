@@ -39,7 +39,9 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounte
 class $CoffeeCounterWidgetDriverProvider extends WidgetDriverProvider<CoffeeCounterWidgetDriver> {
   @override
   CoffeeCounterWidgetDriver buildDriver(BuildContext context) {
-    return CoffeeCounterWidgetDriver(context);
+    return CoffeeCounterWidgetDriver(
+      context,
+    );
   }
 
   @override

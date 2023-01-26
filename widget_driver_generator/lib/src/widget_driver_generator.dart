@@ -5,6 +5,7 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
 import 'package:widget_driver_generator/src/utils/code_writer.dart';
+import 'package:widget_driver_generator/src/utils/providable_variable_code_generator.dart';
 
 import 'model_visitor.dart';
 
@@ -43,9 +44,18 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
 
     codeWriter.writeCode('class $providerClassName extends WidgetDriverProvider<$driverClassName> {');
 
+    final providablesGenerator = ProvidableVariableCodeGenerator(
+      codeWriter: codeWriter,
+      fields: visitor.providableFields,
+      providerClassName: providerClassName,
+    );
+
+    providablesGenerator.generateFields();
+
+    providablesGenerator.generateConstructor();
     codeWriter.writeCode('@override');
     codeWriter.writeCode('$driverClassName buildDriver(BuildContext context) {');
-    codeWriter.writeCode('return $driverClassName(context);');
+    codeWriter.writeCode('return $driverClassName(context ${providablesGenerator.generateParameters()});');
     codeWriter.writeCode('}');
 
     codeWriter.writeCode('@override');

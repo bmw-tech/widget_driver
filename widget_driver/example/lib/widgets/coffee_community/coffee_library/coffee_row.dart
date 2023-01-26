@@ -17,9 +17,8 @@ class CoffeeRow extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Provider.value(
-              value: coffee,
-              child: CoffeeDetailPage(),
+            builder: (context) => CoffeeDetailPage(
+              coffee: coffee,
             ),
           ),
         );

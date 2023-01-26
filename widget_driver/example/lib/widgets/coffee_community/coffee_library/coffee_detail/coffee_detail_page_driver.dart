@@ -1,4 +1,3 @@
-import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../../../models/coffee.dart';
@@ -9,8 +8,10 @@ part 'coffee_detail_page_driver.g.dart';
 class CoffeeDetailPageDriver extends WidgetDriver {
   final Coffee _coffee;
 
-  CoffeeDetailPageDriver(BuildContext context)
-      : _coffee = context.read<Coffee>(),
+  CoffeeDetailPageDriver(
+    BuildContext context, {
+    @driverProvidableModel required Coffee coffee,
+  })  : _coffee = coffee,
         super(context);
 
   @TestDriverDefaultValue(TestCoffee.testCoffeeName)

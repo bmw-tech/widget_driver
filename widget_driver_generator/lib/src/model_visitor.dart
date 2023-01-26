@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
+import 'package:widget_driver_generator/src/utils/providable_field.dart';
 
 import 'utils/code_writer.dart';
 import 'utils/source_code_generator.dart';
@@ -12,11 +13,32 @@ typedef CodeGeneratorMethod = String Function(String codeDefinition, String retu
 class ModelVisitor extends SimpleElementVisitor<void> {
   String className = "";
   final fields = <String, dynamic>{};
+  final providableFields = <ProvidableField>[];
+  final ElementUtils _elementUtils = ElementUtils();
 
   @override
   void visitConstructorElement(ConstructorElement element) {
     final elementReturnType = element.type.returnType.toString();
     className = elementReturnType.replaceFirst('*', '');
+
+    if (!element.isFactory || !element.isDefaultConstructor) {
+      for (final param in element.parameters) {
+        if (_elementUtils.hasValidAnnotation(
+          element: param,
+          validAnnotationType: DriverProvidableModel,
+        )) {
+          providableFields.add(
+            ProvidableField(
+              name: param.name,
+              type: param.type.toString().replaceFirst('*', ''),
+              isRequired: param.isRequired,
+              defaultValueCode: param.defaultValueCode,
+              isNamed: param.isNamed,
+            ),
+          );
+        }
+      }
+    }
   }
 
   @override
@@ -30,7 +52,10 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 class AnnotationVisitor extends SimpleElementVisitor<void> {
   final CodeWriter codeWriter;
   final ElementUtils elementUtils;
-  final List<Type> _validAnnotationTypes = [TestDriverDefaultValue, TestDriverDefaultFutureValue];
+  final List<Type> _validAnnotationTypes = [
+    TestDriverDefaultValue,
+    TestDriverDefaultFutureValue,
+  ];
 
   AnnotationVisitor({required this.codeWriter, ElementUtils? elementUtils})
       : elementUtils = elementUtils ?? ElementUtils(),

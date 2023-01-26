@@ -16,7 +16,9 @@ class _$TestCoffeeCommunityPageDriver extends TestDriver implements CoffeeCommun
 class $CoffeeCommunityPageDriverProvider extends WidgetDriverProvider<CoffeeCommunityPageDriver> {
   @override
   CoffeeCommunityPageDriver buildDriver(BuildContext context) {
-    return CoffeeCommunityPageDriver(context);
+    return CoffeeCommunityPageDriver(
+      context,
+    );
   }
 
   @override
