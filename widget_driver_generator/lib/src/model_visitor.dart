@@ -25,7 +25,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
       for (final param in element.parameters) {
         if (_elementUtils.hasValidAnnotation(
           element: param,
-          validAnnotationType: DriverProvidableModel,
+          validAnnotationType: driverProvidableModel.runtimeType,
         )) {
           providableFields.add(
             ProvidableField(
