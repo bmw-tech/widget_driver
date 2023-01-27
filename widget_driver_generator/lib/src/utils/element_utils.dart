@@ -27,7 +27,7 @@ class ElementUtils {
     required Element element,
     required Type validAnnotationType,
   }) =>
-      TypeChecker.fromRuntime(validAnnotationType).hasAnnotationOfExact(element);
+      getValidAnnotation(element: element, validAnnotationTypes: [validAnnotationType]) != null;
 
   /// Get the string definition of the current element.
   /// E.g. if the element is a `PropertyAccessorElement` which returns a bool and
