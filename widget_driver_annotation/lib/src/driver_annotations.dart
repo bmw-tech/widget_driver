@@ -93,7 +93,7 @@ class _DriverProvidableModel {
 
 /// Use this annotation on constructor params, which should be able to be passed from the `DrivableWidget` to the `
 /// Driver`.
-/// This is intended for model data and not repositories.
+/// This is intended for model data and not repositories or other service/use-case types of objects.
 ///
 /// ### Here is an example on how to use the Annotation
 ///
