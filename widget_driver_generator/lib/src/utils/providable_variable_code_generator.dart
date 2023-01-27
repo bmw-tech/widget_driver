@@ -4,35 +4,34 @@ import 'package:widget_driver_generator/src/utils/source_code_generator.dart';
 
 /// This class can generate string based code.
 class ProvidableVariableCodeGenerator {
-  final CodeWriter _codeWriter;
   final List<ProvidableField> _fields;
   final List<ProvidableField> _namedFields;
   final List<ProvidableField> _positionalFields;
   final String _providerClassName;
 
   ProvidableVariableCodeGenerator({
-    required CodeWriter codeWriter,
     required List<ProvidableField> fields,
     required String providerClassName,
-  })  : _codeWriter = codeWriter,
-        _namedFields = fields.where((element) => element.isNamed).toList(),
+  })  : _namedFields = fields.where((element) => element.isNamed).toList(),
         _positionalFields = fields.where((element) => !element.isNamed).toList(),
         _fields = fields,
         _providerClassName = providerClassName;
 
-  /// Generates private and final fields provided in the constructor and writes those to the provided `codeWriter`.
+  /// Generates private and final fields provided in the constructor.
   /// e.g.:
   /// ```dart
   /// final Type _providedVariable;
   /// ```
-  void generateFields() {
+  String generateFields() {
+    final StringBuffer buffer = StringBuffer();
     for (final variable in _fields) {
-      _codeWriter.writeCode('final ${variable.type} _${variable.name};');
+      buffer.writeln('final ${variable.type} _${variable.name};');
     }
 
     if (_fields.isNotEmpty) {
-      _codeWriter.writeCode(SourceCodeGenerator.getEmptyLineCode());
+      buffer.writeln(SourceCodeGenerator.getEmptyLineCode());
     }
+    return buffer.toString();
   }
 
   /// Generates the constructor that initializes all the `fields` provided in the constructor of this class.
@@ -44,18 +43,25 @@ class ProvidableVariableCodeGenerator {
   ///   required MyClass providedVariable,
   /// }) : _providedVariable = providedVariable;
   /// ```
-  void generateConstructor() {
+  String generateConstructor() {
+    final StringBuffer fields = StringBuffer();
+    final StringBuffer initializer = StringBuffer();
+
     if (_fields.isNotEmpty) {
-      _codeWriter.writeCode('$_providerClassName({');
       for (final variable in _fields) {
         final requiredString = variable.isRequired ? 'required ' : '';
         final defaultValueCode = variable.defaultValueCode != null ? ' = ${variable.defaultValueCode}' : '';
-        _codeWriter.writeCode('$requiredString${variable.type} ${variable.name}$defaultValueCode,');
+        fields.writeln('$requiredString${variable.type} ${variable.name}$defaultValueCode,');
       }
-      _codeWriter.writeCode('}) :');
-      _codeWriter.writeCode(_fields.map((e) => '_${e.name} = ${e.name}').join(',') + ';');
-      _codeWriter.writeCode(SourceCodeGenerator.getEmptyLineCode());
+      initializer.writeln(_fields.map((e) => '_${e.name} = ${e.name}').join(','));
+
+      return '''
+$_providerClassName({
+  ${fields.toString()}
+}) : ${initializer.toString()};''' +
+          SourceCodeGenerator.getEmptyLineCode();
     }
+    return '';
   }
 
   /// Generates the parameter list to be passed to the Driver in the `buildDriver` method, containing all the

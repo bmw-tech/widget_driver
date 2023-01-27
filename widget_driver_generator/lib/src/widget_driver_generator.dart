@@ -45,14 +45,14 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
     codeWriter.writeCode('class $providerClassName extends WidgetDriverProvider<$driverClassName> {');
 
     final providablesGenerator = ProvidableVariableCodeGenerator(
-      codeWriter: codeWriter,
       fields: visitor.providableFields,
       providerClassName: providerClassName,
     );
 
-    providablesGenerator.generateFields();
+    codeWriter.writeCode(providablesGenerator.generateFields());
 
-    providablesGenerator.generateConstructor();
+    codeWriter.writeCode(providablesGenerator.generateConstructor());
+
     codeWriter.writeCode('@override');
     codeWriter.writeCode('$driverClassName buildDriver(BuildContext context) {');
     codeWriter.writeCode('return $driverClassName(context ${providablesGenerator.generateParameters()});');
