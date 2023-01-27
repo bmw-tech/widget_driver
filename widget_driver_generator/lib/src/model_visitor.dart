@@ -31,15 +31,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
           element: param,
           validAnnotationType: driverProvidableModel.runtimeType,
         )) {
-          providableFields.add(
-            ProvidableField(
-              name: param.name,
-              type: param.type.toString().replaceFirst('*', ''),
-              isRequired: param.isRequired,
-              defaultValueCode: param.defaultValueCode,
-              isNamed: param.isNamed,
-            ),
-          );
+          providableFields.add(ProvidableField.fromParameterElement(param));
         }
       }
     }

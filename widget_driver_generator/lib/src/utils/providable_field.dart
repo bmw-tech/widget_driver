@@ -1,4 +1,6 @@
-/// Class representing a field annotated with the `@driverProvidableModel` annotation, to keep track of all the 
+import 'package:analyzer/dart/element/element.dart';
+
+/// Class representing a field annotated with the `@driverProvidableModel` annotation, to keep track of all the
 /// important data to generate fields, constructors and parameters.
 class ProvidableField {
   final String name;
@@ -14,4 +16,14 @@ class ProvidableField {
     required this.defaultValueCode,
     required this.isNamed,
   });
+
+  factory ProvidableField.fromParameterElement(ParameterElement param) {
+    return ProvidableField(
+      name: param.name,
+      type: param.type.toString().replaceFirst('*', ''),
+      isRequired: param.isRequired,
+      defaultValueCode: param.defaultValueCode,
+      isNamed: param.isNamed,
+    );
+  }
 }
