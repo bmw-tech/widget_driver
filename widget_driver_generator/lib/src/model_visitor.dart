@@ -14,7 +14,11 @@ class ModelVisitor extends SimpleElementVisitor<void> {
   String className = "";
   final fields = <String, dynamic>{};
   final providableFields = <ProvidableField>[];
-  final ElementUtils _elementUtils = ElementUtils();
+  final ElementUtils _elementUtils;
+
+  ModelVisitor({ElementUtils? elementUtils})
+      : _elementUtils = elementUtils ?? ElementUtils(),
+        super();
 
   @override
   void visitConstructorElement(ConstructorElement element) {
