@@ -9,7 +9,7 @@ class ProvidableField {
   final String? defaultValueCode;
   final bool isNamed;
 
-  ProvidableField({
+  const ProvidableField({
     required this.name,
     required this.type,
     required this.isRequired,

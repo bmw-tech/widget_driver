@@ -6,6 +6,8 @@ import 'type_utils.dart';
 
 /// A helper class for getting data out of elements
 class ElementUtils {
+  const ElementUtils();
+
   /// Checks if the current element has an annotation which is valid.
   /// If it has a valid annotation, then that annotation type is returned, else it returns null.
   Type? getValidAnnotation({

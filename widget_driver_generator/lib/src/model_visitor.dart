@@ -17,7 +17,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
   final ElementUtils _elementUtils;
 
   ModelVisitor({ElementUtils? elementUtils})
-      : _elementUtils = elementUtils ?? ElementUtils(),
+      : _elementUtils = elementUtils ?? const ElementUtils(),
         super();
 
   @override
@@ -48,13 +48,13 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 class AnnotationVisitor extends SimpleElementVisitor<void> {
   final CodeWriter codeWriter;
   final ElementUtils elementUtils;
-  final List<Type> _validAnnotationTypes = [
+  final List<Type> _validAnnotationTypes = const [
     TestDriverDefaultValue,
     TestDriverDefaultFutureValue,
   ];
 
-  AnnotationVisitor({required this.codeWriter, ElementUtils? elementUtils})
-      : elementUtils = elementUtils ?? ElementUtils(),
+  const AnnotationVisitor({required this.codeWriter, ElementUtils? elementUtils})
+      : elementUtils = elementUtils ?? const ElementUtils(),
         super();
 
   @override
