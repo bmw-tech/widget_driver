@@ -2,6 +2,7 @@ import 'package:widget_driver_generator/src/utils/code_writer.dart';
 import 'package:widget_driver_generator/src/utils/providable_field.dart';
 import 'package:widget_driver_generator/src/utils/source_code_generator.dart';
 
+/// This class can generate string based code.
 class ProvidableVariableCodeGenerator {
   final CodeWriter _codeWriter;
   final List<ProvidableField> _fields;
@@ -19,6 +20,11 @@ class ProvidableVariableCodeGenerator {
         _fields = fields,
         _providerClassName = providerClassName;
 
+  /// Generates private and final fields provided in the constructor and writes those to the provided `codeWriter`.
+  /// e.g.:
+  /// ```dart
+  /// final Type _providedVariable;
+  /// ```
   void generateFields() {
     for (final variable in _fields) {
       _codeWriter.writeCode('final ${variable.type} _${variable.name};');
@@ -29,6 +35,15 @@ class ProvidableVariableCodeGenerator {
     }
   }
 
+  /// Generates the constructor that initializes all the `fields` provided in the constructor of this class.
+  /// All of this fields will be generated as named parameters and be required, depending on the `required` field
+  /// in the `fields` list.
+  /// e.g.:
+  /// ```dart
+  /// $MyPageDriverProvider({
+  ///   required MyClass providedVariable,
+  /// }) : _providedVariable = providedVariable;
+  /// ```
   void generateConstructor() {
     if (_fields.isNotEmpty) {
       _codeWriter.writeCode('$_providerClassName({');
@@ -43,6 +58,8 @@ class ProvidableVariableCodeGenerator {
     }
   }
 
+  /// Generates the parameter list to be passed to the Driver in the `buildDriver` method, containing all the
+  /// provided, named and positional fields.
   String generateParameters() {
     final namedVariables =
         _namedFields.isNotEmpty ? _namedFields.map((e) => '${e.name}: _${e.name}').join(',') + ',' : '';

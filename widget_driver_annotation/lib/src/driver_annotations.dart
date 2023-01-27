@@ -87,8 +87,71 @@ class TestDriverDefaultFutureValue<T> {
   const TestDriverDefaultFutureValue([this.value]);
 }
 
-class DriverProvidableModel {
-  const DriverProvidableModel();
+class _DriverProvidableModel {
+  const _DriverProvidableModel();
 }
 
-const driverProvidableModel = DriverProvidableModel();
+/// Use this annotation on constructor params, which should be able to be passed from the `DrivableWidget` to the `
+/// Driver`.
+/// This is intended for model data and not repositories.
+///
+/// ### Here is an example on how to use the Annotation
+///
+/// ```dart
+/// @GenerateTestDriver()
+/// class CoffeeDetailPageDriver extends WidgetDriver {
+///   final Coffee _coffee;
+///
+///   CoffeeDetailPageDriver(
+///     BuildContext context, {
+///     @driverProvidableModel required Coffee coffee,
+///   })  : _coffee = coffee,
+///         super(context);
+///
+///   // ...
+/// }
+/// ```
+///
+/// This will generate the following `DriverProvider`
+/// ```dart
+/// class $CoffeeDetailPageDriverProvider extends WidgetDriverProvider<CoffeeDetailPageDriver> {
+///   final Coffee _coffee;
+///
+///   $CoffeeDetailPageDriverProvider({
+///     required Coffee coffee,
+///   }) : _coffee = coffee;
+///
+///   @override
+///   CoffeeDetailPageDriver buildDriver(BuildContext context) {
+///     return CoffeeDetailPageDriver(
+///       context,
+///       coffee: _coffee,
+///     );
+///   }
+///
+///   @override
+///   CoffeeDetailPageDriver buildTestDriver() {
+///     return _$TestCoffeeDetailPageDriver();
+///   }
+/// }
+/// ```
+///
+/// And can be used in the widget like this.
+/// ```dart
+/// class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
+///   final Coffee coffee;
+///
+///   CoffeeDetailPage({Key? key, required this.coffee}) : super(key: key);
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return Scaffold(
+///       // ...
+///     );
+///   }
+///
+///   @override
+///   WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider(coffee: coffee);
+/// }
+/// ```
+const driverProvidableModel = _DriverProvidableModel();

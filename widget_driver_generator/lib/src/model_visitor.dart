@@ -9,7 +9,7 @@ import 'utils/element_utils.dart';
 
 typedef CodeGeneratorMethod = String Function(String codeDefinition, String returnValue);
 
-/// Inspect classes and get className and fields out of them
+/// Inspect classes and get className, fields and all constructor parameters annotated with the @driverProvidableFields.
 class ModelVisitor extends SimpleElementVisitor<void> {
   String className = "";
   final fields = <String, dynamic>{};

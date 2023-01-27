@@ -1,3 +1,5 @@
+/// Class representing a field annotated with the `@driverProvidableModel` annotation, to keep track of all the 
+/// important data to generate fields, constructors and parameters.
 class ProvidableField {
   final String name;
   final String type;

@@ -21,6 +21,8 @@ class ElementUtils {
     return null;
   }
 
+  /// Checks if the current `element` has an annotation of the provided `validAnnotationType`.
+  /// Returns `true`, if this true and `false` accordingly.
   bool hasValidAnnotation({
     required Element element,
     required Type validAnnotationType,
