@@ -1,3 +1,8 @@
+## 0.0.4
+
+* Updates the required version of mocktail.  
+The required version was lowered to enable more users to be able to install this package.
+
 ## 0.0.3
 
 * Adds example markdown file for pub.dev to give basic information about how to use the widget_driver_test.

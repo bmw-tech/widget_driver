@@ -1,6 +1,6 @@
 name: widget_driver_test
 description: Contains helper classes/methods for DrivableWidgets, WidgetDrivers, helps with TestDrivers mocking
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver_test
 issue_tracker: https://github.com/bmw-tech/widget_driver/issues
 
@@ -10,8 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widget_driver: ^0.0.2
-  mocktail: ^0.3.0
+  widget_driver: ^0.0.4
+  mocktail: ^0.1.4
   meta: ^1.7.0
   test: ^1.16.0
   flutter_test:
