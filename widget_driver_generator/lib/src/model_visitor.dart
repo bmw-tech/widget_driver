@@ -1,10 +1,9 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
-import 'package:widget_driver_generator/src/utils/providable_field.dart';
 
-import 'utils/code_writer.dart';
-import 'utils/source_code_generator.dart';
+import 'models/annotated_element.dart';
+import 'models/providable_field.dart';
 import 'utils/element_utils.dart';
 
 typedef CodeGeneratorMethod = String Function(String codeDefinition, String returnValue);
@@ -12,9 +11,16 @@ typedef CodeGeneratorMethod = String Function(String codeDefinition, String retu
 /// Inspect classes and get className, fields and all constructor parameters annotated with the @driverProvidableFields.
 class ModelVisitor extends SimpleElementVisitor<void> {
   String className = "";
-  final fields = <String, dynamic>{};
+  final fields = <AnnotatedElement>[];
+  final methods = <AnnotatedElement>[];
+  final properties = <AnnotatedElement>[];
   final providableFields = <ProvidableField>[];
   final ElementUtils _elementUtils;
+
+  final List<Type> _validAnnotationTypes = const [
+    TestDriverDefaultValue,
+    TestDriverDefaultFutureValue,
+  ];
 
   ModelVisitor({ElementUtils? elementUtils})
       : _elementUtils = elementUtils ?? const ElementUtils(),
@@ -29,7 +35,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
       for (final param in element.parameters) {
         if (_elementUtils.hasValidAnnotation(
           element: param,
-          validAnnotationType: driverProvidableModel.runtimeType,
+          validAnnotationType: driverProvidableProperty.runtimeType,
         )) {
           providableFields.add(ProvidableField.fromParameterElement(param));
         }
@@ -39,58 +45,34 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 
   @override
   void visitFieldElement(FieldElement element) {
-    final elementType = element.type.toString();
-    fields[element.name] = elementType.replaceFirst('*', '');
-  }
-}
-
-/// Inspect Driver-related annotations and generate TestDriver with overrides based on default values
-class AnnotationVisitor extends SimpleElementVisitor<void> {
-  final CodeWriter codeWriter;
-  final ElementUtils elementUtils;
-  final List<Type> _validAnnotationTypes = const [
-    TestDriverDefaultValue,
-    TestDriverDefaultFutureValue,
-  ];
-
-  const AnnotationVisitor({required this.codeWriter, ElementUtils? elementUtils})
-      : elementUtils = elementUtils ?? const ElementUtils(),
-        super();
-
-  @override
-  void visitFieldElement(FieldElement element) {
-    CodeGeneratorMethod storedPropertyGenerator = ((propertyDefinition, returnValue) {
-      return SourceCodeGenerator.getStoredPropertyCode(propertyDefinition, returnValue);
-    });
-    _generateAndWriteCode(element, storedPropertyGenerator);
-  }
-
-  @override
-  void visitPropertyAccessorElement(PropertyAccessorElement element) {
-    CodeGeneratorMethod computedPropertyGenerator = ((propertyDefinition, returnValue) {
-      return SourceCodeGenerator.getComputedPropertyCode(propertyDefinition, returnValue);
-    });
-    _generateAndWriteCode(element, computedPropertyGenerator);
-  }
-
-  @override
-  void visitMethodElement(MethodElement element) {
-    CodeGeneratorMethod methodGenerator = ((methodDefinition, returnValue) {
-      return SourceCodeGenerator.getMethodCode(methodDefinition, returnValue);
-    });
-    _generateAndWriteCode(element, methodGenerator);
-  }
-
-  void _generateAndWriteCode(Element element, CodeGeneratorMethod codeGenerator) {
-    final validAnnotationType = elementUtils.getValidAnnotation(
+    final validAnnotationType = _elementUtils.getValidAnnotation(
       element: element,
       validAnnotationTypes: _validAnnotationTypes,
     );
     if (validAnnotationType != null) {
-      final returnValue = elementUtils.getReturnValue(element: element, annotationType: validAnnotationType);
-      final codeDefinition = elementUtils.getCodeDefinitionForElement(element);
-      codeWriter.writeCode(SourceCodeGenerator.getEmptyLineCode());
-      codeWriter.writeCode(codeGenerator(codeDefinition, returnValue));
+      fields.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType));
+    }
+  }
+
+  @override
+  void visitPropertyAccessorElement(PropertyAccessorElement element) {
+    final validAnnotationType = _elementUtils.getValidAnnotation(
+      element: element,
+      validAnnotationTypes: _validAnnotationTypes,
+    );
+    if (validAnnotationType != null) {
+      properties.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType));
+    }
+  }
+
+  @override
+  void visitMethodElement(MethodElement element) {
+    final validAnnotationType = _elementUtils.getValidAnnotation(
+      element: element,
+      validAnnotationTypes: _validAnnotationTypes,
+    );
+    if (validAnnotationType != null) {
+      methods.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType));
     }
   }
 }

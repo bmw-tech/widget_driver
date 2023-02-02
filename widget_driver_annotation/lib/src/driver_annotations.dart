@@ -87,8 +87,8 @@ class TestDriverDefaultFutureValue<T> {
   const TestDriverDefaultFutureValue([this.value]);
 }
 
-class _DriverProvidableModel {
-  const _DriverProvidableModel();
+class _DriverProvidableProperty {
+  const _DriverProvidableProperty();
 }
 
 /// Use this annotation on constructor params, which should be able to be passed from the `DrivableWidget` to the `
@@ -154,4 +154,4 @@ class _DriverProvidableModel {
 ///   WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider(coffee: coffee);
 /// }
 /// ```
-const driverProvidableModel = _DriverProvidableModel();
+const driverProvidableProperty = _DriverProvidableProperty();
