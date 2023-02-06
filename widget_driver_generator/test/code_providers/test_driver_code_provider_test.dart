@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:widget_driver_generator/src/code_providers/test_driver_code_provider.dart';
 import 'package:widget_driver_generator/src/models/annotated_element.dart';
 
@@ -12,8 +12,12 @@ void main() {
         driverClassName: 'ExampleDriver',
       );
       const expected = '''
-class TestExampleProvider extends ExampleDriver {
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  
 
+  
+
+  
 }
 ''';
       expect(codeProvider.code, expected);
@@ -28,10 +32,13 @@ class TestExampleProvider extends ExampleDriver {
         driverClassName: 'ExampleDriver',
       );
       const expected = '''
-class TestExampleProvider extends ExampleDriver {
-@override
-final String example = '\'\'';
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  @override
+final String example = '';
 
+  
+
+  
 }
 ''';
       expect(codeProvider.code, expected);
@@ -47,31 +54,37 @@ final String example = '\'\'';
         driverClassName: 'ExampleDriver',
       );
       const expected = '''
-class TestExampleProvider extends ExampleDriver {
-@override
-final String example = '\'\'';
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  @override
+final String example = '';
 
 @override
-final String example2 = '\'\'';
+final String example2 = '';
 
+  
+
+  
 }
 ''';
       expect(codeProvider.code, expected);
     });
     test("Builds with one property", () {
       final codeProvider = TestDriverCodeProvider(
-        methods: [
+        methods: [],
+        properties: [
           AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
         ],
-        properties: [],
         fields: [],
         driverClassName: 'ExampleDriver',
       );
       const expected = '''
-class TestExampleProvider extends ExampleDriver {
-@override
-String get example => '\'\'';
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  
 
+  @override
+String get example => '';
+
+  
 }
 ''';
       expect(codeProvider.code, expected);
@@ -87,13 +100,16 @@ String get example => '\'\'';
         driverClassName: 'ExampleDriver',
       );
       const expected = '''
-class TestExampleProvider extends ExampleDriver {
-@override
-String get example => '\'\'';
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  
+
+  @override
+String get example => '';
 
 @override
-String get example2 => '\'\'';
+String get example2 => '';
 
+  
 }
 ''';
       expect(codeProvider.code, expected);
@@ -108,12 +124,15 @@ String get example2 => '\'\'';
         driverClassName: 'ExampleDriver',
       );
       const expected = '''
-class TestExampleProvider extends ExampleDriver {
-@override
-String example() {
-  return ''
-}
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  
 
+  
+
+  @override
+String example() {
+  return '';
+}
 }
 ''';
       expect(codeProvider.code, expected);
@@ -129,15 +148,18 @@ String example() {
         driverClassName: 'ExampleDriver',
       );
       const expected = '''
-class TestExampleProvider extends ExampleDriver {
-@override
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  
+
+  
+
+  @override
 String example() {
-  return ''
+  return '';
 }
 
 @override
 void example2() {}
-
 }
 ''';
       expect(codeProvider.code, expected);
@@ -160,27 +182,26 @@ void example2() {}
         driverClassName: 'ExampleDriver',
       );
       const expected = '''
-class TestExampleProvider extends ExampleDriver {
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
   @override
-final String example = '\'\'';
+final String example = '';
 
 @override
-final String example2 = '\'\'';
+final String example2 = '';
+
+  @override
+String get example => '';
 
 @override
-String get example => '\'\'';
+String get example2 => '';
 
-@override
-String get example2 => '\'\'';
-
-@override
+  @override
 String example() {
-  return ''
+  return '';
 }
 
 @override
 void example2() {}
-
 }
 ''';
       expect(codeProvider.code, expected);

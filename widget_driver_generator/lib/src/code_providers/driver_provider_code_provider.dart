@@ -58,13 +58,11 @@ class DriverProviderCodeProvider {
   /// ```dart
   /// final Type _providedVariable;
   /// ```
-  String _fields() {
-    final CodeWriter buffer = CodeWriter();
-    for (final variable in _providedFields) {
-      buffer.writeCode('final ${variable.type} _${variable.name};');
-    }
-    return buffer.getAllCode();
-  }
+  String _fields() => _providedFields
+      .map(
+        (e) => 'final ${e.type} _${e.name};',
+      )
+      .join('\n');
 
   /// Generates the constructor parameters for every field in `fields` provided in the constructor of this class.
   /// All of this fields will be generated as named parameters and be required, depending on the `required` field
@@ -90,7 +88,11 @@ class DriverProviderCodeProvider {
   /// ) : // from the constructor not generated here.
   /// _providableVariable = providableVariable;
   /// ```
-  String _constructorInitializer() => _providedFields.map((e) => '_${e.name} = ${e.name}').join(',');
+  String _constructorInitializer() => _providedFields
+      .map(
+        (e) => '_${e.name} = ${e.name}',
+      )
+      .join(',');
 
   /// Generates the parameter list to be passed to the Driver in the `buildDriver` method, containing all the
   /// provided named and positional fields.

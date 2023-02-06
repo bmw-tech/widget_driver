@@ -1,4 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
+
 import 'package:widget_driver_generator/src/code_providers/driver_provider_code_provider.dart';
 import 'package:widget_driver_generator/src/models/providable_field.dart';
 
@@ -24,7 +25,7 @@ class \$ExampleDriverProvider extends WidgetDriverProvider<ExampleDriver> {
 ''';
       expect(codeProvider.driverProviderClass, expectedCode);
     });
-    test('DriverProviderCodeProvider returns code without fields', () {
+    test('DriverProviderCodeProvider returns code with fields', () {
       final codeProvider = DriverProviderCodeProvider(
         fields: [
           ProvidableField(
@@ -32,21 +33,30 @@ class \$ExampleDriverProvider extends WidgetDriverProvider<ExampleDriver> {
             type: ''.runtimeType.toString(),
             isRequired: true,
             isNamed: false,
-          )
+          ),
+          ProvidableField(
+            name: 'example2',
+            type: ''.runtimeType.toString(),
+            isRequired: true,
+            isNamed: true,
+          ),
         ],
         driverClassName: 'ExampleDriver',
       );
       const expectedCode = '''
 class \$ExampleDriverProvider extends WidgetDriverProvider<ExampleDriver> {
   final String _example;
+final String _example2;
 
   \$ExampleDriverProvider({
-    required String example;
-  }) : _example = example;
+    required String example,
+required String example2,
+
+  }) : _example = example,_example2 = example2;
 
   @override
   ExampleDriver buildDriver(BuildContext context) {
-    return ExampleDriver(context , example: _example,);
+    return ExampleDriver(context , _example, example2: _example2,);
   }
 
   @override
