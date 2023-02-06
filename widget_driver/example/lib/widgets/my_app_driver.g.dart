@@ -16,9 +16,7 @@ class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
 class $MyAppDriverProvider extends WidgetDriverProvider<MyAppDriver> {
   @override
   MyAppDriver buildDriver(BuildContext context) {
-    return MyAppDriver(
-      context,
-    );
+    return MyAppDriver(context);
   }
 
   @override

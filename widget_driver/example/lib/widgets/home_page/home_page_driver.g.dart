@@ -22,9 +22,7 @@ class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
 class $HomePageDriverProvider extends WidgetDriverProvider<HomePageDriver> {
   @override
   HomePageDriver buildDriver(BuildContext context) {
-    return HomePageDriver(
-      context,
-    );
+    return HomePageDriver(context);
   }
 
   @override

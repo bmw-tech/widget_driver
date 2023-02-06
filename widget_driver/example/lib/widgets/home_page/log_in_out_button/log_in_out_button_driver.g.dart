@@ -19,9 +19,7 @@ class _$TestLogInOutButtonDriver extends TestDriver implements LogInOutButtonDri
 class $LogInOutButtonDriverProvider extends WidgetDriverProvider<LogInOutButtonDriver> {
   @override
   LogInOutButtonDriver buildDriver(BuildContext context) {
-    return LogInOutButtonDriver(
-      context,
-    );
+    return LogInOutButtonDriver(context);
   }
 
   @override

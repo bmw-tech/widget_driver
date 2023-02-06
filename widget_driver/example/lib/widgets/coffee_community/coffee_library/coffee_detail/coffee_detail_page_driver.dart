@@ -10,7 +10,7 @@ class CoffeeDetailPageDriver extends WidgetDriver {
 
   CoffeeDetailPageDriver(
     BuildContext context, {
-    @driverProvidableModel required Coffee coffee,
+    @driverProvidableProperty required Coffee coffee,
   })  : _coffee = coffee,
         super(context);
 
