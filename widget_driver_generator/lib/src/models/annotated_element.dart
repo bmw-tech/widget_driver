@@ -7,7 +7,7 @@ class AnnotatedElement {
   final String returnValue;
   final String codeDefinition;
 
-  AnnotatedElement({
+  const AnnotatedElement({
     required this.returnValue,
     required this.codeDefinition,
   });
