@@ -1,7 +1,6 @@
 import 'package:example/widgets/coffee_community/coffee_library/coffee_detail/coffee_detail_page.dart';
 import 'package:example/widgets/custom_widgets/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../models/coffee.dart';
 
