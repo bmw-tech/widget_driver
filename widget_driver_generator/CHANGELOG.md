@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.0.4
+
+* Uses the new `@driverProvidableProperty` annotation in the widget_driver_annotation package to generate code in the `DriverProvider`, to pass data from the widget to the driver.
+* Refactors the generator classes for more readable and decoupled code.
+
 ## 0.0.3
 
 * Updates generator to be compatible with new annotations in the widget_driver_annotation package.
