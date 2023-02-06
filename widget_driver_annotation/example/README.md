@@ -3,12 +3,6 @@
 ```dart
 @GenerateTestDriver()
 class CounterDriver extends WidgetDriver {
-    final SomeModel model;
-
-    CounterDriver({
-        @driverProvidableProperty required this.model,
-    })
-
     @TestDriverDefaultValue(1)
     int get value => _counterService.value;
 
