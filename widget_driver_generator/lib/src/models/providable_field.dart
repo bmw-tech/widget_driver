@@ -13,8 +13,8 @@ class ProvidableField {
     required this.name,
     required this.type,
     required this.isRequired,
-    required this.defaultValueCode,
     required this.isNamed,
+    this.defaultValueCode,
   });
 
   factory ProvidableField.fromParameterElement(ParameterElement param) {

@@ -39,7 +39,7 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
       driverClassName: driverClassName,
     );
 
-    codeWriter.writeCode(testDriverCodeProvider.getCode);
+    codeWriter.writeCode(testDriverCodeProvider.code);
 
     //###################################
     // Start - DriverProvider generation

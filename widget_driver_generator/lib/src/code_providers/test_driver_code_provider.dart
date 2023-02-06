@@ -31,7 +31,7 @@ class TestDriverCodeProvider {
   ///   void exampleMethod() {}
   /// }
   /// ```
-  String get getCode => '''
+  String get code => '''
 class $_testDriverClassName extends TestDriver implements $_driverClassName {
   ${_fieldsCode()}
 
