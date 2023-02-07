@@ -335,7 +335,7 @@ Easy...
     ```
 
 2. Then we just run the generator like we did before...
-3. After that we just need to hand the Variable over to the `DriverProvider` and that's it. 🥳
+3. After that we just need to hand the variable over to the `DriverProvider` and that's it. 🥳
 
    ```dart
     class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
