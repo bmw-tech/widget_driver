@@ -1,3 +1,4 @@
+import 'package:example/models/coffee.dart';
 import 'package:example/widgets/coffee_community/coffee_library/coffee_detail/coffee_detail_page_driver.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
@@ -5,7 +6,10 @@ import 'package:widget_driver/widget_driver.dart';
 import '../../../custom_widgets/cached_network_image.dart';
 
 class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
-  CoffeeDetailPage({Key? key}) : super(key: key);
+  final Coffee coffee;
+  final int index;
+
+  CoffeeDetailPage({Key? key, required this.coffee, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,5 +30,8 @@ class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider();
+  WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider(
+        index: index,
+        coffee: coffee,
+      );
 }

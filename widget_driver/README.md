@@ -293,6 +293,85 @@ The driver decides when the widget needs to update. So inside your driver code, 
 
 This will automatically make sure that your widget get reloaded and it can consume the latest values from your driver.
 
+### If you do want to pass data from the widget to the driver
+
+Say we have a ListView which contains multiple coffees. When the user clicks on one of the items, we want to redirect him to a details page. So how do we pass that coffee object through our widget to the driver to properly use it.
+Easy...
+
+1. First, we annotate the variable in the driver with the `@driverProvidableProperty` annotation. This tells the generator to allow this variable to be passed through from the widget.
+
+    ```dart
+      import 'package:widget_driver/widget_driver.dart';
+
+      import '../../../../models/coffee.dart';
+
+      part 'coffee_detail_page_driver.g.dart';
+
+      @GenerateTestDriver()
+      class CoffeeDetailPageDriver extends WidgetDriver {
+        final int index;
+        final Coffee _coffee;
+
+        CoffeeDetailPageDriver(
+          BuildContext context, 
+          @driverProvidableProperty this.index, {
+          @driverProvidableProperty required Coffee coffee,
+        })  : _coffee = coffee,
+              super(context);
+
+        @TestDriverDefaultValue(TestCoffee.testCoffeeName)
+        String get coffeeName {
+          return '$index. ${_coffee.name}';
+        }
+
+        @TestDriverDefaultValue(TestCoffee.testCoffeeDescription)
+        String get coffeeDescription {
+          return _coffee.description;
+        }
+
+        @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
+        String get coffeeImageUrl {
+          return _coffee.imageUrl;
+        }
+      }
+    ```
+
+2. Then we just run the generator like we did before...
+3. After that we just need to hand the variable over to the `DriverProvider` and that's it. 🥳
+
+   ```dart
+    class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
+      final int index;
+      final Coffee coffee;
+
+      CoffeeDetailPage({Key? key, required this.index, required this.coffee}) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(driver.coffeeName),
+          ),
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                child: Text(driver.coffeeDescription),
+              ),
+              CachedNetworkImage(imageUrl: driver.coffeeImageUrl)
+            ],
+          ),
+        );
+      }
+
+      @override
+      WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider(
+        index: index,
+        coffee: coffee,
+      );
+    }
+   ```
+
 ### Demo
 
 Here is a demo of how the final product looks like

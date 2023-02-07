@@ -1,14 +1,14 @@
 import 'package:example/widgets/coffee_community/coffee_library/coffee_detail/coffee_detail_page.dart';
 import 'package:example/widgets/custom_widgets/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../models/coffee.dart';
 
 class CoffeeRow extends StatelessWidget {
   final Coffee coffee;
+  final int index;
 
-  const CoffeeRow({Key? key, required this.coffee}) : super(key: key);
+  const CoffeeRow({Key? key, required this.coffee, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,9 @@ class CoffeeRow extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Provider.value(
-              value: coffee,
-              child: CoffeeDetailPage(),
+            builder: (context) => CoffeeDetailPage(
+              index: index,
+              coffee: coffee,
             ),
           ),
         );
@@ -48,7 +48,7 @@ class CoffeeRow extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                coffee.name,
+                '$index. ${coffee.name}',
                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),

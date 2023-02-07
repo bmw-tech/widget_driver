@@ -6,6 +6,8 @@ import 'type_utils.dart';
 
 /// A helper class for getting data out of elements
 class ElementUtils {
+  const ElementUtils();
+
   /// Checks if the current element has an annotation which is valid.
   /// If it has a valid annotation, then that annotation type is returned, else it returns null.
   Type? getValidAnnotation({
@@ -20,6 +22,14 @@ class ElementUtils {
     }
     return null;
   }
+
+  /// Checks if the current `element` has an annotation of the provided `validAnnotationType`.
+  /// Returns `true`, if this true and `false` accordingly.
+  bool hasValidAnnotation({
+    required Element element,
+    required Type validAnnotationType,
+  }) =>
+      getValidAnnotation(element: element, validAnnotationTypes: [validAnnotationType]) != null;
 
   /// Get the string definition of the current element.
   /// E.g. if the element is a `PropertyAccessorElement` which returns a bool and
