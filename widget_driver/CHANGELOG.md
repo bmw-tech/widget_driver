@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Updates documentation to reflect the new driver annotation names.
+
 ## 0.0.3
 
 * Removes `FlowCoordinators` since it is currently not used. We will add this back if it ever becomes needed.
