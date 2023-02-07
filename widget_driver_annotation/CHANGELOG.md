@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.4
+
+* Adds new annotation to support passing data from the widget to the driver
+
 ## 0.0.3
 
 * Breaking change: Removes old annotation -> `Driver`, `DriverProperty`, `DriverAction`.  
