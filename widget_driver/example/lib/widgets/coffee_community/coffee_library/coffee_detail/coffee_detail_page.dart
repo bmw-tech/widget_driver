@@ -7,8 +7,9 @@ import '../../../custom_widgets/cached_network_image.dart';
 
 class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
   final Coffee coffee;
+  final int index;
 
-  CoffeeDetailPage({Key? key, required this.coffee}) : super(key: key);
+  CoffeeDetailPage({Key? key, required this.coffee, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,5 +30,8 @@ class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider(coffee: coffee);
+  WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider(
+        index: index,
+        coffee: coffee,
+      );
 }

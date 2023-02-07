@@ -309,17 +309,19 @@ Easy...
 
       @GenerateTestDriver()
       class CoffeeDetailPageDriver extends WidgetDriver {
+        final int index;
         final Coffee _coffee;
 
         CoffeeDetailPageDriver(
-          BuildContext context, {
+          BuildContext context, 
+          @driverProvidableProperty this.index, {
           @driverProvidableProperty required Coffee coffee,
         })  : _coffee = coffee,
               super(context);
 
         @TestDriverDefaultValue(TestCoffee.testCoffeeName)
         String get coffeeName {
-          return _coffee.name;
+          return '$index. ${_coffee.name}';
         }
 
         @TestDriverDefaultValue(TestCoffee.testCoffeeDescription)
@@ -339,9 +341,10 @@ Easy...
 
    ```dart
     class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
+      final int index;
       final Coffee coffee;
 
-      CoffeeDetailPage({Key? key, required this.coffee}) : super(key: key);
+      CoffeeDetailPage({Key? key, required this.index, required this.coffee}) : super(key: key);
 
       @override
       Widget build(BuildContext context) {
@@ -362,7 +365,10 @@ Easy...
       }
 
       @override
-      WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider(coffee: coffee);
+      WidgetDriverProvider<CoffeeDetailPageDriver> get driverProvider => $CoffeeDetailPageDriverProvider(
+        index: index,
+        coffee: coffee,
+      );
     }
    ```
 

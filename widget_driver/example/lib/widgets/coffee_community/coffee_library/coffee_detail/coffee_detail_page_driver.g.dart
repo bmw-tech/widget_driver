@@ -20,16 +20,20 @@ class _$TestCoffeeDetailPageDriver extends TestDriver implements CoffeeDetailPag
 }
 
 class $CoffeeDetailPageDriverProvider extends WidgetDriverProvider<CoffeeDetailPageDriver> {
+  final int _index;
   final Coffee _coffee;
 
   $CoffeeDetailPageDriverProvider({
+    required int index,
     required Coffee coffee,
-  }) : _coffee = coffee;
+  })  : _index = index,
+        _coffee = coffee;
 
   @override
   CoffeeDetailPageDriver buildDriver(BuildContext context) {
     return CoffeeDetailPageDriver(
       context,
+      _index,
       coffee: _coffee,
     );
   }

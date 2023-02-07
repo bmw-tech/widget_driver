@@ -6,8 +6,9 @@ import '../../../models/coffee.dart';
 
 class CoffeeRow extends StatelessWidget {
   final Coffee coffee;
+  final int index;
 
-  const CoffeeRow({Key? key, required this.coffee}) : super(key: key);
+  const CoffeeRow({Key? key, required this.coffee, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class CoffeeRow extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => CoffeeDetailPage(
+              index: index,
               coffee: coffee,
             ),
           ),
@@ -46,7 +48,7 @@ class CoffeeRow extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                coffee.name,
+                '$index. ${coffee.name}',
                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
