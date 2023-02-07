@@ -27,7 +27,7 @@ class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
         methods: [],
         properties: [],
         fields: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
         ],
         driverClassName: 'ExampleDriver',
       );
@@ -48,8 +48,8 @@ final String example = '';
         methods: [],
         properties: [],
         fields: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example2'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example2'),
         ],
         driverClassName: 'ExampleDriver',
       );
@@ -72,7 +72,7 @@ final String example2 = '';
       final codeProvider = TestDriverCodeProvider(
         methods: [],
         properties: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
         ],
         fields: [],
         driverClassName: 'ExampleDriver',
@@ -93,8 +93,8 @@ String get example => '';
       final codeProvider = TestDriverCodeProvider(
         methods: [],
         properties: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example2'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example2'),
         ],
         fields: [],
         driverClassName: 'ExampleDriver',
@@ -117,7 +117,7 @@ String get example2 => '';
     test('Builds with one method', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
         ],
         properties: [],
         fields: [],
@@ -140,8 +140,8 @@ String example() {
     test('Builds with multiple methods', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
-          AnnotatedElement(returnValue: '', codeDefinition: 'void example2()'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
+          const AnnotatedElement(returnValue: '', codeDefinition: 'void example2()'),
         ],
         properties: [],
         fields: [],
@@ -168,16 +168,16 @@ void example2() {}
     test('Builds mixed', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
-          AnnotatedElement(returnValue: '', codeDefinition: 'void example2()'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
+          const AnnotatedElement(returnValue: '', codeDefinition: 'void example2()'),
         ],
         properties: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example2'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example2'),
         ],
         fields: [
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
-          AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example2'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
+          const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example2'),
         ],
         driverClassName: 'ExampleDriver',
       );

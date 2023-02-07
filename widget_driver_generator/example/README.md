@@ -29,10 +29,12 @@ class MyDriver extends WidgetDriver {
 
 ```dart
 class MyDriver extends WidgetDriver {
-  final SomeType someVariable;
+  final SomeType someNamedVariable;
+  final SomeType somePositionalVariable;
 
-  MyDriver({
-    @driverProvidableProperty required this.someVariable
+  MyDriver(
+    @driverProvidableProperty this.somePositionalVariable, {
+    @driverProvidableProperty required this.someNamedVariable
   });
 
   ...
@@ -46,7 +48,10 @@ class MyWidget extends DriveableWidget<MyDriver> {
   }
 
   @override
-  WidgetDriverProvider<MyDriver> get driverProvider => $MyDriverProvider(someVariable: xyz);
+  WidgetDriverProvider<MyDriver> get driverProvider => $MyDriverProvider(
+    somePositionalVariable: xyz,
+    someNamedVariable: zyx,
+  );
 }
 ```
 

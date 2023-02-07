@@ -98,9 +98,9 @@ class DriverProviderCodeProvider {
   /// provided named and positional fields.
   String _parameters() {
     final namedVariables =
-        _providedNamedFields.isNotEmpty ? _providedNamedFields.map((e) => '${e.name}: _${e.name}').join(',') + ',' : '';
+        _providedNamedFields.isNotEmpty ? '${_providedNamedFields.map((e) => '${e.name}: _${e.name}').join(',')},' : '';
     final positionalVariables =
-        _providedPositionalFields.isNotEmpty ? _providedPositionalFields.map((e) => '_${e.name}').join(',') + ',' : '';
+        _providedPositionalFields.isNotEmpty ? '${_providedPositionalFields.map((e) => '_${e.name}').join(',')},' : '';
     return ', $positionalVariables $namedVariables';
   }
 
