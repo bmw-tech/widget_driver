@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Updates to use latest version of annotations package which contains the new `driverProvidableProperty` annotations to support passing simple parameters directly into the driver.
+
 ## 0.0.4
 
 * Updates documentation to reflect the new driver annotation names.
