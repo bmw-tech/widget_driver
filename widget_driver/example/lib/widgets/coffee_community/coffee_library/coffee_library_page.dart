@@ -25,7 +25,10 @@ class CoffeeLibraryPage extends DrivableWidget<CoffeeLibraryPageDriver> {
             final coffee = driver.getCoffeeAtIndex(index);
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: CoffeeRow(coffee: coffee),
+              child: CoffeeRow(
+                index: index + 1,
+                coffee: coffee,
+              ),
             );
           });
     }

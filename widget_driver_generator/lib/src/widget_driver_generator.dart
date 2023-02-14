@@ -4,6 +4,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
+import 'package:widget_driver_generator/src/code_providers/driver_provider_code_provider.dart';
+import 'package:widget_driver_generator/src/code_providers/test_driver_code_provider.dart';
 import 'package:widget_driver_generator/src/utils/code_writer.dart';
 
 import 'model_visitor.dart';
@@ -12,12 +14,12 @@ import 'model_visitor.dart';
 class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
   @override
   Future<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
+    // Visit the annotated class and gather the data we need.
     final visitor = ModelVisitor();
     element.visitChildren(visitor);
 
     final codeWriter = CodeWriter();
     final driverClassName = visitor.className;
-    final providerClassName = '\$${driverClassName}Provider';
 
     //###################################
     // Start - Package version generation
@@ -30,30 +32,25 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
     // Start - TestDriver generation
     //###################################
 
-    final testDriverClassName = '_\$Test$driverClassName';
+    final testDriverCodeProvider = TestDriverCodeProvider(
+      methods: visitor.methods,
+      properties: visitor.properties,
+      fields: visitor.fields,
+      driverClassName: driverClassName,
+    );
 
-    codeWriter.writeCode('class $testDriverClassName extends TestDriver implements $driverClassName {');
-    final annotationVisitor = AnnotationVisitor(codeWriter: codeWriter);
-    element.visitChildren(annotationVisitor);
-    codeWriter.writeCode('}');
+    codeWriter.writeCode(testDriverCodeProvider.code);
 
     //###################################
     // Start - DriverProvider generation
     //###################################
 
-    codeWriter.writeCode('class $providerClassName extends WidgetDriverProvider<$driverClassName> {');
+    final driverProviderCodeProvider = DriverProviderCodeProvider(
+      fields: visitor.providableFields,
+      driverClassName: driverClassName,
+    );
 
-    codeWriter.writeCode('@override');
-    codeWriter.writeCode('$driverClassName buildDriver(BuildContext context) {');
-    codeWriter.writeCode('return $driverClassName(context);');
-    codeWriter.writeCode('}');
-
-    codeWriter.writeCode('@override');
-    codeWriter.writeCode('$driverClassName buildTestDriver() {');
-    codeWriter.writeCode('return $testDriverClassName();');
-    codeWriter.writeCode('}');
-
-    codeWriter.writeCode('}');
+    codeWriter.writeCode(driverProviderCodeProvider.driverProviderClass);
 
     return codeWriter.getAllCode();
   }
