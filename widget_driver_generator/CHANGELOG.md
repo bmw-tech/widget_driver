@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.5
+
+* Adds `coverage:ignore-file` to generated files to make the code coverage tool ignore these.
+
 ## 0.0.4
 
 * Uses the new `@driverProvidableProperty` annotation in the widget_driver_annotation package to generate code in the `DriverProvider`, to pass data from the widget to the driver.
