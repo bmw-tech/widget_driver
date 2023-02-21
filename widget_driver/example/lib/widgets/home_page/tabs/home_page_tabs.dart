@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HomePageAppTabs {
-  final List<AppTabType> tabs = [AppTabType.consumption, AppTabType.community];
+  final List<AppTabType> tabs = [AppTabType.consumption, AppTabType.community, AppTabType.playground];
 }
 
-enum AppTabType { consumption, community }
+enum AppTabType { consumption, community, playground }
 
 extension IconProvider on AppTabType {
   IconData get iconData {
@@ -13,6 +13,8 @@ extension IconProvider on AppTabType {
         return Icons.coffee;
       case AppTabType.community:
         return Icons.people;
+      case AppTabType.playground:
+        return Icons.app_shortcut;
     }
   }
 }
