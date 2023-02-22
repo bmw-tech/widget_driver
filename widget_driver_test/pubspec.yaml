@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widget_driver: ^0.0.4
+  widget_driver:
+    path: ../widget_driver
   mocktail: ^0.1.4
   meta: ^1.7.0
   test: ^1.16.0

@@ -12,7 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   meta: ^1.7.0
-  widget_driver_annotation: ^0.0.4
+  widget_driver_annotation:
+    path: ../widget_driver_annotation
 
 dev_dependencies:
   flutter_test:

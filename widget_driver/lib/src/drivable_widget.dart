@@ -40,6 +40,7 @@ abstract class DrivableWidget<Driver extends WidgetDriver> extends StatefulWidge
 
 class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidget<Driver>> {
   Driver? _driver;
+  bool _shouldRebuildDriver = false;
 
   @override
   void dispose() {
@@ -52,13 +53,28 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
   Widget build(BuildContext context) {
     final driver = _getDriverAndSetupUpIfNeeded(context);
     widget._widgetDriverContainer.instance = driver;
+    widget.driverProvider.updateProvidedPropertiesIfNeeded(driver);
     return widget.build(context);
+  }
+
+  @override
+  void didChangeDependencies() {
+    print('### didChangeDependencies');
+    if (_driver != null) {
+      _shouldRebuildDriver = true;
+    }
+    super.didChangeDependencies();
   }
 
   Driver _getDriverAndSetupUpIfNeeded(BuildContext context) {
     // The driver was already created. Nothing more to do. Just return it.
     if (_driver != null) {
-      return _driver!;
+      if (!_shouldRebuildDriver) {
+        return _driver!;
+      } else {
+        _shouldRebuildDriver = false;
+        _driver!.dispose();
+      }
     }
 
     Driver driver;
