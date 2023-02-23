@@ -337,7 +337,46 @@ Easy...
     ```
 
 2. Then we just run the generator like we did before...
-3. After that we just need to hand the variable over to the `DriverProvider` and that's it. 🥳
+3. We should get a compiler warning in the generated file. To resolve that we just have to add the generated mixin `$<YourDriver>ProvidedPropertiesMixin` to our driver like this:
+
+    ```dart
+    @GenerateTestDriver()
+      class CoffeeDetailPageDriver extends WidgetDriver with $CoffeeDetailPageDriverProvidedPropertiesMixin {
+        ...
+      }
+    ```
+
+4. This requires us to override `updateProvidedProperties(...)` which gets called on state updates. That way we can respond to new values to our provided properties. (Technical Note: This is because the Driver does not get rebuilt on state updates. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
+
+    ```dart
+    @GenerateTestDriver()
+      class CoffeeDetailPageDriver extends WidgetDriver with $CoffeeDetailPageDriverProvidedPropertiesMixin {
+        int index;
+        Coffee _coffee;
+
+        CoffeeDetailPageDriver(
+          BuildContext context, 
+          @driverProvidableProperty this.index, {
+          @driverProvidableProperty required Coffee coffee,
+        })  : _coffee = coffee,
+              super(context);
+
+        ...
+
+        @override
+        void updateProvidedProperties(
+          int newIndex,
+          Coffee newCoffee,
+        ) {
+          index = newIndex;
+          _coffee = newCoffee;
+
+          // And whatever else you want to do on state change.
+        }
+      }
+    ```
+
+5. After that we just need to hand the variable over to the `DriverProvider` and that's it. 🥳
 
    ```dart
     class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {

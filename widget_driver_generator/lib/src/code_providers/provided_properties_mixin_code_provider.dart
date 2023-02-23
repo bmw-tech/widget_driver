@@ -12,8 +12,19 @@ class ProvidedPropertiesMixinCodeProvider {
   })  : _fields = fields,
         _providedPropertiesMixinClassName = ClassUtils.providedPropertiesMixinClassName(driverClassName);
 
+  /// Generates the parameter list for [updateProvidedProperties], as required named parameters.
   String _parameters() => _fields.map((e) => 'required ${e.type} ${e.name.makeItNew()}').join(',');
 
+  /// Returns the code of the `ProvidedPropertiesMixin` class depending on the provided ProvidableFields list.
+  /// E.g:
+  /// ```dart
+  /// class $ExampleDriverProvidedPropertiesMixin {
+  ///   void updateProvidedProperties({
+  ///     required int newIndex,
+  ///     required String newTitle,
+  ///   });
+  /// }
+  /// ```
   String get providedPropertiesMixinClass {
     if (_fields.isEmpty) {
       return '';

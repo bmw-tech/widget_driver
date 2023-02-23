@@ -14,7 +14,9 @@ abstract class WidgetDriverProvider<Driver extends WidgetDriver> {
   /// Creates and returns the `Driver` with the hard coded test values.
   Driver buildTestDriver();
 
-  /// TODO: Add some real documentation here.. and maybe rename the method?
-  /// Is another name better?
+  /// This function only get's overriden when the driver has provided properties.
+  /// It calls a function in the driver, added by the `[SomeDriver]ProvidedPropertiesMixin`,
+  /// to respond to properties changed during a state update.
+  /// (The driver does not get rebuilt for state updates!)
   void updateProvidedProperties(Driver driver) {}
 }
