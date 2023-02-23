@@ -53,13 +53,12 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
   Widget build(BuildContext context) {
     final driver = _getDriverAndSetupUpIfNeeded(context);
     widget._widgetDriverContainer.instance = driver;
-    widget.driverProvider.updateProvidedPropertiesIfNeeded(driver);
+    widget.driverProvider.updateProvidedProperties(driver);
     return widget.build(context);
   }
 
   @override
   void didChangeDependencies() {
-    print('### didChangeDependencies');
     if (_driver != null) {
       _shouldRebuildDriver = true;
     }

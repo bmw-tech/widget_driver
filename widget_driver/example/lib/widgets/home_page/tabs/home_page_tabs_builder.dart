@@ -13,7 +13,7 @@ class HomePageTabBuilder {
       case AppTabType.community:
         return CoffeeCommunityPage();
       case AppTabType.playground:
-        return PlaygroundPage();
+        return const PlaygroundPage();
     }
   }
 }

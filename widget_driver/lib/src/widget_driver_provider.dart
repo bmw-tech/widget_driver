@@ -14,7 +14,7 @@ abstract class WidgetDriverProvider<Driver extends WidgetDriver> {
   /// Creates and returns the `Driver` with the hard coded test values.
   Driver buildTestDriver();
 
-  /// Add some real documentation here.. and maybe rename the method?
+  /// TODO: Add some real documentation here.. and maybe rename the method?
   /// Is another name better?
-  void updateProvidedPropertiesIfNeeded(Driver driver) {}
+  void updateProvidedProperties(Driver driver) {}
 }

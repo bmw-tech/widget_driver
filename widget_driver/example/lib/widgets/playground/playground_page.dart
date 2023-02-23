@@ -59,7 +59,7 @@ class ColorWidget extends DrivableWidget<ColorWidgetDriver> {
         const Text('Child Widget stuff'),
         Provider.value(
           value: driver.selectedColor,
-          child: ColorDisplayerWidget(),
+          child: const ColorDisplayerWidget(),
         ),
         const SizedBox(height: 20),
         Provider.value(
@@ -77,7 +77,7 @@ class ColorWidget extends DrivableWidget<ColorWidgetDriver> {
 // ########### Normal widget ###########
 
 class ColorDisplayerWidget extends StatelessWidget {
-  ColorDisplayerWidget({Key? key}) : super(key: key);
+  const ColorDisplayerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +113,8 @@ class DrivableColorDisplayerWidget extends DrivableWidget<DrivableColorDisplayer
 }
 
 class DrivableColorDisplayerWidgetDriver extends WidgetDriver with $MixinProvidedProperties {
-  final MaterialColor _color;
   final Locator _read;
-
+  final MaterialColor _color;
   MaterialColor _passedInColor;
 
   DrivableColorDisplayerWidgetDriver(
@@ -125,13 +124,15 @@ class DrivableColorDisplayerWidgetDriver extends WidgetDriver with $MixinProvide
         // _color = context.watch<MaterialColor>(), // Getting data from context which will update
         _color = context.read<MaterialColor>(), // Getting data from context which will not update
         _passedInColor = passedInColor,
-        super(context) {
-    print('### New driver created');
-  }
+        super(context);
 
   // MaterialColor get selectedColor => _read<MaterialColor>(); // get color from Locator
   // MaterialColor get selectedColor => _color; // get color from context
   MaterialColor get selectedColor => _passedInColor; // get color from passed in color
+
+  MaterialColor get contextColor => _read<MaterialColor>();
+
+  MaterialColor get oneTimeReadColor => _color;
 
   @override
   void updateProperties2(MaterialColor passedInColor) {
@@ -159,7 +160,7 @@ class DrivableColorDisplayerWidgetDriverProvider extends WidgetDriverProvider<Dr
   }
 
   @override
-  void updateProvidedPropertiesIfNeeded(DrivableColorDisplayerWidgetDriver driver) {
+  void updateProvidedProperties(DrivableColorDisplayerWidgetDriver driver) {
     // Dont forgot to add the mixin to your diver.. This is how you do it: example
     driver.updateProperties2(passedInColor);
   }

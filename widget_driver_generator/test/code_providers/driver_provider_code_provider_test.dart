@@ -63,6 +63,25 @@ required String example2,
   ExampleDriver buildTestDriver() {
     return _\$TestExampleDriver();
   }
+
+  @override
+  void updateProvidedProperties(ExampleDriver driver) {
+    /* 
+      In case you get a compiler error here, you have to mixin [\$ExampleDriverProvidedPropertiesMixin] into your driver.
+      And implement [updateProvidedProperties()], there you can react to new values to all your provided values.
+      Like this:
+      class ExampleDriver extends WidgetDriver with [\$ExampleDriverProvidedPropertiesMixin] {
+        
+        ...
+
+        @override
+        void updateProvidedProperties(...) {
+          // Handle your updates
+        }
+      }
+    */ 
+    driver.updateProvidedProperties(newExample: _example,newExample2: _example2,);
+  }
 }
 ''';
       expect(codeProvider.driverProviderClass, expectedCode);

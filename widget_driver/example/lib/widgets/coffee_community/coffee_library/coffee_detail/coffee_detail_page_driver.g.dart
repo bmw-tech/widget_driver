@@ -44,4 +44,33 @@ class $CoffeeDetailPageDriverProvider extends WidgetDriverProvider<CoffeeDetailP
   CoffeeDetailPageDriver buildTestDriver() {
     return _$TestCoffeeDetailPageDriver();
   }
+
+  @override
+  void updateProvidedProperties(CoffeeDetailPageDriver driver) {
+    /* 
+      In case you get a compiler error here, you have to mixin [$CoffeeDetailPageDriverProvidedPropertiesMixin] into your driver.
+      And implement [updateProvidedProperties()], there you can react to new values to all your provided values.
+      Like this:
+      class CoffeeDetailPageDriver extends WidgetDriver with [$CoffeeDetailPageDriverProvidedPropertiesMixin] {
+        
+        ...
+
+        @override
+        void updateProvidedProperties(...) {
+          // Handle your updates
+        }
+      }
+    */
+    driver.updateProvidedProperties(
+      newIndex: _index,
+      newCoffee: _coffee,
+    );
+  }
+}
+
+mixin $CoffeeDetailPageDriverProvidedPropertiesMixin {
+  void updateProvidedProperties({
+    required int newIndex,
+    required Coffee newCoffee,
+  });
 }
