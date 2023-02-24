@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.6
+
+* Adds generating of `_$DriverProvidedPropertiesMixin` which fixes ignoring of state issues
+
 ## 0.0.5
 
 * Adds `coverage:ignore-file` to generated files to make the code coverage tool ignore these.
