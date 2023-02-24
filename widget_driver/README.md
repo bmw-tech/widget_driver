@@ -337,20 +337,20 @@ Easy...
     ```
 
 2. Then we just run the generator like we did before...
-3. We should get a compiler warning in the generated file. To resolve that we just have to add the generated mixin `$<YourDriver>ProvidedPropertiesMixin` to our driver like this:
+3. We should get a compiler warning in the generated file. To resolve that we just have to add the generated mixin `_$DriverProvidedPropertiesMixin` to our driver like this:
 
     ```dart
     @GenerateTestDriver()
-      class CoffeeDetailPageDriver extends WidgetDriver with $CoffeeDetailPageDriverProvidedPropertiesMixin {
+      class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
         ...
       }
     ```
 
-4. This requires us to override `updateDriverProvidedProperties(...)` which gets called on state updates. That way we can respond to new values to our provided properties. (Technical Note: This is because the Driver does not get rebuilt on state updates. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
+4. This requires us to override `updateDriverProvidedProperties(...)` which gets called on state update to the corresponding DriveableWidget. That way we can respond to new values to our provided properties given to us by the widget. (Technical Note: This is because the Driver does not get rebuilt on state updates. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
 
     ```dart
     @GenerateTestDriver()
-      class CoffeeDetailPageDriver extends WidgetDriver with $CoffeeDetailPageDriverProvidedPropertiesMixin {
+      class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
         int index;
         Coffee _coffee;
 
@@ -387,20 +387,7 @@ Easy...
 
       @override
       Widget build(BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(driver.coffeeName),
-          ),
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                child: Text(driver.coffeeDescription),
-              ),
-              CachedNetworkImage(imageUrl: driver.coffeeImageUrl)
-            ],
-          ),
-        );
+        ...
       }
 
       @override
@@ -411,48 +398,46 @@ Easy...
     }
    ```
 
-### Caveat's when working with dependencies
+### Working with changing dependencies injected into the BuildContext
 
-The driver is bound to the lifecycle of the widget, this means it lifes as long as the widget does. However we do not want to recreate the driver on every state change, that would increase the build time of a `DrivableWidget`. (That's also why we need the mixin for `@driverProvidableProperties` annotated properties)
-However we want to resolve our dependencies in our constructor. (Using e.g. `Provider`) So how do those get updated?
-We tied the recreation of the driver to the `didChangeDependencies` statefunction. Should you watch, listen or subscribe to updates to your dependencies, we will rebuild the driver for you. Thus allowing you to re-resolve your service and create new listeners etc.
-As Google's `Provider` package is one of the most used packages in that category, here is an example:
+The Driver is bound to the lifecycle of the widget's state object, this means it lifes as long as the state of a stateful widget. Because like with StatefulWidget, we do not want to rebuild the Driver on every UI change, that would increase the build time of a `DriveableWidget`. That's also why we need the mixin and the generated method for `@driverProvidableProperties` annotated properties. This way we do not need to rebuild the driver with every UI change. (Side Note: Under the hood `DriveableWidget` is a StatefulWidget)
+However we want to resolve our dependencies in our Driver's constructor. (Using e.g. `Provider`) So how do those get updated?
+We tied the recreation of the driver to the `didChangeDependencies` state function. Should you watch, listen or subscribe to updates to your dependencies, we will rebuild the driver for you. Thus allowing you to re-resolve your service and create new listeners etc.
+As the `Provider` package is one of the most used packages in that category, here is an example:
 
+#### Example with Provider
 
-#### Example with Google Provider
-
-Say we have a Auth-Service, which could be changed at runtime.
+We want to read a ThemeDataServiceService from the context, which could change between light and dark Theme at runtime.
 If we were to resolve it like this:
 
 ```dart
 class SomeDriver extends WidgetDriver {
-  final AuthService _service;
+  final ThemeDataServiceService _themeDataService;
 
   SomeDriver(
     BuildContext context, {
-    AuthService? service,
-  })  : _service = service ?? context.read<AuthService>(),
+    ThemeDataService? themeDataService,
+  })  : _themeDataService = themeDataService ?? context.read<ThemeDataService>(),
         super(context);
 }
 ```
 
-The driver would not get an update should the AuthService be changed.
+The driver would not get an update should the ThemeDataService be changed.
 The `Provider` package however offers us the option to `watch` the provided value.
 
 ```dart
 class SomeDriver extends WidgetDriver {
-  final AuthService _service;
+  final ThemeDataService _themeDataService;
 
   SomeDriver(
     BuildContext context, {
-    AuthService? service,
-  })  : _service = service ?? context.watch<AuthService>(),
+    ThemeDataService? themeDataService,
+  })  : _themeDataService = themeDataService ?? context.watch<ThemeDataService>(),
         super(context);
 }
 ```
 
-This registers the widget to get updated once the AuthService changes and the WidgetDriver Framework takes care of rebuilding the driver.
-(Note: `context.watch` only works in the context of a build function, but because the driver gets created in that context, the Constructor and `updateDriverProvidedProperties()` is actually the only place you can use this syntax)
+This registers the widget to get updated once the ThemeDataService changes and the WidgetDriver Framework takes care of rebuilding the driver.
 
 Should you not want the driver to be rebuilt you can also use a `Locator`.
 
@@ -465,11 +450,11 @@ class SomeDriver extends WidgetDriver {
     )  : _locator = context.read,
         super(context);
 
-  bool get authenticated => _locator<AuthService>().authenticated;
+  bool get isDarkMode => _locator<ThemeDataService>().isDarkMode;
 }
 ```
 
-This way you resolve the AuthService once you need it, making the recreation obsolete.
+This way you resolve the ThemeDataService once you need it, making the recreation obsolete.
 (Note: Saving the BuildContext for that purpose is **NOT** a good practice)
 
 ### Demo

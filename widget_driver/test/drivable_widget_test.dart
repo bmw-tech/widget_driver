@@ -15,73 +15,80 @@ void main() {
       _mockRuntimeEnvironmentInfo = _MockRuntimeEnvironmentInfo();
     });
 
-    testWidgets('Uses real driver when not in test environment', (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+    group('Runtime Environment: ', () {
+      testWidgets('Uses real driver when not in test environment', (WidgetTester tester) async {
+        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
-      final testContainerDrivableWidget = TestContainerDrivableWidget(
-        environmentInfo: _mockRuntimeEnvironmentInfo,
-      );
-      await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+        final testContainerDrivableWidget = TestContainerDrivableWidget(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+        );
+        await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
 
-      final driver = testContainerDrivableWidget.driver;
-      expect(driver.runtimeType, TestContainerDriver);
+        final driver = testContainerDrivableWidget.driver;
+        expect(driver.runtimeType, TestContainerDriver);
+      });
+
+      testWidgets('Uses test driver when in test environment', (WidgetTester tester) async {
+        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(true);
+
+        final testContainerDrivableWidget = TestContainerDrivableWidget(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+        );
+        await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+
+        final driver = testContainerDrivableWidget.driver;
+        expect(driver.runtimeType, TestContainerTestDriver);
+      });
     });
 
-    testWidgets('Uses test driver when in test environment', (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(true);
+    group('Driver Access: ', () {
+      testWidgets('Can access its driver', (WidgetTester tester) async {
+        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
-      final testContainerDrivableWidget = TestContainerDrivableWidget(
-        environmentInfo: _mockRuntimeEnvironmentInfo,
-      );
-      await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+        final testContainerDrivableWidget = TestContainerDrivableWidget(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+        );
+        await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
 
-      final driver = testContainerDrivableWidget.driver;
-      expect(driver.runtimeType, TestContainerTestDriver);
+        final driver = testContainerDrivableWidget.driver;
+        expect(driver.aTestText, 'A test text');
+      });
     });
 
-    testWidgets('Can access its driver', (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+    group('Providable Properties: ', () {
+      testWidgets('Calling `aTestMethod` on driver makes widget reload with new data', (WidgetTester tester) async {
+        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
-      final testContainerDrivableWidget = TestContainerDrivableWidget(
-        environmentInfo: _mockRuntimeEnvironmentInfo,
-      );
-      await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+        final testContainerDrivableWidget = TestContainerDrivableWidget(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+        );
+        await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+        final driver = testContainerDrivableWidget.driver;
 
-      final driver = testContainerDrivableWidget.driver;
-      expect(driver.aTestText, 'A test text');
-    });
+        expect(find.text('didCallTestMethod: false'), findsOneWidget);
 
-    testWidgets('Calling `aTestMethod` on driver makes widget reload with new data', (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+        driver.aTestMethod();
+        await tester.pump();
 
-      final testContainerDrivableWidget = TestContainerDrivableWidget(
-        environmentInfo: _mockRuntimeEnvironmentInfo,
-      );
-      await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
-      final driver = testContainerDrivableWidget.driver;
+        expect(find.text('didCallTestMethod: true'), findsOneWidget);
+      });
 
-      expect(find.text('didCallTestMethod: false'), findsOneWidget);
+      testWidgets('On state change updateDriverProvidedProperties gets called', (WidgetTester tester) async {
+        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
-      driver.aTestMethod();
-      await tester.pump();
+        final testContainerDrivableWidget = TestContainerDrivableWidget(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+        );
+        await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+        final driver = testContainerDrivableWidget.driver;
 
-      expect(find.text('didCallTestMethod: true'), findsOneWidget);
-    });
-    testWidgets('On state change updateDriverProvidedProperties gets called', (WidgetTester tester) async {
-      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+        expect(driver.numberOfCallsToUpdateDriverProvidedProperties, 1);
 
-      final testContainerDrivableWidget = TestContainerDrivableWidget(
-        environmentInfo: _mockRuntimeEnvironmentInfo,
-      );
-      await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
-      final driver = testContainerDrivableWidget.driver;
+        driver.aTestMethod(); // Calls `notifyWidget` thereby causing a state update
+        await tester.pump();
 
-      expect(driver.updateCount, 1);
-
-      driver.aTestMethod();
-      await tester.pump();
-
-      expect(driver.updateCount, 2);
+        expect(driver.numberOfCallsToUpdateDriverProvidedProperties, 2);
+      });
     });
 
     group('dispose behaviour of drivers', () {

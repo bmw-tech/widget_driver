@@ -3,7 +3,7 @@
 ## 0.0.6
 
 * Fixes issues with ignoring of state changes
-* using new generated mixin from `widget_driver_generator ^0.0.6`
+* enables new generated mixin from `widget_driver_generator ^0.0.6`
 
 ## 0.0.5
 

@@ -17,10 +17,10 @@ class TestContainerDriver extends WidgetDriver {
     notifyWidget();
   }
 
-  int updateCount = 0;
+  int numberOfCallsToUpdateDriverProvidedProperties = 0;
 
   void updateDriverProvidedProperties() {
-    updateCount++;
+    numberOfCallsToUpdateDriverProvidedProperties++;
   }
 }
 
