@@ -131,18 +131,18 @@ Well, not really. Let's dive into what happens:
     And thats all you need to conform to the `WidgetDriver` interface. The rest of the code in a `WidgetDriver` depends on your use case.
 
 1. Next, we define the dependencies which the driver needs. In our case we need access to some service which can keep track of the count and we need some localizations.  
-  In the constructor of the driver we have the option to resolve these dependencies either from the `BuildContext` (for example using something like the [Provider package](https://pub.dev/packages/provider)), or we can load them using a DI package such as [get_it](https://pub.dev/packages/get_it).
+  In the constructor of the driver we have the option to resolve these dependencies either from the `BuildContext` (for example using something like the [Provider package](https://pub.dev/packages/provider)), or we can load them using a DI package such as [get_it](https://pub.dev/packages/get_it). (There are some caveats, please refer to [Caveat's when working with dependencies](#caveats-when-working-with-dependencies))
 
     ```dart
     final CounterService _counterService;
-    final Localization _localization;
+    final Locator locator;
     StreamSubscription? _subscription;
 
     CounterWidgetDriver(
       BuildContext context, {
       CounterService? counterService,
     })  : _counterService = counterService ?? GetIt.I.get<CounterService>(),
-        _localization = context.read<Localization>(),
+        _localizationLocator = context.read,
         super(context) {
       ...
     }
@@ -346,7 +346,7 @@ Easy...
       }
     ```
 
-4. This requires us to override `updateProvidedProperties(...)` which gets called on state updates. That way we can respond to new values to our provided properties. (Technical Note: This is because the Driver does not get rebuilt on state updates. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
+4. This requires us to override `updateDriverProvidedProperties(...)` which gets called on state updates. That way we can respond to new values to our provided properties. (Technical Note: This is because the Driver does not get rebuilt on state updates. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
 
     ```dart
     @GenerateTestDriver()
@@ -364,7 +364,7 @@ Easy...
         ...
 
         @override
-        void updateProvidedProperties(
+        void updateDriverProvidedProperties(
           int newIndex,
           Coffee newCoffee,
         ) {
@@ -410,6 +410,67 @@ Easy...
       );
     }
    ```
+
+### Caveat's when working with dependencies
+
+The driver is bound to the lifecycle of the widget, this means it lifes as long as the widget does. However we do not want to recreate the driver on every state change, that would increase the build time of a `DrivableWidget`. (That's also why we need the mixin for `@driverProvidableProperties` annotated properties)
+However we want to resolve our dependencies in our constructor. (Using e.g. `Provider`) So how do those get updated?
+We tied the recreation of the driver to the `didChangeDependencies` statefunction. Should you watch, listen or subscribe to updates to your dependencies, we will rebuild the driver for you. Thus allowing you to re-resolve your service and create new listeners etc.
+As Google's `Provider` package is one of the most used packages in that category, here is an example:
+
+
+#### Example with Google Provider
+
+Say we have a Auth-Service, which could be changed at runtime.
+If we were to resolve it like this:
+
+```dart
+class SomeDriver extends WidgetDriver {
+  final AuthService _service;
+
+  SomeDriver(
+    BuildContext context, {
+    AuthService? service,
+  })  : _service = service ?? context.read<AuthService>(),
+        super(context);
+}
+```
+
+The driver would not get an update should the AuthService be changed.
+The `Provider` package however offers us the option to `watch` the provided value.
+
+```dart
+class SomeDriver extends WidgetDriver {
+  final AuthService _service;
+
+  SomeDriver(
+    BuildContext context, {
+    AuthService? service,
+  })  : _service = service ?? context.watch<AuthService>(),
+        super(context);
+}
+```
+
+This registers the widget to get updated once the AuthService changes and the WidgetDriver Framework takes care of rebuilding the driver.
+(Note: `context.watch` only works in the context of a build function, but because the driver gets created in that context, the Constructor and `updateDriverProvidedProperties()` is actually the only place you can use this syntax)
+
+Should you not want the driver to be rebuilt you can also use a `Locator`.
+
+```dart
+class SomeDriver extends WidgetDriver {
+  final Locator _locator
+
+  SomeDriver(
+    BuildContext context,
+    )  : _locator = context.read,
+        super(context);
+
+  bool get authenticated => _locator<AuthService>().authenticated;
+}
+```
+
+This way you resolve the AuthService once you need it, making the recreation obsolete.
+(Note: Saving the BuildContext for that purpose is **NOT** a good practice)
 
 ### Demo
 

@@ -12,6 +12,7 @@ void main() {
       );
       expect(codeProvider.providedPropertiesMixinClass, '');
     });
+
     test('Returns correctly from providedFields', () {
       final fields = <ProvidableField>[
         const ProvidableField(
@@ -33,8 +34,20 @@ void main() {
         fields: fields,
       );
       expect(codeProvider.providedPropertiesMixinClass, '''
-mixin \$SomeDriverProvidedPropertiesMixin {
-  void updateProvidedProperties({required String newExample1,required String newExample2,required int newExample3,});
+mixin _\$DriverProvidedPropertiesMixin {
+
+  /// This function allows you to react to state changes in the driver. 
+  /// It provides you with the new values to the properties that you passed into the driver.
+  /// This is because the driver does not get recreated on state changes.
+  /// Important, you do not need to call `notifyWidget()` in this function. 
+  /// It gets called in the build method of the widget, slightly before rendering. 
+  /// Thus all data changed here will be shown with the "currently ongoing state change". 
+  /// 
+  /// Very Important!!
+  /// Because this function is running during the build process, 
+  /// it is NOT the place to run time cosuming or blocking tasks etc. (like calling Api-Endpoints)
+  /// This could greatly impact your apps performance.
+  void updateDriverProvidedProperties({required String newExample1,required String newExample2,required int newExample3,});
 }
 ''');
     });

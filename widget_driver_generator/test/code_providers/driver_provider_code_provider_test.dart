@@ -25,6 +25,7 @@ class \$ExampleDriverProvider extends WidgetDriverProvider<ExampleDriver> {
 ''';
       expect(codeProvider.driverProviderClass, expectedCode);
     });
+
     test('DriverProviderCodeProvider returns code with fields', () {
       final codeProvider = DriverProviderCodeProvider(
         fields: [
@@ -65,22 +66,21 @@ required String example2,
   }
 
   @override
-  void updateProvidedProperties(ExampleDriver driver) {
-    /* 
-      In case you get a compiler error here, you have to mixin [\$ExampleDriverProvidedPropertiesMixin] into your driver.
-      And implement [updateProvidedProperties()], there you can react to new values to all your provided values.
-      Like this:
-      class ExampleDriver extends WidgetDriver with [\$ExampleDriverProvidedPropertiesMixin] {
-        
-        ...
+  void updateDriverProvidedProperties(ExampleDriver driver) {
 
-        @override
-        void updateProvidedProperties(...) {
-          // Handle your updates
-        }
-      }
-    */ 
-    driver.updateProvidedProperties(newExample: _example,newExample2: _example2,);
+    //  In case you get a compiler error here, you have to mixin _\$DriverProvidedPropertiesMixin into your driver.
+    //  And implement updateDriverProvidedProperties(), there you can react to new values to all your provided values.
+    //  Like this:
+    //  class ExampleDriver extends WidgetDriver with _\$DriverProvidedPropertiesMixin {
+    //    
+    //    ...
+    //
+    //    @override
+    //    void updateDriverProvidedProperties(...) {
+    //      // Handle your updates
+    //    }
+    //  }
+    driver.updateDriverProvidedProperties(newExample: _example,newExample2: _example2,);
   }
 }
 ''';

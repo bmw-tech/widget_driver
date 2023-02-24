@@ -144,22 +144,21 @@ class $_providerClassName extends WidgetDriverProvider<$_driverClassName> {
   }
 
   @override
-  void updateProvidedProperties($_driverClassName driver) {
-    /* 
-      In case you get a compiler error here, you have to mixin [${ClassUtils.providedPropertiesMixinClassName(_driverClassName)}] into your driver.
-      And implement [updateProvidedProperties()], there you can react to new values to all your provided values.
-      Like this:
-      class $_driverClassName extends WidgetDriver with [${ClassUtils.providedPropertiesMixinClassName(_driverClassName)}] {
-        
-        ...
+  void updateDriverProvidedProperties($_driverClassName driver) {
 
-        @override
-        void updateProvidedProperties(...) {
-          // Handle your updates
-        }
-      }
-    */ 
-    driver.updateProvidedProperties(${_updateParameters()},);
+    //  In case you get a compiler error here, you have to mixin ${ClassUtils.providedPropertiesMixinClassName()} into your driver.
+    //  And implement updateDriverProvidedProperties(), there you can react to new values to all your provided values.
+    //  Like this:
+    //  class $_driverClassName extends WidgetDriver with ${ClassUtils.providedPropertiesMixinClassName()} {
+    //    
+    //    ...
+    //
+    //    @override
+    //    void updateDriverProvidedProperties(...) {
+    //      // Handle your updates
+    //    }
+    //  }
+    driver.updateDriverProvidedProperties(${_updateParameters()},);
   }
 }
 ''';

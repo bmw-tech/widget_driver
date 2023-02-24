@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 import 'test_helpers/test_container_drivable_widget.dart';
 
@@ -65,6 +66,91 @@ void main() {
       await tester.pump();
 
       expect(find.text('didCallTestMethod: true'), findsOneWidget);
+    });
+    testWidgets('On state change updateDriverProvidedProperties gets called', (WidgetTester tester) async {
+      when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+
+      final testContainerDrivableWidget = TestContainerDrivableWidget(
+        environmentInfo: _mockRuntimeEnvironmentInfo,
+      );
+      await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+      final driver = testContainerDrivableWidget.driver;
+
+      expect(driver.updateCount, 1);
+
+      driver.aTestMethod();
+      await tester.pump();
+
+      expect(driver.updateCount, 2);
+    });
+
+    group('dispose behaviour of drivers', () {
+      testWidgets('does not create new driver, if there are no buildContext dependencies', (tester) async {
+        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+        var providedValue = 1;
+
+        final provider = TestContainerDriverProvider();
+
+        final testContainerDrivableWidget = TestContainerDrivableWidget(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+          provider: provider,
+        );
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Provider.value(
+              value: providedValue,
+              child: testContainerDrivableWidget,
+            ),
+          ),
+        );
+        final driver = testContainerDrivableWidget.driver;
+
+        expect(provider.driverBuiltCount, 1);
+
+        driver.aTestMethod();
+        await tester.pump();
+
+        expect(provider.driverBuiltCount, 1);
+      });
+      testWidgets('does not create new driver, if we only read from buildContext', (tester) async {
+        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+
+        final provider = ReadDriverProvider();
+
+        final readWidget = ReadWidget(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+          provider: provider,
+        );
+        await tester.pumpWidget(ProviderWidget(child: readWidget));
+
+        expect(provider.driverBuiltCount, 1);
+        expect(readWidget.driver.provided, 1);
+
+        await tester.pump();
+
+        expect(provider.driverBuiltCount, 1);
+        expect(readWidget.driver.provided, 1);
+      });
+      testWidgets('does create new driver, if we watch buildContext', (tester) async {
+        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+
+        final provider = WatchDriverProvider();
+
+        final watchWidget = WatchWidget(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+          provider: provider,
+        );
+        await tester.pumpWidget(ProviderWidget(child: watchWidget));
+
+        expect(provider.driverBuiltCount, 1);
+        expect(watchWidget.driver.provided, 1);
+
+        await tester.tap(find.byKey(const Key('provider_widget_action_button')));
+        await tester.pumpAndSettle();
+
+        expect(provider.driverBuiltCount, 2);
+        expect(watchWidget.driver.provided, 2);
+      });
     });
   });
 }

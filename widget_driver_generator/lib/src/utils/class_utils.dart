@@ -3,5 +3,5 @@ class ClassUtils {
 
   static String driverProviderClassName(String className) => '\$${className}Provider';
 
-  static String providedPropertiesMixinClassName(String className) => '\$${className}ProvidedPropertiesMixin';
+  static String providedPropertiesMixinClassName() => '_\$DriverProvidedPropertiesMixin';
 }

@@ -5,7 +5,7 @@ import '../../../../models/coffee.dart';
 part 'coffee_detail_page_driver.g.dart';
 
 @GenerateTestDriver()
-class CoffeeDetailPageDriver extends WidgetDriver with $CoffeeDetailPageDriverProvidedPropertiesMixin {
+class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
   int _index;
   Coffee _coffee;
 
@@ -32,7 +32,7 @@ class CoffeeDetailPageDriver extends WidgetDriver with $CoffeeDetailPageDriverPr
   }
 
   @override
-  void updateProvidedProperties({required int newIndex, required Coffee newCoffee}) {
+  void updateDriverProvidedProperties({required int newIndex, required Coffee newCoffee}) {
     _index = newIndex;
     _coffee = newCoffee;
   }

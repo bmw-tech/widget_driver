@@ -8,10 +8,12 @@ void main() {
         const testString = '';
         expect(testString.removeLeadingUnderscore(), testString);
       });
+
       test('should return as is, if first character is no underscore', () {
         const testString = 'hallo';
         expect(testString.removeLeadingUnderscore(), testString);
       });
+
       test('should remove leading underscore if it exists', () {
         const testString = '_hallo';
         expect(testString.removeLeadingUnderscore(), 'hallo');
@@ -23,6 +25,7 @@ void main() {
         const testString = '';
         expect(testString.capitalizeFirstLetter(), testString);
       });
+
       test('Should return correctly, if String is not empty', () {
         const testString = 'halloIchBinEinString';
         expect(testString.capitalizeFirstLetter(), 'HalloIchBinEinString');
@@ -34,6 +37,7 @@ void main() {
         const testString = '';
         expect(testString.makeItNew(), testString);
       });
+
       test('should return correct string, if it is not empty', () {
         const testString = 'someValue';
         expect(testString.makeItNew(), 'newSomeValue');

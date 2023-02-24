@@ -10,16 +10,17 @@ void main() {
       final actual = ClassUtils.testDriverClassName(className);
       expect(actual, expected);
     });
+
     test('Returns correct driverProviderClassName', () {
       const className = 'ExampleDriver';
       const expected = '\$${className}Provider';
       final actual = ClassUtils.driverProviderClassName(className);
       expect(actual, expected);
     });
+
     test('Returns correct providedPropertiesMixinClassName', () {
-      const className = 'ExampleDriver';
-      const expected = '\$${className}ProvidedPropertiesMixin';
-      final actual = ClassUtils.providedPropertiesMixinClassName(className);
+      const expected = '_\$DriverProvidedPropertiesMixin';
+      final actual = ClassUtils.providedPropertiesMixinClassName();
       expect(actual, expected);
     });
   });

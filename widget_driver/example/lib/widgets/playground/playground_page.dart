@@ -160,7 +160,7 @@ class DrivableColorDisplayerWidgetDriverProvider extends WidgetDriverProvider<Dr
   }
 
   @override
-  void updateProvidedProperties(DrivableColorDisplayerWidgetDriver driver) {
+  void updateDriverProvidedProperties(DrivableColorDisplayerWidgetDriver driver) {
     // Dont forgot to add the mixin to your diver.. This is how you do it: example
     driver.updateProperties2(passedInColor);
   }

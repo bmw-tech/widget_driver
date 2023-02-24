@@ -18,5 +18,5 @@ abstract class WidgetDriverProvider<Driver extends WidgetDriver> {
   /// It calls a function in the driver, added by the `[SomeDriver]ProvidedPropertiesMixin`,
   /// to respond to properties changed during a state update.
   /// (The driver does not get rebuilt for state updates!)
-  void updateProvidedProperties(Driver driver) {}
+  void updateDriverProvidedProperties(Driver driver) {}
 }

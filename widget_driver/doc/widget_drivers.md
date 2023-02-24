@@ -66,14 +66,14 @@ part 'counter_widget_driver.g.dart';
 @GenerateTestDriver()
 class CounterWidgetDriver extends WidgetDriver {
   final CounterService _counterService;
-  final Localization _localization;
+  final Locator _localizationLocator;
   StreamSubscription? _subscription;
 
   CounterWidgetDriver(
     BuildContext context, {
     CounterService? counterService,
   })  : _counterService = counterService ?? GetIt.I.get<CounterService>(),
-        _localization = context.read<Localization>(),
+        _localization = context.read,
         super(context) {
 
     _subscription = _counterService.valueStream.listen((_) {
@@ -83,7 +83,7 @@ class CounterWidgetDriver extends WidgetDriver {
   }
 
   @TestDriverDefaultValue('The title of the counter')
-  String get counterTitle => _localization.counterTitle;
+  String get counterTitle => _localizationLocator<Localization>().counterTitle;
 
   @TestDriverDefaultValue(1)
   int get value => _counterService.value;
