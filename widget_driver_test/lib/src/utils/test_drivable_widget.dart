@@ -12,10 +12,9 @@ class TestDrivableWidget<T extends WidgetDriver> extends DrivableWidget<T> {
   final T Function(BuildContext context) _driverBuilder;
 
   TestDrivableWidget({
-    Key? key,
     required T Function(BuildContext context) driverBuilder,
   })  : _driverBuilder = driverBuilder,
-        super(key: key, environmentInfo: TestRuntimeEnvironmentInfo());
+        super(key: UniqueKey(), environmentInfo: TestRuntimeEnvironmentInfo());
 
   @override
   Widget build(BuildContext context) {
