@@ -1,3 +1,10 @@
+# CHANGELOG
+
+## 0.0.6
+
+* Fixes issues with ignoring of state changes
+* using new generated mixin from `widget_driver_generator ^0.0.6`
+
 ## 0.0.5
 
 * Updates to use latest version of annotations package which contains the new `driverProvidableProperty` annotations to support passing simple parameters directly into the driver.
