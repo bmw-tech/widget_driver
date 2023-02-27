@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Fixes bug where a new TestDrivableWidget is ignored by element tree if one was already created
+
 ## 0.0.4
 
 * Updates the required version of mocktail.  
