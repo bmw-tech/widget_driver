@@ -73,7 +73,7 @@ class CounterWidgetDriver extends WidgetDriver {
     BuildContext context, {
     CounterService? counterService,
   })  : _counterService = counterService ?? GetIt.I.get<CounterService>(),
-        _localization = context.read,
+        _localizationLocator = context.read,
         super(context) {
 
     _subscription = _counterService.valueStream.listen((_) {
