@@ -40,6 +40,7 @@ extension Driver on WidgetTester {
     WidgetBuilder? parentWidgetBuilder,
   }) async {
     TestDrivableWidget<T> drivableWidget = TestDrivableWidget<T>(
+      key: UniqueKey(),
       driverBuilder: driverBuilder,
     );
     Widget widget = drivableWidget;
