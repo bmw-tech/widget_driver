@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Adds EmptyDefault to ease testDriverValue creation
+
 ## 0.0.5
 
 * Updates to use latest version of annotations package which contains the new `driverProvidableProperty` annotations to support passing simple parameters directly into the driver.
