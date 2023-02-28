@@ -5,20 +5,20 @@ import '../../../../models/coffee.dart';
 part 'coffee_detail_page_driver.g.dart';
 
 @GenerateTestDriver()
-class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
-  int _index;
-  Coffee _coffee;
+class CoffeeDetailPageDriver extends WidgetDriver {
+  final int index;
+  final Coffee _coffee;
 
   CoffeeDetailPageDriver(
     BuildContext context,
-    @driverProvidableProperty this._index, {
+    @driverProvidableProperty this.index, {
     @driverProvidableProperty required Coffee coffee,
   })  : _coffee = coffee,
         super(context);
 
   @TestDriverDefaultValue(TestCoffee.testCoffeeName)
   String get coffeeName {
-    return '$_index. ${_coffee.name}';
+    return '$index. ${_coffee.name}';
   }
 
   @TestDriverDefaultValue(TestCoffee.testCoffeeDescription)
@@ -29,11 +29,5 @@ class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertie
   @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
     return _coffee.imageUrl;
-  }
-
-  @override
-  void updateDriverProvidedProperties({required int newIndex, required Coffee newCoffee}) {
-    _index = newIndex;
-    _coffee = newCoffee;
   }
 }
