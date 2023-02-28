@@ -1,5 +1,6 @@
 import 'package:widget_driver_generator/src/utils/class_utils.dart';
 import 'package:widget_driver_generator/src/utils/code_writer.dart';
+import 'package:widget_driver_generator/src/utils/string_extensions.dart';
 
 import '../models/providable_field.dart';
 
@@ -104,6 +105,10 @@ class DriverProviderCodeProvider {
     return ', $positionalVariables $namedVariables';
   }
 
+  String _updateParameters() {
+    return _providedFields.map((e) => '${e.name.makeItNew()}: _${e.name}').join(',');
+  }
+
   /// Generates a DriverProvider-class, if there are no provided variables.
   String _classWithoutFields() => '''
 class $_providerClassName extends WidgetDriverProvider<$_driverClassName> {
@@ -136,6 +141,24 @@ class $_providerClassName extends WidgetDriverProvider<$_driverClassName> {
   @override
   $_driverClassName buildTestDriver() {
     return $_testDriverClassName();
+  }
+
+  @override
+  void updateDriverProvidedProperties($_driverClassName driver) {
+
+    //  In case you get a compiler error here, you have to mixin ${ClassUtils.providedPropertiesMixinClassName()} into your driver.
+    //  And implement updateDriverProvidedProperties(), there you can react to new values to all your provided values.
+    //  Like this:
+    //  class $_driverClassName extends WidgetDriver with ${ClassUtils.providedPropertiesMixinClassName()} {
+    //    
+    //    ...
+    //
+    //    @override
+    //    void updateDriverProvidedProperties(...) {
+    //      // Handle your updates
+    //    }
+    //  }
+    driver.updateDriverProvidedProperties(${_updateParameters()},);
   }
 }
 ''';
