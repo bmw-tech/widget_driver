@@ -73,25 +73,32 @@ void main() {
         expect(find.text('didCallTestMethod: true'), findsOneWidget);
       });
 
-      testWidgets('On state change updateDriverProvidedProperties gets called', (WidgetTester tester) async {
+      testWidgets('updateDriverProvidedProperties gets called on widget configuration change',
+          (WidgetTester tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
-        final testContainerDrivableWidget = TestContainerDrivableWidget(
+        final testContainerDrivableWidget = WrappedTestContainer(
           environmentInfo: _mockRuntimeEnvironmentInfo,
         );
-        await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+        await tester.pumpWidget(testContainerDrivableWidget);
         final driver = testContainerDrivableWidget.driver;
 
-        expect(driver.numberOfCallsToUpdateDriverProvidedProperties, 1);
+        expect(driver?.numberOfCallsToUpdateDriverProvidedProperties, 0);
 
-        driver.aTestMethod(); // Calls `notifyWidget` thereby causing a state update
-        await tester.pump();
+        await tester.tap(
+          find.byKey(
+            const Key(
+              'wrapped_test_container_button',
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
 
-        expect(driver.numberOfCallsToUpdateDriverProvidedProperties, 2);
+        expect(driver?.numberOfCallsToUpdateDriverProvidedProperties, 1);
       });
     });
 
-    group('dispose behaviour of drivers', () {
+    group('Driver lifecycle', () {
       testWidgets('does not create new driver, if there are no buildContext dependencies', (tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
         var providedValue = 1;
@@ -119,6 +126,7 @@ void main() {
 
         expect(provider.driverBuiltCount, 1);
       });
+
       testWidgets('does not create new driver, if we only read from buildContext', (tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
@@ -138,6 +146,7 @@ void main() {
         expect(provider.driverBuiltCount, 1);
         expect(readWidget.driver.provided, 1);
       });
+
       testWidgets('does create new driver, if we watch buildContext', (tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 

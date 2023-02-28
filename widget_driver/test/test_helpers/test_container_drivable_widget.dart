@@ -69,12 +69,15 @@ class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriv
 /// The driver which drives this widget is a `TestContainerDriver`.
 class TestContainerDrivableWidget extends DrivableWidget<TestContainerDriver> {
   final TestContainerDriverProvider? provider;
+  final int justSomeData;
 
   TestContainerDrivableWidget({
     Key? key,
     RuntimeEnvironmentInfo? environmentInfo,
     this.provider,
-  }) : super(key: key, environmentInfo: environmentInfo);
+    int? justSomeData,
+  })  : justSomeData = justSomeData ?? 10,
+        super(key: key, environmentInfo: environmentInfo);
 
   @override
   Widget build(BuildContext context) {
@@ -82,12 +85,55 @@ class TestContainerDrivableWidget extends DrivableWidget<TestContainerDriver> {
       children: [
         Text(driver.aTestText),
         Text('didCallTestMethod: ${driver.didCallTestMethod}'),
+        Text('justSomeData: $justSomeData'),
       ],
     );
   }
 
   @override
   WidgetDriverProvider<TestContainerDriver> get driverProvider => provider ?? TestContainerDriverProvider();
+}
+
+// ignore: must_be_immutable
+class WrappedTestContainer extends StatefulWidget {
+  final RuntimeEnvironmentInfo environmentInfo;
+  TestContainerDriver? driver;
+  Widget testContainer(int someData, RuntimeEnvironmentInfo info) {
+    final widget = TestContainerDrivableWidget(
+      environmentInfo: info,
+      justSomeData: someData,
+    );
+    // Driver gets set after the build. So, I'm only accessing it after the build is finished.(PostFrameCallback)
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      driver = widget.driver;
+    });
+    return widget;
+  }
+
+  WrappedTestContainer({Key? key, required this.environmentInfo}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => WrappedTestContainerState();
+}
+
+class WrappedTestContainerState extends State<WrappedTestContainer> {
+  int justSomeData = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MaterialButton(
+        key: const Key('wrapped_test_container_button'),
+        onPressed: () => setState(() {
+          justSomeData++;
+        }),
+        child: widget.testContainer(
+          justSomeData,
+          widget.environmentInfo,
+        ),
+      ),
+    );
+  }
 }
 
 class ProviderWidget extends StatefulWidget {

@@ -7,12 +7,12 @@ part 'my_app_driver.g.dart';
 
 @GenerateTestDriver()
 class MyAppDriver extends WidgetDriver {
-  final Locator _localizationLocator;
+  final Locator _locator;
 
   MyAppDriver(BuildContext context)
-      : _localizationLocator = context.read,
+      : _locator = context.read,
         super(context);
 
   @TestDriverDefaultValue('Coffee Demo App')
-  String get appTitle => _localizationLocator<Localization>().appTitle;
+  String get appTitle => _locator<Localization>().appTitle;
 }

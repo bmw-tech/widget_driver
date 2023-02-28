@@ -7,12 +7,12 @@ part 'not_logged_in_page_driver.g.dart';
 
 @GenerateTestDriver()
 class NotLoggedInPageDriver extends WidgetDriver {
-  final Locator _localizationLocator;
+  final Locator _locator;
 
   NotLoggedInPageDriver(BuildContext context)
-      : _localizationLocator = context.read,
+      : _locator = context.read,
         super(context);
 
   @TestDriverDefaultValue('Not logged in')
-  String get notLoggedInText => _localizationLocator<Localization>().notLoggedIn;
+  String get notLoggedInText => _locator<Localization>().notLoggedIn;
 }

@@ -54,23 +54,29 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
   Widget build(BuildContext context) {
     final driver = _getDriverAndSetupUpIfNeeded(context);
     widget._widgetDriverContainer.instance = driver;
-    widget.driverProvider.updateDriverProvidedProperties(driver);
     return widget.build(context);
   }
 
   @override
+  void didUpdateWidget(covariant DrivableWidget<Driver> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (driverExists) {
+      widget.driverProvider.updateDriverProvidedProperties(_driver!);
+    }
+  }
+
+  @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
     if (driverExists) {
       // If didChangeDependencies get's called this means your driver depends on a value from the BuildContext,
       // which the flutter framework marked as "has changed".
       // Thus we need to rebuild the driver to retrieve the latest value.
       markDriverToBeRebuilt();
     }
-    super.didChangeDependencies();
   }
 
   Driver _getDriverAndSetupUpIfNeeded(BuildContext context) {
-    // The driver was already created. Nothing more to do. Just return it.
     if (driverExists) {
       if (_shouldRebuildDriver) {
         disposeDriver();

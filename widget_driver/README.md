@@ -131,18 +131,18 @@ Well, not really. Let's dive into what happens:
     And thats all you need to conform to the `WidgetDriver` interface. The rest of the code in a `WidgetDriver` depends on your use case.
 
 1. Next, we define the dependencies which the driver needs. In our case we need access to some service which can keep track of the count and we need some localizations.  
-  In the constructor of the driver we have the option to resolve these dependencies either from the `BuildContext` (for example using something like the [Provider package](https://pub.dev/packages/provider)), or we can load them using a DI package such as [get_it](https://pub.dev/packages/get_it). (There are some caveats, please refer to [Caveat's when working with dependencies](#caveats-when-working-with-dependencies))
+  In the constructor of the driver we have the option to resolve these dependencies either from the `BuildContext` (for example using something like the [Provider package](https://pub.dev/packages/provider)), or we can load them using a DI package such as [get_it](https://pub.dev/packages/get_it). (There are some caveats, please refer to [Working with changing dependencies injected into the BuildContext](#working-with-changing-dependencies-injected-into-the-buildcontext))
 
     ```dart
     final CounterService _counterService;
-    final Locator locator;
+    final Locator _locator;
     StreamSubscription? _subscription;
 
     CounterWidgetDriver(
       BuildContext context, {
       CounterService? counterService,
     })  : _counterService = counterService ?? GetIt.I.get<CounterService>(),
-        _localizationLocator = context.read,
+        _locator_ = context.read,
         super(context) {
       ...
     }
@@ -430,7 +430,7 @@ pass to the Test Driver.
 
 The Driver is bound to the lifecycle of the widget's state object, this means it lifes as long as the state of a stateful widget. Because like with StatefulWidget, we do not want to rebuild the Driver on every UI change, that would increase the build time of a `DriveableWidget`. That's also why we need the mixin and the generated method for `@driverProvidableProperties` annotated properties. This way we do not need to rebuild the driver with every UI change. (Side Note: Under the hood `DriveableWidget` is a StatefulWidget)
 However we want to resolve our dependencies in our Driver's constructor. (Using e.g. `Provider`) So how do those get updated?
-We tied the recreation of the driver to the `didChangeDependencies` state function. Should you watch, listen or subscribe to updates to your dependencies, we will rebuild the driver for you. Thus allowing you to re-resolve your service and create new listeners etc.
+We tied the recreation of the driver to the `didChangeDependencies` state function. Should you watch, listen or subscribe to updates to your dependencies, we will rebuild the driver for you. Thus allowing you to re-resolve your services and create new listeners etc.
 As the `Provider` package is one of the most used packages in that category, here is an example:
 
 #### Example with Provider
