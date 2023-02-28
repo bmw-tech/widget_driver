@@ -77,13 +77,17 @@ void main() {
           (WidgetTester tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
+        late TestContainerDriver driver;
         final testContainerDrivableWidget = WrappedTestContainer(
           environmentInfo: _mockRuntimeEnvironmentInfo,
+          driverCallback: (newDriver) => driver = newDriver,
         );
         await tester.pumpWidget(testContainerDrivableWidget);
-        final driver = testContainerDrivableWidget.driver;
+        final firstDriver = driver;
 
-        expect(driver?.numberOfCallsToUpdateDriverProvidedProperties, 0);
+        expect(driver.numberOfCallsToUpdateDriverProvidedProperties, 0);
+        expect(driver.someData, 0);
+        expect(find.text('justSomeData: 0'), findsOneWidget);
 
         await tester.tap(
           find.byKey(
@@ -94,7 +98,10 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        expect(driver?.numberOfCallsToUpdateDriverProvidedProperties, 1);
+        expect(driver.numberOfCallsToUpdateDriverProvidedProperties, 1);
+        expect(driver.someData, 1);
+        expect(find.text('justSomeData: 1'), findsOneWidget);
+        expect(driver, firstDriver);
       });
     });
 

@@ -142,7 +142,7 @@ Well, not really. Let's dive into what happens:
       BuildContext context, {
       CounterService? counterService,
     })  : _counterService = counterService ?? GetIt.I.get<CounterService>(),
-        _locator_ = context.read,
+        _locator = context.read,
         super(context) {
       ...
     }
@@ -346,7 +346,7 @@ Easy...
       }
     ```
 
-4. This requires us to override `updateDriverProvidedProperties(...)` which gets called on state update to the corresponding DriveableWidget. That way we can respond to new values to our provided properties given to us by the widget. (Technical Note: This is because the Driver does not get rebuilt on state updates. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
+4. This requires us to override `updateDriverProvidedProperties(...)` which gets called whenever the corresponding widgets gets asked to re-render by its parent (same as `didUpdateWidget`). That way we can respond to new values to our provided properties given to us by the widget. (Technical Note: This is because the Driver does not get rebuilt when the widget gets rebuilt. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
 
     ```dart
     @GenerateTestDriver()
@@ -397,16 +397,17 @@ Easy...
       );
     }
    ```
-   
+
 ### If your WidgetDriver exposes classes that require a lot of overrides
-Some classes have a lot of fields and functions that have to be overridden to construct them. 
+
+Some classes have a lot of fields and functions that have to be overridden to construct them.
 In this case, adding a proper TestDriverDefaultValue can be burdening. To make it easier, we added
-a class called `EmptyDefault`. By extending this and implementing the 
-complex class you want the test driver to mock, you can create a empty test class that you can 
+a class called `EmptyDefault`. By extending this and implementing the
+complex class you want the test driver to mock, you can create a empty test class that you can
 pass to the Test Driver.
 
 1. Create the testDriver class by extending `EmptyDefault` and implementing the class you want to pass to the Widget Driver
-    
+
    ```dart
     class _TestDriverMyComplexService extends EmptyDefault implements MyComplexService {
       const _TestDriverReadyToPairConfirmationService();
@@ -414,7 +415,7 @@ pass to the Test Driver.
     ```
 
 2. Construct the newly created class and pass it as `TestDriverDefaultValue`
-    
+
    ```dart
     class MyWidgetDriver extends WidgetDriver {
       ...

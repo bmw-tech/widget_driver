@@ -7,7 +7,13 @@ import 'package:widget_driver/widget_driver.dart';
 /// need some concrete instance which we can use in our tests.
 /// This is the driver which is driving the `TestContainerDrivableWidget`.
 class TestContainerDriver extends WidgetDriver {
-  TestContainerDriver(BuildContext context) : super(context);
+  int someData;
+
+  TestContainerDriver(
+    BuildContext context, {
+    int? newSomeData,
+  })  : someData = newSomeData ?? -1,
+        super(context);
 
   String get aTestText => 'A test text';
 
@@ -19,7 +25,8 @@ class TestContainerDriver extends WidgetDriver {
 
   int numberOfCallsToUpdateDriverProvidedProperties = 0;
 
-  void updateDriverProvidedProperties() {
+  void updateDriverProvidedProperties({required int newSomeData}) {
+    someData = newSomeData;
     numberOfCallsToUpdateDriverProvidedProperties++;
   }
 }
@@ -29,6 +36,9 @@ class TestContainerDriver extends WidgetDriver {
 /// the we are running in a test environment.
 class TestContainerTestDriver extends TestDriver implements TestContainerDriver {
   @override
+  int someData = -1;
+
+  @override
   String get aTestText => 'TestDriver test text';
 
   @override
@@ -36,20 +46,22 @@ class TestContainerTestDriver extends TestDriver implements TestContainerDriver 
 
   @override
   void aTestMethod() {}
-
-  @override
-  void updateDriverProvidedProperties() {}
 }
 
 /// This is the provider used by `TestContainerDrivableWidget`
 /// to create the correct drivers for it.
 class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriver> {
   int driverBuiltCount = 0;
+  final int someData;
+
+  TestContainerDriverProvider({
+    int? newSomeData,
+  }) : someData = newSomeData ?? -1;
 
   @override
   TestContainerDriver buildDriver(BuildContext context) {
     driverBuiltCount++;
-    return TestContainerDriver(context);
+    return TestContainerDriver(context, newSomeData: someData);
   }
 
   @override
@@ -59,7 +71,7 @@ class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriv
 
   @override
   void updateDriverProvidedProperties(TestContainerDriver driver) {
-    driver.updateDriverProvidedProperties();
+    driver.updateDriverProvidedProperties(newSomeData: someData);
   }
 }
 
@@ -69,55 +81,51 @@ class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriv
 /// The driver which drives this widget is a `TestContainerDriver`.
 class TestContainerDrivableWidget extends DrivableWidget<TestContainerDriver> {
   final TestContainerDriverProvider? provider;
-  final int justSomeData;
+  final int someData;
+  final void Function(TestContainerDriver driver)? driverCallback;
 
   TestContainerDrivableWidget({
     Key? key,
     RuntimeEnvironmentInfo? environmentInfo,
     this.provider,
-    int? justSomeData,
-  })  : justSomeData = justSomeData ?? 10,
+    int? newSomeData,
+    this.driverCallback,
+  })  : someData = newSomeData ?? -1,
         super(key: key, environmentInfo: environmentInfo);
 
   @override
   Widget build(BuildContext context) {
+    driverCallback?.call(driver);
     return Column(
       children: [
         Text(driver.aTestText),
         Text('didCallTestMethod: ${driver.didCallTestMethod}'),
-        Text('justSomeData: $justSomeData'),
+        Text('justSomeData: ${driver.someData}'),
       ],
     );
   }
 
   @override
-  WidgetDriverProvider<TestContainerDriver> get driverProvider => provider ?? TestContainerDriverProvider();
+  WidgetDriverProvider<TestContainerDriver> get driverProvider =>
+      provider ?? TestContainerDriverProvider(newSomeData: someData);
 }
 
-// ignore: must_be_immutable
 class WrappedTestContainer extends StatefulWidget {
   final RuntimeEnvironmentInfo environmentInfo;
-  TestContainerDriver? driver;
-  Widget testContainer(int someData, RuntimeEnvironmentInfo info) {
-    final widget = TestContainerDrivableWidget(
-      environmentInfo: info,
-      justSomeData: someData,
-    );
-    // Driver gets set after the build. So, I'm only accessing it after the build is finished.(PostFrameCallback)
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      driver = widget.driver;
-    });
-    return widget;
-  }
+  final Function(TestContainerDriver) driverCallback;
 
-  WrappedTestContainer({Key? key, required this.environmentInfo}) : super(key: key);
+  const WrappedTestContainer({
+    Key? key,
+    required this.environmentInfo,
+    required this.driverCallback,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => WrappedTestContainerState();
 }
 
 class WrappedTestContainerState extends State<WrappedTestContainer> {
-  int justSomeData = 0;
+  int someData = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -125,11 +133,12 @@ class WrappedTestContainerState extends State<WrappedTestContainer> {
       home: MaterialButton(
         key: const Key('wrapped_test_container_button'),
         onPressed: () => setState(() {
-          justSomeData++;
+          someData++;
         }),
-        child: widget.testContainer(
-          justSomeData,
-          widget.environmentInfo,
+        child: TestContainerDrivableWidget(
+          newSomeData: someData,
+          environmentInfo: widget.environmentInfo,
+          driverCallback: widget.driverCallback,
         ),
       ),
     );
