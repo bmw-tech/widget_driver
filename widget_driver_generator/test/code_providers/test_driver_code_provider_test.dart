@@ -22,6 +22,7 @@ class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
 ''';
       expect(codeProvider.code, expected);
     });
+
     test('Builds with one field', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
@@ -43,6 +44,7 @@ final String example = '';
 ''';
       expect(codeProvider.code, expected);
     });
+
     test('Builds with multiple fields', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
@@ -68,6 +70,7 @@ final String example2 = '';
 ''';
       expect(codeProvider.code, expected);
     });
+
     test("Builds with one property", () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
@@ -89,6 +92,7 @@ String get example => '';
 ''';
       expect(codeProvider.code, expected);
     });
+
     test("Builds with multiple properties", () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
@@ -114,6 +118,7 @@ String get example2 => '';
 ''';
       expect(codeProvider.code, expected);
     });
+
     test('Builds with one method', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [
@@ -137,6 +142,7 @@ String example() {
 ''';
       expect(codeProvider.code, expected);
     });
+
     test('Builds with multiple methods', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [
