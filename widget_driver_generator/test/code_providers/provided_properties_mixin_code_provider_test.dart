@@ -42,7 +42,7 @@ mixin _\$DriverProvidedPropertiesMixin {
   /// But the driver does not get recreated for each widget creation. The drivers lifecycle is similar to that of a state.
   /// That means that your driver constructor is not called when a new widget is created.
   /// So the driver constructor does not get a chance to read any potential changes of the properties in the widget.
-  /// 
+  ///
   /// Important, you do not need to call `notifyWidget()` in this method. 
   /// This method is called right before the build method of the DrivableWidget. 
   /// Thus all data changed here will be shown with the "currently ongoing render cycle".
