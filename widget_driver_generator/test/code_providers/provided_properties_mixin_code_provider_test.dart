@@ -37,7 +37,7 @@ void main() {
 mixin _\$DriverProvidedPropertiesMixin {
 
   /// This function allows you to react to changes of the `driverProvidableProperties` in the driver. 
-  /// 
+  ///
   /// These properties are coming to the driver from the widget, and in Flutter, the widgets get recreated often. 
   /// But the driver does not get recreated for each widget creation. The drivers lifecycle is similar to that of a state.
   /// That means that your driver constructor is not called when a new widget is created.

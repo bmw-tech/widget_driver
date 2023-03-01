@@ -83,7 +83,7 @@ class CounterWidgetDriver extends WidgetDriver {
   }
 
   @TestDriverDefaultValue('The title of the counter')
-  String get counterTitle => _locator_<Localization>().counterTitle;
+  String get counterTitle => _locator<Localization>().counterTitle;
 
   @TestDriverDefaultValue(1)
   int get value => _counterService.value;

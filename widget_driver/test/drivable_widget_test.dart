@@ -15,7 +15,7 @@ void main() {
       _mockRuntimeEnvironmentInfo = _MockRuntimeEnvironmentInfo();
     });
 
-    group('Runtime Environment: ', () {
+    group('Runtime Environment:', () {
       testWidgets('Uses real driver when not in test environment', (WidgetTester tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
@@ -41,7 +41,7 @@ void main() {
       });
     });
 
-    group('Driver Access: ', () {
+    group('Driver Access:', () {
       testWidgets('Can access its driver', (WidgetTester tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
@@ -55,7 +55,7 @@ void main() {
       });
     });
 
-    group('Providable Properties: ', () {
+    group('Providable Properties:', () {
       testWidgets('Calling `aTestMethod` on driver makes widget reload with new data', (WidgetTester tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
@@ -105,8 +105,8 @@ void main() {
       });
     });
 
-    group('Driver lifecycle', () {
-      testWidgets('does not create new driver, if there are no buildContext dependencies', (tester) async {
+    group('Driver lifecycle:', () {
+      testWidgets('Does not create new driver, if there are no buildContext dependencies', (tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
         var providedValue = 1;
 
@@ -134,7 +134,7 @@ void main() {
         expect(provider.driverBuiltCount, 1);
       });
 
-      testWidgets('does not create new driver, if we only read from buildContext', (tester) async {
+      testWidgets('Does not create new driver, if we only read from buildContext', (tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
         final provider = ReadDriverProvider();
@@ -154,7 +154,7 @@ void main() {
         expect(readWidget.driver.provided, 1);
       });
 
-      testWidgets('does create new driver, if we watch buildContext', (tester) async {
+      testWidgets('Does create new driver, if we watch buildContext', (tester) async {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
 
         final provider = WatchDriverProvider();
