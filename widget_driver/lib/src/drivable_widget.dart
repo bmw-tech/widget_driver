@@ -81,9 +81,7 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
       return _driver!;
     }
 
-    if (_shouldRebuildDriver) {
-      _disposeDriver();
-    }
+    _disposeDriver();
 
     Driver driver;
     if (_isRunningInTestEnvironment()) {
