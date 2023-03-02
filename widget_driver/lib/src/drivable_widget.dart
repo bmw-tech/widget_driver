@@ -77,12 +77,12 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
   }
 
   Driver _getDriverAndSetupUpIfNeeded(BuildContext context) {
-    if (_driverExists) {
-      if (_shouldRebuildDriver) {
-        _disposeDriver();
-      } else {
-        return _driver!;
-      }
+    if (_driverExists && !_shouldRebuildDriver) {
+      return _driver!;
+    }
+
+    if (_shouldRebuildDriver) {
+      _disposeDriver();
     }
 
     Driver driver;
@@ -131,7 +131,7 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
 
   void _disposeDriver() {
     _shouldRebuildDriver = false;
-    _driver!.dispose();
+    _driver?.dispose();
   }
 }
 
