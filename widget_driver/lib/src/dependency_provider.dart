@@ -87,7 +87,7 @@ abstract class DependencyProvider {
 
       // If we are running tests, then try to return the test default value
       if (_environmentInfo.isRunningInTestEnvironment()) {
-        final testDefaultInstance = _tryToGetTestDefaultInstance();
+        final testDefaultInstance = _tryToGetTestDefaultInstance<T>();
         if (testDefaultInstance != null) {
           return testDefaultInstance;
         } else {
