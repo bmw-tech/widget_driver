@@ -1,3 +1,10 @@
+# CHANGELOG
+
+## 0.0.7
+
+* Fixes issues with ignoring of state changes
+* enables new generated mixin from `widget_driver_generator ^0.0.6`
+
 ## 0.0.6
 
 * Adds EmptyDefault to ease testDriverValue creation
