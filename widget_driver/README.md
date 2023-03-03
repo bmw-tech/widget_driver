@@ -131,18 +131,18 @@ Well, not really. Let's dive into what happens:
     And thats all you need to conform to the `WidgetDriver` interface. The rest of the code in a `WidgetDriver` depends on your use case.
 
 1. Next, we define the dependencies which the driver needs. In our case we need access to some service which can keep track of the count and we need some localizations.  
-  In the constructor of the driver we have the option to resolve these dependencies either from the `BuildContext` (for example using something like the [Provider package](https://pub.dev/packages/provider)), or we can load them using a DI package such as [get_it](https://pub.dev/packages/get_it).
+  In the constructor of the driver we have the option to resolve these dependencies either from the `BuildContext` (for example using something like the [Provider package](https://pub.dev/packages/provider)), or we can load them using a DI package such as [get_it](https://pub.dev/packages/get_it). (There are some caveats, please refer to [Working with changing dependencies injected into the BuildContext](#working-with-changing-dependencies-injected-into-the-buildcontext))
 
     ```dart
     final CounterService _counterService;
-    final Localization _localization;
+    final Locator _locator;
     StreamSubscription? _subscription;
 
     CounterWidgetDriver(
       BuildContext context, {
       CounterService? counterService,
     })  : _counterService = counterService ?? GetIt.I.get<CounterService>(),
-        _localization = context.read<Localization>(),
+        _locator = context.read,
         super(context) {
       ...
     }
@@ -337,7 +337,46 @@ Easy...
     ```
 
 2. Then we just run the generator like we did before...
-3. After that we just need to hand the variable over to the `DriverProvider` and that's it. 🥳
+3. We should get a compiler warning in the generated file. To resolve that we just have to add the generated mixin `_$DriverProvidedPropertiesMixin` to our driver like this:
+
+    ```dart
+    @GenerateTestDriver()
+      class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
+        ...
+      }
+    ```
+
+4. This requires us to override `updateDriverProvidedProperties(...)` which gets called whenever the corresponding widgets gets asked to re-render by its parent (same as `didUpdateWidget`). That way we can respond to new values to our provided properties given to us by the widget. (Technical Note: This is because the Driver does not get rebuilt when the widget gets rebuilt. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
+
+    ```dart
+    @GenerateTestDriver()
+      class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
+        int index;
+        Coffee _coffee;
+
+        CoffeeDetailPageDriver(
+          BuildContext context, 
+          @driverProvidableProperty this.index, {
+          @driverProvidableProperty required Coffee coffee,
+        })  : _coffee = coffee,
+              super(context);
+
+        ...
+
+        @override
+        void updateDriverProvidedProperties(
+          int newIndex,
+          Coffee newCoffee,
+        ) {
+          index = newIndex;
+          _coffee = newCoffee;
+
+          // And whatever else you want to do on state change.
+        }
+      }
+    ```
+
+5. After that we just need to hand the variable over to the `DriverProvider` and that's it. 🥳
 
    ```dart
     class CoffeeDetailPage extends DrivableWidget<CoffeeDetailPageDriver> {
@@ -348,20 +387,7 @@ Easy...
 
       @override
       Widget build(BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(driver.coffeeName),
-          ),
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                child: Text(driver.coffeeDescription),
-              ),
-              CachedNetworkImage(imageUrl: driver.coffeeImageUrl)
-            ],
-          ),
-        );
+        ...
       }
 
       @override
@@ -371,16 +397,17 @@ Easy...
       );
     }
    ```
-   
+
 ### If your WidgetDriver exposes classes that require a lot of overrides
-Some classes have a lot of fields and functions that have to be overridden to construct them. 
+
+Some classes have a lot of fields and functions that have to be overridden to construct them.
 In this case, adding a proper TestDriverDefaultValue can be burdening. To make it easier, we added
-a class called `EmptyDefault`. By extending this and implementing the 
-complex class you want the test driver to mock, you can create a empty test class that you can 
+a class called `EmptyDefault`. By extending this and implementing the
+complex class you want the test driver to mock, you can create a empty test class that you can
 pass to the Test Driver.
 
 1. Create the testDriver class by extending `EmptyDefault` and implementing the class you want to pass to the Widget Driver
-    
+
    ```dart
     class _TestDriverMyComplexService extends EmptyDefault implements MyComplexService {
       const _TestDriverReadyToPairConfirmationService();
@@ -388,7 +415,7 @@ pass to the Test Driver.
     ```
 
 2. Construct the newly created class and pass it as `TestDriverDefaultValue`
-    
+
    ```dart
     class MyWidgetDriver extends WidgetDriver {
       ...
@@ -399,6 +426,65 @@ pass to the Test Driver.
       ...
     }
     ```
+
+### Working with changing dependencies injected into the BuildContext
+
+The Driver is bound to the lifecycle of the widget's state object, this means it lifes as long as the state of a stateful widget. Because like with StatefulWidget, we do not want to rebuild the Driver on every UI change, that would increase the build time of a `DriveableWidget`. That's also why we need the mixin and the generated method for `@driverProvidableProperties` annotated properties. This way we do not need to rebuild the driver with every UI change. (Side Note: Under the hood `DriveableWidget` is a StatefulWidget)
+However we want to resolve our dependencies in our Driver's constructor. (Using e.g. `Provider`) So how do those get updated?
+We tied the recreation of the driver to the `didChangeDependencies` state function. Should you watch, listen or subscribe to updates to your dependencies, we will rebuild the driver for you. Thus allowing you to re-resolve your services and create new listeners etc.
+As the `Provider` package is one of the most used packages in that category, here is an example:
+
+#### Example with Provider
+
+We want to read a ThemeDataServiceService from the context, which could change between light and dark Theme at runtime.
+If we were to resolve it like this:
+
+```dart
+class SomeDriver extends WidgetDriver {
+  final ThemeDataServiceService _themeDataService;
+
+  SomeDriver(
+    BuildContext context, {
+    ThemeDataService? themeDataService,
+  })  : _themeDataService = themeDataService ?? context.read<ThemeDataService>(),
+        super(context);
+}
+```
+
+The driver would not get an update should the ThemeDataService be changed.
+The `Provider` package however offers us the option to `watch` the provided value.
+
+```dart
+class SomeDriver extends WidgetDriver {
+  final ThemeDataService _themeDataService;
+
+  SomeDriver(
+    BuildContext context, {
+    ThemeDataService? themeDataService,
+  })  : _themeDataService = themeDataService ?? context.watch<ThemeDataService>(),
+        super(context);
+}
+```
+
+This registers the widget to get updated once the ThemeDataService changes and the WidgetDriver Framework takes care of rebuilding the driver.
+
+Should you not want the driver to be rebuilt you can also use a `Locator`.
+
+```dart
+class SomeDriver extends WidgetDriver {
+  final Locator _locator
+
+  SomeDriver(
+    BuildContext context,
+    )  : _locator = context.read,
+        super(context);
+
+  bool get isDarkMode => _locator<ThemeDataService>().isDarkMode;
+}
+```
+
+This way you resolve the ThemeDataService once you need it, making the recreation obsolete.
+(Note: Saving the BuildContext for that purpose is **NOT** a good practice)
 
 ### Demo
 

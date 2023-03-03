@@ -11,12 +11,12 @@ part 'log_in_out_button_driver.g.dart';
 @GenerateTestDriver()
 class LogInOutButtonDriver extends WidgetDriver {
   final AuthService _authService;
-  final Localization _localization;
+  final Locator _locator;
   StreamSubscription? _subscription;
 
   LogInOutButtonDriver(BuildContext context)
-      : _authService = context.read<AuthService>(),
-        _localization = context.read<Localization>(),
+      : _authService = context.watch<AuthService>(),
+        _locator = context.read,
         super(context) {
     _subscription = _authService.isLoggedInStream.listen((_) {
       notifyWidget();
@@ -25,7 +25,7 @@ class LogInOutButtonDriver extends WidgetDriver {
 
   @TestDriverDefaultValue('Log in')
   String get buttonText {
-    return _authService.isLoggedIn ? _localization.logOut : _localization.logIn;
+    return _authService.isLoggedIn ? _localization().logOut : _localization().logIn;
   }
 
   @TestDriverDefaultValue()
@@ -42,4 +42,6 @@ class LogInOutButtonDriver extends WidgetDriver {
     _subscription?.cancel();
     super.dispose();
   }
+
+  Localization _localization() => _locator<Localization>();
 }
