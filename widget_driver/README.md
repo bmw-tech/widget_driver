@@ -448,6 +448,25 @@ So please follow guideline two -> Put your business logic in the `Driver`, not i
 
 More about testing and the benefits are described [here](doc/testing.md)
 
+## Providing dependencies into the build context
+
+If you need to inject some dependencies into the BuildContext then a typical use case is that you create/resolve them in a build method of a widget. And then you use some state management tool like `Provider` to inject them into the widget tree. Like so:
+
+```dart
+Widget build(BuildContext context) {
+  return Provider(
+    create: MyService(someStuffFromContext: context.read<SomeStuff>()),
+    child: child,
+  );
+}
+```
+
+Now this works fine when running the app normally. But when you run widget tests, then any parent of this widget would need to provide a mocked version of `SomeStuff` into the build context, otherwise the `context.read<SomeStuff>()` would fail and throw an exception.
+
+To get around this we have created a helper class called `DependencyProvider`. This class adds a small wrapper around the creation of your dependency and will automatically provide a test default value for you when running tests.  
+
+Please see the documentation for [DependencyProvider](lib/src/dependency_provider.dart) for more information.
+
 ## Examples
 
 Please see this [example app](example) for inspiration on how to use `WidgetDrivers` in your app.  
@@ -462,7 +481,7 @@ But the application state should not be stored in the `Driver`! It is not the ow
 
 So the `Drivers` will need to access state somehow. [Here](https://docs.flutter.dev/development/data-and-backend/state-mgmt/options) is a list of recommended state management approaches. **BUT** just make sure to use these state management systems in the `Driver`.
 
-For e.g. if you choose to use [Provider](https://pub.dev/packages/provider), then don't use your `Provider` in the widgets. So don't use `context.watch<T>()`. Instead you then want to use the `Providers` in your `Driver`. See the [example app](example/) for inspiration on how to do this.
+For e.g. if you choose to use [Provider](https://pub.dev/packages/provider), then don't use your `Provider` in the widgets. So don't use `context.watch<T>()` in your widgets build method. Instead you then want to use the `Providers` in your `Driver`. See the [example app](example/) for inspiration on how to do this.
 
 ## Documentation
 

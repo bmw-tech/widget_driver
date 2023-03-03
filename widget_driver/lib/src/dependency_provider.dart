@@ -2,7 +2,7 @@ import 'utils/runtime_environment_info.dart';
 
 /// Use this class to create/resolve dependencies in your widgets.
 /// This class adds a safe way to create/resolve dependencies during testing where
-/// parent widgets are not forced to provide a mocked instance of your dependency.
+/// parent widgets are not forced to provide a mocked instances of your dependencies.
 ///
 /// The `DependencyProvider` will create the dependency object
 /// according to the provided builder when you are not running tests.
@@ -13,14 +13,16 @@ import 'utils/runtime_environment_info.dart';
 ///
 /// This is how you use this in your widget where you provide dependencies:
 /// Step one: At the bottom of your widget class, create a subclass of `DependencyProvider` and implement the
-/// `registerTestDefaultFallbackValues` method. In this method you register the test default instance.
+/// `registerTestDefaultFallbackValues` method. In this method you register the test default instances.
 /// This should be an empty implementation instance. Like a mock object.
+/// You typically would only have one concrete implementation of `DependencyProvider` per widget where you use it.
 ///
 /// ```dart
 /// class MyServiceProviderWidget extends StatelessWidget {
 ///     ...
 /// }
 ///
+/// // Here we create the concrete implementation of `DependencyProvider`
 /// class _DependencyProvider extends DependencyProvider {
 ///     @override
 ///     void registerTestDefaultFallbackValues() {
@@ -48,13 +50,14 @@ import 'utils/runtime_environment_info.dart';
 /// ```
 ///
 /// Now when you run this normally as a flutter app, then the real `MyService` will be created.
-/// And it will try to real `SomeStuff` out of the build context.
-/// And when you run this during tests and you registered some mock version of `SomeStuff` in the buildContext
-/// then that will be used.
+/// And it will try to get the real `SomeStuff` instance out of the build context.
+/// Should you want to provide a mocked version of `SomeStuff` during testing, then you can just simply
+/// provide that object in the buildContext, like you would previously and that one will be used.
 ///
-/// BUT: if you run this during tests, and you never registered any type for `SomeStuff` in the buildContext then
-/// normally this would break your test build and throw an exception. But in this case it will still run.
-/// It just returns the empty test default instance of your `MyService`.
+/// BUT: if you run this during tests, and you never registered any type for `SomeStuff` in the buildContext.
+/// Normally, this would break your test build and throw an exception. In this case however, we will default back
+/// to your test default instance of your `MyService`, provided in the registerTestDefaultBuilder() method.
+/// Thereby taking away one more thing to consider/remember when writing tests.
 ///
 /// So when you run any parent widget test then they do not need to be aware of your needed dependency!
 abstract class DependencyProvider {
