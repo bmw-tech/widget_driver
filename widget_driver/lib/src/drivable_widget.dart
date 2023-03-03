@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
@@ -40,6 +41,7 @@ abstract class DrivableWidget<Driver extends WidgetDriver> extends StatefulWidge
 
 class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidget<Driver>> {
   Driver? _driver;
+  bool _shouldRebuildDriver = false;
 
   @override
   void dispose() {
@@ -55,11 +57,31 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
     return widget.build(context);
   }
 
+  @override
+  void didUpdateWidget(covariant DrivableWidget<Driver> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_driverExists) {
+      widget.driverProvider.updateDriverProvidedProperties(_driver!);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_driverExists) {
+      // If didChangeDependencies get's called this means your driver depends on a value from the BuildContext,
+      // which the flutter framework marked as "has changed".
+      // Thus we need to rebuild the driver to retrieve the latest value.
+      _markDriverToBeRebuilt();
+    }
+  }
+
   Driver _getDriverAndSetupUpIfNeeded(BuildContext context) {
-    // The driver was already created. Nothing more to do. Just return it.
-    if (_driver != null) {
+    if (_driverExists && !_shouldRebuildDriver) {
       return _driver!;
     }
+
+    _disposeDriver();
 
     Driver driver;
     if (_isRunningInTestEnvironment()) {
@@ -97,6 +119,17 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
 
     // There was no mocked driver. Then just return the hard coded TestDriver.
     return widget.driverProvider.buildTestDriver();
+  }
+
+  void _markDriverToBeRebuilt() {
+    _shouldRebuildDriver = true;
+  }
+
+  bool get _driverExists => _driver != null;
+
+  void _disposeDriver() {
+    _shouldRebuildDriver = false;
+    _driver?.dispose();
   }
 }
 
