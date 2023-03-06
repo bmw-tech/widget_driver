@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.8
+
+* Adds a new helper class `DependencyProvider` to support with creating/resolving dependencies when needed directly into the widget.
+
 ## 0.0.7
 
 * Fixes issues with ignoring of state changes
