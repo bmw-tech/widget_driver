@@ -8,7 +8,19 @@ class NotLoggedInPage extends DrivableWidget<NotLoggedInPageDriver> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text(driver.notLoggedInText));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(driver.notLoggedInText),
+        ),
+        ElevatedButton(
+          onPressed: () => driver.registerNewAccountTapped(context),
+          child: Text(driver.registerNewAccountButtonText),
+        ),
+      ],
+    );
   }
 
   @override

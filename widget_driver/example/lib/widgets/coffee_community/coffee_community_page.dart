@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import 'coffee_community_page_driver.dart';
+import 'not_logged_in/not_logged_in_dependency_injector.dart';
 
 class CoffeeCommunityPage extends DrivableWidget<CoffeeCommunityPageDriver> {
   CoffeeCommunityPage({Key? key}) : super(key: key);
@@ -13,7 +14,9 @@ class CoffeeCommunityPage extends DrivableWidget<CoffeeCommunityPageDriver> {
     if (driver.isLoggedIn) {
       return CoffeeLibraryPage();
     } else {
-      return NotLoggedInPage();
+      return NotLoggedInDependencyInjector(
+        child: NotLoggedInPage(),
+      );
     }
   }
 
