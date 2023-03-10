@@ -5,7 +5,7 @@ import '../../../../models/coffee.dart';
 part 'coffee_detail_page_driver.g.dart';
 
 @GenerateTestDriver()
-class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
+class CoffeeDetailPageDriver extends WidgetDriver implements _$DriverProvidedProperties {
   int _index;
   Coffee _coffee;
 

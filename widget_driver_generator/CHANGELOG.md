@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.7
+
+* Changes the generated code for provided properties to use `implements` and abstract class instead of mixins.
+
 ## 0.0.6
 
 * Adds generating of `_$DriverProvidedPropertiesMixin` which fixes ignoring of state issues

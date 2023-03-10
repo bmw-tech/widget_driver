@@ -14,8 +14,8 @@ abstract class WidgetDriverProvider<Driver extends WidgetDriver> {
   /// Creates and returns the `Driver` with the hard coded test values.
   Driver buildTestDriver();
 
-  /// This method only get's overriden when the driver has provided properties.
-  /// It calls a method in the driver, added by the `_$DriverProvidedPropertiesMixin`,
+  /// This method only get's overridden when the driver has provided properties.
+  /// It calls a method in the driver, added by the `_$DriverProvidedProperties` interface,
   /// to respond to properties changed during a state update.
   /// Therefore it is called in the scope of the build method,
   /// shortly before the widget gets actually built.

@@ -21,10 +21,18 @@ class _$TestRegisterAccountPageDriver extends TestDriver implements RegisterAcco
   String? get usernameInputError => null;
 
   @override
+  String get registerButtonText => 'Register and log in';
+
+  @override
+  bool get registerIsLoading => false;
+
+  @override
   void usernameInputChanged(String inputName) {}
 
   @override
-  Future<void> tappedRegister(BuildContext context) async {}
+  Future<void> tappedRegister(BuildContext context) {
+    return Future.value();
+  }
 }
 
 class $RegisterAccountPageDriverProvider extends WidgetDriverProvider<RegisterAccountPageDriver> {

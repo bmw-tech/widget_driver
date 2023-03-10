@@ -337,11 +337,11 @@ Easy...
     ```
 
 2. Then we just run the generator like we did before...
-3. We should get a compiler warning in the generated file. To resolve that we just have to add the generated mixin `_$DriverProvidedPropertiesMixin` to our driver like this:
+3. We should get a compiler warning in the generated file. To resolve that we just have to add the generated abstract class `_$DriverProvidedProperties` to our driver like this:
 
     ```dart
     @GenerateTestDriver()
-      class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
+      class CoffeeDetailPageDriver extends WidgetDriver implements _$DriverProvidedProperties {
         ...
       }
     ```
@@ -350,7 +350,7 @@ Easy...
 
     ```dart
     @GenerateTestDriver()
-      class CoffeeDetailPageDriver extends WidgetDriver with _$DriverProvidedPropertiesMixin {
+      class CoffeeDetailPageDriver extends WidgetDriver implements _$DriverProvidedProperties {
         int index;
         Coffee _coffee;
 
@@ -429,7 +429,7 @@ pass to the Test Driver.
 
 ### Working with changing dependencies injected into the BuildContext
 
-The Driver is bound to the lifecycle of the widget's state object, this means it lifes as long as the state of a stateful widget. Because like with StatefulWidget, we do not want to rebuild the Driver on every UI change, that would increase the build time of a `DriveableWidget`. That's also why we need the mixin and the generated method for `@driverProvidableProperties` annotated properties. This way we do not need to rebuild the driver with every UI change. (Side Note: Under the hood `DriveableWidget` is a StatefulWidget)
+The Driver is bound to the lifecycle of the widget's state object, this means it lives as long as the state of a stateful widget. Because like with StatefulWidget, we do not want to rebuild the Driver on every UI change, that would increase the build time of a `DrivableWidget`. That's also why we need the interface and the generated method for `@driverProvidableProperties` annotated properties. This way we do not need to rebuild the driver with every UI change. (Side Note: Under the hood `DrivableWidget` is a StatefulWidget)
 However we want to resolve our dependencies in our Driver's constructor. (Using e.g. `Provider`) So how do those get updated?
 We tied the recreation of the driver to the `didChangeDependencies` state function. Should you watch, listen or subscribe to updates to your dependencies, we will rebuild the driver for you. Thus allowing you to re-resolve your services and create new listeners etc.
 As the `Provider` package is one of the most used packages in that category, here is an example:
