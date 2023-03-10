@@ -8,7 +8,7 @@ part of 'coffee_counter_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.0.7"
+// This file was generated with widget_driver_generator version "0.1.0"
 
 class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounterWidgetDriver {
   @override
