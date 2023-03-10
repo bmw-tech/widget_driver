@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## 0.0.7
+## 0.1.0
 
 * Changes the generated code for provided properties to use `implements` and abstract class instead of mixins.
+* Fixes the issue where the version number of the generator in the generated file was wrong.
 
 ## 0.0.6
 

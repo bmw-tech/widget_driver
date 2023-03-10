@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -10,9 +8,16 @@ import 'package:widget_driver_generator/src/code_providers/test_driver_code_prov
 import 'package:widget_driver_generator/src/utils/code_writer.dart';
 
 import 'model_visitor.dart';
+import 'utils/package_info_provider.dart';
 
 /// Generates TestDrivers and WidgetDriverProviders based on annotations
 class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
+  final PackageInfoProvider _packageInfoProvider;
+
+  WidgetDriverGenerator({
+    PackageInfoProvider? packageInfoProvider,
+  }) : _packageInfoProvider = packageInfoProvider ?? PackageInfoProvider();
+
   @override
   Future<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
     // Visit the annotated class and gather the data we need.
@@ -28,8 +33,8 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
 
     codeWriter.writeCode('// coverage:ignore-file\n');
 
-    final packageVersionString = await _getPackageVersionString();
-    codeWriter.writeCode('// This file was generated with widget_driver_generator $packageVersionString\n');
+    final packageVersionString = await _packageInfoProvider.getPackageVersionString();
+    codeWriter.writeCode('// This file was generated with widget_driver_generator version $packageVersionString\n');
 
     //###################################
     // Start - TestDriver generation
@@ -66,14 +71,5 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
     codeWriter.writeCode(providedPropertiesInterfaceCodeProvider.getCode);
 
     return codeWriter.getAllCode();
-  }
-
-  /// Grabs the version string from the pubspec.yaml
-  Future<String> _getPackageVersionString() async {
-    final file = File('pubspec.yaml');
-    final pubspecString = await file.readAsString();
-    final exp = RegExp(r'version: .+');
-    final match = exp.firstMatch(pubspecString)!;
-    return match[0]!;
   }
 }
