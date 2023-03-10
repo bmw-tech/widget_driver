@@ -1,16 +1,15 @@
 import 'package:test/test.dart';
-import 'package:widget_driver_generator/src/code_providers/provided_properties_mixin_code_provider.dart';
+import 'package:widget_driver_generator/src/code_providers/provided_properties_interface_code_provider.dart';
 import 'package:widget_driver_generator/src/models/providable_field.dart';
 
 void main() {
-  group('ProvidedPropertiesMixinCodeProviderTest:', () {
+  group('ProvidedPropertiesInterfaceCodeProviderTest:', () {
     test('Returns nothing, if there are no providedFields', () {
       final fields = <ProvidableField>[];
-      final codeProvider = ProvidedPropertiesMixinCodeProvider(
-        driverClassName: 'SomeDriver',
+      final codeProvider = ProvidedPropertiesInterfaceCodeProvider(
         fields: fields,
       );
-      expect(codeProvider.providedPropertiesMixinClass, '');
+      expect(codeProvider.getCode, '');
     });
 
     test('Returns correctly from providedFields', () {
@@ -29,12 +28,12 @@ void main() {
         ),
         const ProvidableField(name: 'example3', type: 'int', isRequired: false, isNamed: false),
       ];
-      final codeProvider = ProvidedPropertiesMixinCodeProvider(
-        driverClassName: 'SomeDriver',
+      final codeProvider = ProvidedPropertiesInterfaceCodeProvider(
         fields: fields,
       );
-      expect(codeProvider.providedPropertiesMixinClass, '''
-mixin _\$DriverProvidedPropertiesMixin {
+      expect(codeProvider.getCode, '''
+// ignore: one_member_abstracts
+abstract class _\$DriverProvidedProperties {
 
   /// This function allows you to react to changes of the `driverProvidableProperties` in the driver. 
   ///

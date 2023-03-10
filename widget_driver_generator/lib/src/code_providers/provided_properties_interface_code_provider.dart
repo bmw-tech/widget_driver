@@ -1,36 +1,33 @@
 import 'package:widget_driver_generator/src/models/providable_field.dart';
-import 'package:widget_driver_generator/src/utils/class_utils.dart';
 import 'package:widget_driver_generator/src/utils/string_extensions.dart';
 
-class ProvidedPropertiesMixinCodeProvider {
+class ProvidedPropertiesInterfaceCodeProvider {
   final List<ProvidableField> _fields;
-  final String _providedPropertiesMixinClassName;
 
-  ProvidedPropertiesMixinCodeProvider({
+  ProvidedPropertiesInterfaceCodeProvider({
     required List<ProvidableField> fields,
-    required String driverClassName,
-  })  : _fields = fields,
-        _providedPropertiesMixinClassName = ClassUtils.providedPropertiesMixinClassName();
+  }) : _fields = fields;
 
   /// Generates the parameter list for [updateDriverProvidedProperties], as required named parameters.
   String _parameters() => _fields.map((e) => 'required ${e.type} ${e.name.makeItNew()}').join(',');
 
-  /// Returns the code of the `ProvidedPropertiesMixin` class depending on the provided ProvidableFields list.
+  /// Returns the code of the `ProvidedProperties` class depending on the provided ProvidableFields list.
   /// E.g:
   /// ```dart
-  /// class $ExampleDriverProvidedPropertiesMixin {
+  /// abstract class _$DriverProvidedProperties {
   ///   void updateDriverProvidedProperties({
   ///     required int newIndex,
   ///     required String newTitle,
   ///   });
   /// }
   /// ```
-  String get providedPropertiesMixinClass {
+  String get getCode {
     if (_fields.isEmpty) {
       return '';
     } else {
       return '''
-mixin $_providedPropertiesMixinClassName {
+// ignore: one_member_abstracts
+abstract class _\$DriverProvidedProperties {
 
   /// This function allows you to react to changes of the `driverProvidableProperties` in the driver. 
   ///

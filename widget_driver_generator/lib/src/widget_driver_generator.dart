@@ -5,7 +5,7 @@ import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
 import 'package:widget_driver_generator/src/code_providers/driver_provider_code_provider.dart';
-import 'package:widget_driver_generator/src/code_providers/provided_properties_mixin_code_provider.dart';
+import 'package:widget_driver_generator/src/code_providers/provided_properties_interface_code_provider.dart';
 import 'package:widget_driver_generator/src/code_providers/test_driver_code_provider.dart';
 import 'package:widget_driver_generator/src/utils/code_writer.dart';
 
@@ -55,12 +55,15 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
 
     codeWriter.writeCode(driverProviderCodeProvider.driverProviderClass);
 
-    final providedPropertiesMixinCodeProvider = ProvidedPropertiesMixinCodeProvider(
+    //################################################
+    // Start - ProvidedProperties Interface generation
+    //################################################
+
+    final providedPropertiesInterfaceCodeProvider = ProvidedPropertiesInterfaceCodeProvider(
       fields: visitor.providableFields,
-      driverClassName: driverClassName,
     );
 
-    codeWriter.writeCode(providedPropertiesMixinCodeProvider.providedPropertiesMixinClass);
+    codeWriter.writeCode(providedPropertiesInterfaceCodeProvider.getCode);
 
     return codeWriter.getAllCode();
   }
