@@ -68,10 +68,9 @@ required String example2,
   @override
   void updateDriverProvidedProperties(ExampleDriver driver) {
 
-    //  In case you get a compiler error here, you have to mixin _\$DriverProvidedPropertiesMixin into your driver.
-    //  And implement updateDriverProvidedProperties(), there you can react to new values to all your provided values.
-    //  Like this:
-    //  class ExampleDriver extends WidgetDriver with _\$DriverProvidedPropertiesMixin {
+    // In case you get a compiler error here, you have to implement _\$DriverProvidedProperties in your driver.
+    // Like this:
+    //  class ExampleDriver extends WidgetDriver implements _\$DriverProvidedProperties {
     //    
     //    ...
     //

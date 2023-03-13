@@ -17,11 +17,5 @@ void main() {
       final actual = ClassUtils.driverProviderClassName(className);
       expect(actual, expected);
     });
-
-    test('Returns correct providedPropertiesMixinClassName', () {
-      const expected = '_\$DriverProvidedPropertiesMixin';
-      final actual = ClassUtils.providedPropertiesMixinClassName();
-      expect(actual, expected);
-    });
   });
 }

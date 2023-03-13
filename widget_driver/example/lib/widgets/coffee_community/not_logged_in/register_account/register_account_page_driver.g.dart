@@ -8,7 +8,7 @@ part of 'register_account_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version: 1.0.0+1
+// This file was generated with widget_driver_generator version "0.1.0"
 
 class _$TestRegisterAccountPageDriver extends TestDriver implements RegisterAccountPageDriver {
   @override
@@ -21,10 +21,18 @@ class _$TestRegisterAccountPageDriver extends TestDriver implements RegisterAcco
   String? get usernameInputError => null;
 
   @override
+  String get registerButtonText => 'Register and log in';
+
+  @override
+  bool get registerIsLoading => false;
+
+  @override
   void usernameInputChanged(String inputName) {}
 
   @override
-  Future<void> tappedRegister(BuildContext context) async {}
+  Future<void> tappedRegister(BuildContext context) {
+    return Future.value();
+  }
 }
 
 class $RegisterAccountPageDriverProvider extends WidgetDriverProvider<RegisterAccountPageDriver> {
