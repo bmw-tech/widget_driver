@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 import 'test_helpers/test_container_drivable_widget.dart';
 
@@ -14,6 +13,16 @@ void main() {
     setUp(() {
       _mockRuntimeEnvironmentInfo = _MockRuntimeEnvironmentInfo();
     });
+
+    Future<void> _tapButtonToIncreaseSomeData(WidgetTester tester) async {
+      await tester.tap(find.byKey(const Key('increase_someData_button')));
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> _tapButtonWhichDoesNothingJustCallsSetState(WidgetTester tester) async {
+      await tester.tap(find.byKey(const Key('just_calls_set_state_button')));
+      await tester.pumpAndSettle();
+    }
 
     group('Runtime Environment:', () {
       testWidgets('Uses real driver when not in test environment', (WidgetTester tester) async {
@@ -42,9 +51,11 @@ void main() {
     });
 
     group('Driver Access:', () {
-      testWidgets('Can access its driver', (WidgetTester tester) async {
+      setUp(() {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+      });
 
+      testWidgets('Can access its driver', (WidgetTester tester) async {
         final testContainerDrivableWidget = TestContainerDrivableWidget(
           environmentInfo: _mockRuntimeEnvironmentInfo,
         );
@@ -56,9 +67,11 @@ void main() {
     });
 
     group('Providable Properties:', () {
-      testWidgets('Calling `aTestMethod` on driver makes widget reload with new data', (WidgetTester tester) async {
+      setUp(() {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+      });
 
+      testWidgets('Calling aTestMethod on driver makes widget reload with new data', (WidgetTester tester) async {
         final testContainerDrivableWidget = TestContainerDrivableWidget(
           environmentInfo: _mockRuntimeEnvironmentInfo,
         );
@@ -73,10 +86,8 @@ void main() {
         expect(find.text('didCallTestMethod: true'), findsOneWidget);
       });
 
-      testWidgets('updateDriverProvidedProperties gets called on widget configuration change',
+      testWidgets('didUpdateProvidedProperties gets called on widget configuration change',
           (WidgetTester tester) async {
-        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
-
         late TestContainerDriver driver;
         final testContainerDrivableWidget = WrappedTestContainer(
           environmentInfo: _mockRuntimeEnvironmentInfo,
@@ -89,90 +100,111 @@ void main() {
         expect(driver.someData, 0);
         expect(find.text('justSomeData: 0'), findsOneWidget);
 
-        await tester.tap(
-          find.byKey(
-            const Key(
-              'wrapped_test_container_button',
-            ),
-          ),
-        );
-        await tester.pumpAndSettle();
+        await _tapButtonToIncreaseSomeData(tester);
 
         expect(driver.numberOfCallsToUpdateDriverProvidedProperties, 1);
         expect(driver.someData, 1);
         expect(find.text('justSomeData: 1'), findsOneWidget);
-        expect(driver, firstDriver);
+        expect(identical(driver, firstDriver), isTrue);
       });
     });
 
-    group('Driver lifecycle:', () {
-      testWidgets('Does not create new driver, if there are no buildContext dependencies', (tester) async {
+    group('BuildContext dependencies:', () {
+      setUp(() {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
-        var providedValue = 1;
-
-        final provider = TestContainerDriverProvider();
-
-        final testContainerDrivableWidget = TestContainerDrivableWidget(
-          environmentInfo: _mockRuntimeEnvironmentInfo,
-          provider: provider,
-        );
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Provider.value(
-              value: providedValue,
-              child: testContainerDrivableWidget,
-            ),
-          ),
-        );
-        final driver = testContainerDrivableWidget.driver;
-
-        expect(provider.driverBuiltCount, 1);
-
-        driver.aTestMethod();
-        await tester.pump();
-
-        expect(provider.driverBuiltCount, 1);
       });
 
-      testWidgets('Does not create new driver, if we only read from buildContext', (tester) async {
-        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
-
-        final provider = ReadDriverProvider();
-
-        final readWidget = ReadWidget(
+      testWidgets('Does not call didUpdateBuildContextDependencies, if there are no buildContext dependencies',
+          (tester) async {
+        late TestContainerDriver driver;
+        final testContainerDrivableWidget = WrappedTestContainer(
           environmentInfo: _mockRuntimeEnvironmentInfo,
-          provider: provider,
+          driverCallback: (newDriver) => driver = newDriver,
+          readFromContext: false,
+          watchFromContext: false,
         );
-        await tester.pumpWidget(ProviderWidget(child: readWidget));
+        await tester.pumpWidget(testContainerDrivableWidget);
+        final firstDriver = driver;
 
-        expect(provider.driverBuiltCount, 1);
-        expect(readWidget.driver.provided, 1);
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
 
-        await tester.pump();
+        await _tapButtonToIncreaseSomeData(tester);
 
-        expect(provider.driverBuiltCount, 1);
-        expect(readWidget.driver.provided, 1);
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(identical(driver, firstDriver), isTrue);
       });
 
-      testWidgets('Does create new driver, if we watch buildContext', (tester) async {
-        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
-
-        final provider = WatchDriverProvider();
-
-        final watchWidget = WatchWidget(
+      testWidgets('Does not call didUpdateBuildContextDependencies, if we only read from buildContext', (tester) async {
+        late TestContainerDriver driver;
+        final testContainerDrivableWidget = WrappedTestContainer(
           environmentInfo: _mockRuntimeEnvironmentInfo,
-          provider: provider,
+          driverCallback: (newDriver) => driver = newDriver,
+          readFromContext: true,
+          watchFromContext: false,
         );
-        await tester.pumpWidget(ProviderWidget(child: watchWidget));
+        await tester.pumpWidget(testContainerDrivableWidget);
+        final firstDriver = driver;
 
-        expect(provider.driverBuiltCount, 1);
-        expect(watchWidget.driver.provided, 1);
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.readDataValue, 0);
 
-        await tester.tap(find.byKey(const Key('provider_widget_action_button')));
-        await tester.pumpAndSettle();
+        await _tapButtonToIncreaseSomeData(tester);
 
-        expect(provider.driverBuiltCount, 2);
-        expect(watchWidget.driver.provided, 2);
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        // Should still be zero since we are not watching anything from build context.
+        // So the driver does not get updated.
+        expect(driver.readDataValue, 0);
+        expect(identical(driver, firstDriver), isTrue);
+      });
+
+      testWidgets('Does not call didUpdateBuildContextDependencies, if we watch buildContext but it never changes',
+          (tester) async {
+        late TestContainerDriver driver;
+        final testContainerDrivableWidget = WrappedTestContainer(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+          driverCallback: (newDriver) => driver = newDriver,
+          readFromContext: false,
+          watchFromContext: true,
+        );
+        await tester.pumpWidget(testContainerDrivableWidget);
+        final firstDriver = driver;
+
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.watchDataValue, 0);
+
+        await _tapButtonWhichDoesNothingJustCallsSetState(tester);
+
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.watchDataValue, 0);
+        expect(identical(driver, firstDriver), isTrue);
+      });
+
+      testWidgets('Does call didUpdateBuildContextDependencies, if we watch buildContext and it changes',
+          (tester) async {
+        late TestContainerDriver driver;
+        final testContainerDrivableWidget = WrappedTestContainer(
+          environmentInfo: _mockRuntimeEnvironmentInfo,
+          driverCallback: (newDriver) => driver = newDriver,
+          readFromContext: false,
+          watchFromContext: true,
+        );
+        await tester.pumpWidget(testContainerDrivableWidget);
+        final firstDriver = driver;
+
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.watchDataValue, 0);
+
+        await _tapButtonToIncreaseSomeData(tester);
+
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 1);
+        expect(driver.watchDataValue, 1);
+        expect(identical(driver, firstDriver), isTrue);
+
+        await _tapButtonToIncreaseSomeData(tester);
+
+        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 2);
+        expect(driver.watchDataValue, 2);
+        expect(identical(driver, firstDriver), isTrue);
       });
     });
   });

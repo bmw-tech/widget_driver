@@ -8,12 +8,28 @@ import 'package:widget_driver/widget_driver.dart';
 /// This is the driver which is driving the `TestContainerDrivableWidget`.
 class TestContainerDriver extends WidgetDriver {
   int someData;
+  int? readDataValue;
+  int? watchDataValue;
+
+  final bool _readFromContext;
+  final bool _watchFromContext;
 
   TestContainerDriver(
     BuildContext context, {
     int? newSomeData,
-  })  : someData = newSomeData ?? -1,
-        super(context);
+    required bool readFromContext,
+    required bool watchFromContext,
+  })  : _readFromContext = readFromContext,
+        _watchFromContext = watchFromContext,
+        someData = newSomeData ?? -1,
+        super(context) {
+    if (readFromContext) {
+      readDataValue = context.read<ReadData>().value;
+    }
+    if (watchFromContext) {
+      watchDataValue = context.watch<WatchData>().value;
+    }
+  }
 
   String get aTestText => 'A test text';
 
@@ -25,9 +41,23 @@ class TestContainerDriver extends WidgetDriver {
 
   int numberOfCallsToUpdateDriverProvidedProperties = 0;
 
-  void updateDriverProvidedProperties({required int newSomeData}) {
+  void didUpdateProvidedProperties({required int newSomeData}) {
     someData = newSomeData;
-    numberOfCallsToUpdateDriverProvidedProperties++;
+    numberOfCallsToUpdateDriverProvidedProperties += 1;
+  }
+
+  int numberOfCallsToUpdateBuildContextDependencies = 0;
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {
+    numberOfCallsToUpdateBuildContextDependencies += 1;
+
+    if (_readFromContext) {
+      readDataValue = context.read<ReadData>().value;
+    }
+    if (_watchFromContext) {
+      watchDataValue = context.watch<WatchData>().value;
+    }
   }
 }
 
@@ -51,17 +81,26 @@ class TestContainerTestDriver extends TestDriver implements TestContainerDriver 
 /// This is the provider used by `TestContainerDrivableWidget`
 /// to create the correct drivers for it.
 class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriver> {
-  int driverBuiltCount = 0;
-  final int someData;
+  final int _someData;
+  final bool _readFromContext;
+  final bool _watchFromContext;
 
   TestContainerDriverProvider({
-    int? newSomeData,
-  }) : someData = newSomeData ?? -1;
+    int? someData,
+    bool? readFromContext,
+    bool? watchFromContext,
+  })  : _someData = someData ?? -1,
+        _readFromContext = readFromContext ?? false,
+        _watchFromContext = watchFromContext ?? false;
 
   @override
   TestContainerDriver buildDriver(BuildContext context) {
-    driverBuiltCount++;
-    return TestContainerDriver(context, newSomeData: someData);
+    return TestContainerDriver(
+      context,
+      newSomeData: _someData,
+      readFromContext: _readFromContext,
+      watchFromContext: _watchFromContext,
+    );
   }
 
   @override
@@ -71,7 +110,7 @@ class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriv
 
   @override
   void updateDriverProvidedProperties(TestContainerDriver driver) {
-    driver.updateDriverProvidedProperties(newSomeData: someData);
+    driver.didUpdateProvidedProperties(newSomeData: _someData);
   }
 }
 
@@ -80,15 +119,18 @@ class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriv
 /// need some concrete instance which we can use in our tests.
 /// The driver which drives this widget is a `TestContainerDriver`.
 class TestContainerDrivableWidget extends DrivableWidget<TestContainerDriver> {
-  final TestContainerDriverProvider? provider;
   final int someData;
+  final bool? readFromContext;
+  final bool? watchFromContext;
+
   final void Function(TestContainerDriver driver)? driverCallback;
 
   TestContainerDrivableWidget({
     Key? key,
     RuntimeEnvironmentInfo? environmentInfo,
-    this.provider,
     int? newSomeData,
+    this.readFromContext,
+    this.watchFromContext,
     this.driverCallback,
   })  : someData = newSomeData ?? -1,
         super(key: key, environmentInfo: environmentInfo);
@@ -106,19 +148,28 @@ class TestContainerDrivableWidget extends DrivableWidget<TestContainerDriver> {
   }
 
   @override
-  WidgetDriverProvider<TestContainerDriver> get driverProvider =>
-      provider ?? TestContainerDriverProvider(newSomeData: someData);
+  WidgetDriverProvider<TestContainerDriver> get driverProvider => TestContainerDriverProvider(
+        someData: someData,
+        readFromContext: readFromContext,
+        watchFromContext: watchFromContext,
+      );
 }
 
 class WrappedTestContainer extends StatefulWidget {
   final RuntimeEnvironmentInfo environmentInfo;
   final Function(TestContainerDriver) driverCallback;
+  final bool _readFromContext;
+  final bool _watchFromContext;
 
   const WrappedTestContainer({
     Key? key,
     required this.environmentInfo,
     required this.driverCallback,
-  }) : super(key: key);
+    bool? readFromContext,
+    bool? watchFromContext,
+  })  : _readFromContext = readFromContext ?? false,
+        _watchFromContext = watchFromContext ?? false,
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() => WrappedTestContainerState();
@@ -126,137 +177,53 @@ class WrappedTestContainer extends StatefulWidget {
 
 class WrappedTestContainerState extends State<WrappedTestContainer> {
   int someData = 0;
+  ReadData readData = ReadData(0);
+  WatchData watchData = WatchData(0);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MaterialButton(
-        key: const Key('wrapped_test_container_button'),
-        onPressed: () => setState(() {
-          someData++;
-        }),
-        child: TestContainerDrivableWidget(
-          newSomeData: someData,
-          environmentInfo: widget.environmentInfo,
-          driverCallback: widget.driverCallback,
+      home: MultiProvider(
+        providers: [
+          Provider<ReadData>.value(value: readData),
+          Provider<WatchData>.value(value: watchData),
+        ],
+        child: Column(
+          children: [
+            MaterialButton(
+              key: const Key('increase_someData_button'),
+              onPressed: () => setState(() {
+                someData += 1;
+                readData = ReadData(someData);
+                watchData = WatchData(someData);
+              }),
+              child: const Text('Increase button'),
+            ),
+            MaterialButton(
+              key: const Key('just_calls_set_state_button'),
+              onPressed: () => setState(() {}),
+              child: const Text('Just call setState button'),
+            ),
+            TestContainerDrivableWidget(
+              newSomeData: someData,
+              environmentInfo: widget.environmentInfo,
+              driverCallback: widget.driverCallback,
+              readFromContext: widget._readFromContext,
+              watchFromContext: widget._watchFromContext,
+            )
+          ],
         ),
       ),
     );
   }
 }
 
-class ProviderWidget extends StatefulWidget {
-  final Widget child;
-
-  const ProviderWidget({Key? key, required this.child}) : super(key: key);
-
-  @override
-  State<ProviderWidget> createState() => _ProviderWidgetState();
+class ReadData {
+  final int value;
+  ReadData(this.value);
 }
 
-class _ProviderWidgetState extends State<ProviderWidget> {
-  int providedValue = 1;
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Provider.value(
-        value: providedValue,
-        child: MaterialButton(
-          key: const Key('provider_widget_action_button'),
-          onPressed: updatedProvidedValue,
-          child: widget.child,
-        ),
-      ),
-    );
-  }
-
-  void updatedProvidedValue() {
-    setState(() {
-      providedValue++;
-    });
-  }
-}
-
-class WatchDriver extends WidgetDriver {
-  final int _provided;
-
-  WatchDriver(BuildContext context)
-      : _provided = context.watch<int>(),
-        super(context);
-
-  int get provided => _provided;
-}
-
-class WatchDriverProvider extends WidgetDriverProvider<WatchDriver> {
-  int driverBuiltCount = 0;
-  @override
-  WatchDriver buildDriver(BuildContext context) {
-    driverBuiltCount++;
-    return WatchDriver(context);
-  }
-
-  @override
-  WatchDriver buildTestDriver() {
-    throw UnimplementedError();
-  }
-}
-
-class WatchWidget extends DrivableWidget<WatchDriver> {
-  final WatchDriverProvider? provider;
-
-  WatchWidget({
-    Key? key,
-    RuntimeEnvironmentInfo? environmentInfo,
-    this.provider,
-  }) : super(key: key, environmentInfo: environmentInfo);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-
-  @override
-  WidgetDriverProvider<WatchDriver> get driverProvider => provider ?? WatchDriverProvider();
-}
-
-class ReadDriver extends WidgetDriver {
-  final int _provided;
-
-  ReadDriver(BuildContext context)
-      : _provided = context.read<int>(),
-        super(context);
-
-  int get provided => _provided;
-}
-
-class ReadDriverProvider extends WidgetDriverProvider<ReadDriver> {
-  int driverBuiltCount = 0;
-  @override
-  ReadDriver buildDriver(BuildContext context) {
-    driverBuiltCount++;
-    return ReadDriver(context);
-  }
-
-  @override
-  ReadDriver buildTestDriver() {
-    throw UnimplementedError();
-  }
-}
-
-class ReadWidget extends DrivableWidget<ReadDriver> {
-  final ReadDriverProvider? provider;
-
-  ReadWidget({
-    Key? key,
-    RuntimeEnvironmentInfo? environmentInfo,
-    this.provider,
-  }) : super(key: key, environmentInfo: environmentInfo);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-
-  @override
-  WidgetDriverProvider<ReadDriver> get driverProvider => provider ?? ReadDriverProvider();
+class WatchData {
+  final int value;
+  WatchData(this.value);
 }

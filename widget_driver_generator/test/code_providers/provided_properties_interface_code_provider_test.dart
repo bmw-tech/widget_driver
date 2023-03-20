@@ -48,9 +48,9 @@ abstract class _\$DriverProvidedProperties {
   /// 
   /// Very Important!!
   /// Because this function is running during the build process, 
-  /// it is NOT the place to run time cosuming or blocking tasks etc. (like calling Api-Endpoints)
+  /// it is NOT the place to run time consuming or blocking tasks etc. (like calling Api-Endpoints)
   /// This could greatly impact your apps performance.
-  void updateDriverProvidedProperties({required String newExample1,required String newExample2,required int newExample3,});
+  void didUpdateProvidedProperties({required String newExample1,required String newExample2,required int newExample3,});
 }
 ''');
     });

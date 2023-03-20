@@ -75,11 +75,11 @@ required String example2,
     //    ...
     //
     //    @override
-    //    void updateDriverProvidedProperties(...) {
+    //    void didUpdateProvidedProperties(...) {
     //      // Handle your updates
     //    }
     //  }
-    driver.updateDriverProvidedProperties(newExample: _example,newExample2: _example2,);
+    driver.didUpdateProvidedProperties(newExample: _example,newExample2: _example2,);
   }
 }
 ''';

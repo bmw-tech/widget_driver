@@ -103,19 +103,23 @@ class CounterWidgetDriver extends WidgetDriver {
     _subscription?.cancel();
     super.dispose();
   }
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }
 ```
 
 There are three important concepts here.
 
-1. The dependencies are loaded/created/resolved in the constructor of the `driver`.
+1. The dependencies are loaded/created/resolved in the constructor of the `driver`.  
+(If the driver depends on an inherited widgets, then you can update these dependencies in the `didUpdateBuildContextDependencies` method)
 1. All the properties/methods which the driver wants to expose to the widgets needs to be annotated and given default values.
 1. Whenever important data has changed in the `driver` and you want the widget to update: call `notifyWidget()`
 
 **Let's start talking about the dependencies.**  
-Any type of dependencies which your `driver` needs to be able to give your widget the correct data has to be loaded/created/resolved in the constructor of the `driver`.
+Any type of dependencies which your `driver` needs to be able to give your widget the correct data has to be loaded/created/resolved in the constructor of the `driver`. (And potentially updated in the `didUpdateBuildContextDependencies` and/or `didUpdateProvidedProperties` methods.)
 
-You get two option here for how to resolve these dependencies. Either you can grab them out of the `BuildContext` (for example if you are using the `Provider` package). Or you can use some DI package like `get_it` and then just grab the dependencies from the DI container.
+You get three option here for how to resolve these dependencies. Either you can grab them out of the `BuildContext` (for example if you are using the `Provider` package). Or you can use some DI package like `get_it` and then just grab the dependencies from the DI container. Or you can pass in the dependencies to your driver using the `@driverProvidableProperty` annotation.
 
 **Now what about those annotations?**  
 They are needed for the `testDrivers` to be generated correctly. So for all properties and methods which you expose to the widget, you will need to add these annotations.
@@ -137,6 +141,8 @@ So for this to work, make sure that you first have all the correct data in place
 
 ### Life cycle
 
-Your `driver` lives together with the widget it drives. As soon as that widget gets put on screen, the `driver` gets created. If that widget gets remove from the screen then your `driver` gets disposed.
+Your `driver` lives together with the widget it drives. As soon as that widget is inserted into the widget tree, then the `driver` gets created. If that widget gets removed from the widget tree then your `driver` gets disposed.  
 
-At this point you could do some clean up in your `driver`. Just override the `void dispose()` method and put your clean up code there.
+NOTE: The driver is actually living inside the state of a `StatefulWidget`, and the lifecycle of the driver is the same as the lifecycle of the state of the `StatefulWidget`.
+
+If your widget is removed from the widget tree, then the dispose method of your driver is called and you could do some clean up in your `driver`. Just override the `void dispose()` method and put your clean up code there.

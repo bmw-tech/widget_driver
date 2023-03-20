@@ -166,6 +166,9 @@ class _ConcreteWidgetDriver extends WidgetDriver {
     }
     super.dispose();
   }
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }
 
 class _ConcreteTestDriver extends TestDriver implements _ConcreteWidgetDriver {

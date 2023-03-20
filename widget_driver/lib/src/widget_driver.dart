@@ -85,6 +85,20 @@ abstract class WidgetDriver {
       _widgetNotifier!.addListener(listener);
     }
   }
+
+  /// If the [WidgetDriver] constructor referenced an
+  /// [InheritedWidget] from the [BuildContext] that later changed, then
+  /// the framework will call this method to notify this driver about the change.
+  ///
+  /// Use this method to grab the latest value for your dependency from the [BuildContext].
+  /// Since the value which you got in the [WidgetDriver] constructor might be outdated/changed.
+  ///
+  /// The framework always calls [build] after a dependency changes.
+  /// So there is no need to call `notifyWidget` in this method since the widget's build method is called anyways.
+  ///
+  /// NOTE: If your driver is not referencing an [InheritedWidget]
+  /// then you can ignore this method since it will anyways never be called.
+  void didUpdateBuildContextDependencies(BuildContext context);
 }
 
 /// A base class for the test version of the WidgetDrivers.

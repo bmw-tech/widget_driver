@@ -8,14 +8,14 @@ class ProvidedPropertiesInterfaceCodeProvider {
     required List<ProvidableField> fields,
   }) : _fields = fields;
 
-  /// Generates the parameter list for [updateDriverProvidedProperties], as required named parameters.
+  /// Generates the parameter list for [didUpdateProvidedProperties], as required named parameters.
   String _parameters() => _fields.map((e) => 'required ${e.type} ${e.name.makeItNew()}').join(',');
 
   /// Returns the code of the `ProvidedProperties` class depending on the provided ProvidableFields list.
   /// E.g:
   /// ```dart
   /// abstract class _$DriverProvidedProperties {
-  ///   void updateDriverProvidedProperties({
+  ///   void didUpdateProvidedProperties({
   ///     required int newIndex,
   ///     required String newTitle,
   ///   });
@@ -42,9 +42,9 @@ abstract class _\$DriverProvidedProperties {
   /// 
   /// Very Important!!
   /// Because this function is running during the build process, 
-  /// it is NOT the place to run time cosuming or blocking tasks etc. (like calling Api-Endpoints)
+  /// it is NOT the place to run time consuming or blocking tasks etc. (like calling Api-Endpoints)
   /// This could greatly impact your apps performance.
-  void updateDriverProvidedProperties({${_parameters()},});
+  void didUpdateProvidedProperties({${_parameters()},});
 }
 ''';
     }
