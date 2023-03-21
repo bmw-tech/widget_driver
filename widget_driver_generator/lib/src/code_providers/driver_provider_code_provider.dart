@@ -153,11 +153,11 @@ class $_providerClassName extends WidgetDriverProvider<$_driverClassName> {
     //    ...
     //
     //    @override
-    //    void updateDriverProvidedProperties(...) {
+    //    void didUpdateProvidedProperties(...) {
     //      // Handle your updates
     //    }
     //  }
-    driver.updateDriverProvidedProperties(${_updateParameters()},);
+    driver.didUpdateProvidedProperties(${_updateParameters()},);
   }
 }
 ''';

@@ -41,7 +41,6 @@ abstract class DrivableWidget<Driver extends WidgetDriver> extends StatefulWidge
 
 class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidget<Driver>> {
   Driver? _driver;
-  bool _shouldRebuildDriver = false;
 
   @override
   void dispose() {
@@ -71,17 +70,15 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
     if (_driverExists) {
       // If didChangeDependencies get's called this means your driver depends on a value from the BuildContext,
       // which the flutter framework marked as "has changed".
-      // Thus we need to rebuild the driver to retrieve the latest value.
-      _markDriverToBeRebuilt();
+      // Thus we need to tell the driver about this so that it can update any logic depending on that dependency.
+      _driver!.didUpdateBuildContextDependencies(context);
     }
   }
 
   Driver _getDriverAndSetupUpIfNeeded(BuildContext context) {
-    if (_driverExists && !_shouldRebuildDriver) {
+    if (_driverExists) {
       return _driver!;
     }
-
-    _disposeDriver();
 
     Driver driver;
     if (_isRunningInTestEnvironment()) {
@@ -121,16 +118,7 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
     return widget.driverProvider.buildTestDriver();
   }
 
-  void _markDriverToBeRebuilt() {
-    _shouldRebuildDriver = true;
-  }
-
   bool get _driverExists => _driver != null;
-
-  void _disposeDriver() {
-    _shouldRebuildDriver = false;
-    _driver?.dispose();
-  }
 }
 
 class _WidgetDriverContainer<Driver extends WidgetDriver> {

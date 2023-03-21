@@ -111,6 +111,9 @@ class CounterWidgetDriver extends WidgetDriver {
     _subscription?.cancel();
     super.dispose();
   }
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }
 ```
 
@@ -346,7 +349,7 @@ Easy...
       }
     ```
 
-4. This requires us to override `updateDriverProvidedProperties(...)` which gets called whenever the corresponding widgets gets asked to re-render by its parent (same as `didUpdateWidget`). That way we can respond to new values to our provided properties given to us by the widget. (Technical Note: This is because the Driver does not get rebuilt when the widget gets rebuilt. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
+4. This requires us to override `didUpdateProvidedProperties(...)` which gets called whenever the corresponding widgets gets asked to re-render by its parent (same as `didUpdateWidget`). That way we can respond to new values to our provided properties given to us by the widget. (Technical Note: This is because the Driver does not get rebuilt when the widget gets rebuilt. And a call to `notifyWidget()` is not necessary, this function gets called before the widget shows the new data.)
 
     ```dart
     @GenerateTestDriver()
@@ -364,7 +367,7 @@ Easy...
         ...
 
         @override
-        void updateDriverProvidedProperties(
+        void didUpdateProvidedProperties(
           int newIndex,
           Coffee newCoffee,
         ) {
@@ -398,6 +401,94 @@ Easy...
     }
    ```
 
+### If you want to pass data to the driver via the BuildContext
+
+You can have your `Driver` grab dependencies from the `BuildContext` in its constructor.  
+There are typically 2 options here:
+
+1. Either you grab the dependency once by looking up the `BuildContext` ancestor tree. For example if you are using the `Provider` package, then you would do this with a `context.read<MyDependencyType>()`
+
+2. Or you grab your dependency as an inherited widget from the `BuildContext`. For example if you are using the `Provider` package, then you would do this with a `context.watch<MyDependencyType>()`.
+
+If you grab the dependency as an inherited widget then when/if your dependency ever changes, the framework will call this method on your driver: `didUpdateBuildContextDependencies(BuildContext context)`.  
+There you get access to the `BuildContext` again and can grab the latest version of your dependency.  
+
+**This is important!** Since the constructor of the `driver` is only called once. If you forget to handle potential updates in the `didUpdateBuildContextDependencies` method, then your data in the driver might be outdated.
+
+The `didUpdateBuildContextDependencies` method is only called by the framework if your `driver` declares a dependency to an inherited widget in its constructor. In case you do not do this, then you can leave this method implementation empty.
+
+#### Example grabbing a dependency with Provider
+
+We want to read a ThemeDataServiceService from the context, which could change between light and dark Theme at runtime.
+If we were to resolve it like this:
+
+```dart
+class SomeDriver extends WidgetDriver {
+  final ThemeDataServiceService _themeDataService;
+
+  SomeDriver(
+    BuildContext context, {
+    ThemeDataService? themeDataService,
+  })  : _themeDataService = themeDataService ?? context.read<ThemeDataService>(),
+        super(context);
+
+  ...
+
+  // No need to do anything in this method since we only get the dependency using `context.read`
+  void didUpdateBuildContextDependencies(BuildContext context) {}
+}
+```
+
+The driver would not get an update should the ThemeDataService be changed.
+The `Provider` package however offers us the option to `watch` the provided value.
+
+```dart
+class SomeDriver extends WidgetDriver {
+  ThemeDataService _themeDataService;
+
+  SomeDriver(
+    BuildContext context, {
+    ThemeDataService? themeDataService,
+  })  : _themeDataService = themeDataService ?? context.watch<ThemeDataService>(),
+        super(context);
+
+  ...
+
+  // Now we are using `context.watch`. So we will get notified if the `ThemeDataService` would be recreated.
+  // So we need to grab it again from the context.
+  void didUpdateBuildContextDependencies(BuildContext context) {
+    _themeDataService = context.watch<ThemeDataService>(),
+  }
+}
+```
+
+Another approach to get data from the `BuildContext` is to use the `Locator` which is offered by the `Provider` package. Then you store a reference to the `Locator` in your `driver` and you access content from it on demand when needed.  
+This way you do not grab data from the context and persist that data which at some point might get outdated.
+Instead you hold a reference to a `Locator` which knows how to read data from the context.
+
+The same rule applies though, if you grab a `Locator` using `final locator = context.read` then your driver will not get notified if a dependency which you need changes. So you still need to combine this with the usage of context.watch.
+
+The benefit using a `Locator` is that you do not need to reassign anything in the `didUpdateBuildContextDependencies` method. Since your `Locator` always have access to the correct `BuildContext` and can always look up the correct data.
+
+Here is an example using the `locator` approach:
+
+```dart
+class SomeDriver extends WidgetDriver {
+  final Locator _locator
+
+  SomeDriver(
+    BuildContext context,
+    )  : _locator = context.read,
+        super(context) {
+          context.watch<ThemeDataService>()
+        };
+
+  bool get isDarkMode => _locator<ThemeDataService>().isDarkMode;
+
+  void didUpdateBuildContextDependencies(BuildContext context) {}
+}
+```
+
 ### If your WidgetDriver exposes classes that require a lot of overrides
 
 Some classes have a lot of fields and functions that have to be overridden to construct them.
@@ -426,65 +517,6 @@ pass to the Test Driver.
       ...
     }
     ```
-
-### Working with changing dependencies injected into the BuildContext
-
-The Driver is bound to the lifecycle of the widget's state object, this means it lives as long as the state of a stateful widget. Because like with StatefulWidget, we do not want to rebuild the Driver on every UI change, that would increase the build time of a `DrivableWidget`. That's also why we need the interface and the generated method for `@driverProvidableProperties` annotated properties. This way we do not need to rebuild the driver with every UI change. (Side Note: Under the hood `DrivableWidget` is a StatefulWidget)
-However we want to resolve our dependencies in our Driver's constructor. (Using e.g. `Provider`) So how do those get updated?
-We tied the recreation of the driver to the `didChangeDependencies` state function. Should you watch, listen or subscribe to updates to your dependencies, we will rebuild the driver for you. Thus allowing you to re-resolve your services and create new listeners etc.
-As the `Provider` package is one of the most used packages in that category, here is an example:
-
-#### Example with Provider
-
-We want to read a ThemeDataServiceService from the context, which could change between light and dark Theme at runtime.
-If we were to resolve it like this:
-
-```dart
-class SomeDriver extends WidgetDriver {
-  final ThemeDataServiceService _themeDataService;
-
-  SomeDriver(
-    BuildContext context, {
-    ThemeDataService? themeDataService,
-  })  : _themeDataService = themeDataService ?? context.read<ThemeDataService>(),
-        super(context);
-}
-```
-
-The driver would not get an update should the ThemeDataService be changed.
-The `Provider` package however offers us the option to `watch` the provided value.
-
-```dart
-class SomeDriver extends WidgetDriver {
-  final ThemeDataService _themeDataService;
-
-  SomeDriver(
-    BuildContext context, {
-    ThemeDataService? themeDataService,
-  })  : _themeDataService = themeDataService ?? context.watch<ThemeDataService>(),
-        super(context);
-}
-```
-
-This registers the widget to get updated once the ThemeDataService changes and the WidgetDriver Framework takes care of rebuilding the driver.
-
-Should you not want the driver to be rebuilt you can also use a `Locator`.
-
-```dart
-class SomeDriver extends WidgetDriver {
-  final Locator _locator
-
-  SomeDriver(
-    BuildContext context,
-    )  : _locator = context.read,
-        super(context);
-
-  bool get isDarkMode => _locator<ThemeDataService>().isDarkMode;
-}
-```
-
-This way you resolve the ThemeDataService once you need it, making the recreation obsolete.
-(Note: Saving the BuildContext for that purpose is **NOT** a good practice)
 
 ### Demo
 

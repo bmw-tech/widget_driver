@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.0
+
+* Adds a new method which your drivers are forced to implement. This new method is `didUpdateBuildContextDependencies` and it is called by the framework if your driver has a dependency to an inherited widget from the build context and that dependency updates.
+
 ## 0.0.8
 
 * Adds a new helper class `DependencyProvider` to support with creating/resolving dependencies when needed directly into the widget.
