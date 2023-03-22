@@ -28,4 +28,7 @@ class HomePageDriver extends WidgetDriver {
 
   @TestDriverDefaultValue([AppTabType.consumption, AppTabType.community])
   List<AppTabType> get appTabs => _appTabs.tabs;
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }

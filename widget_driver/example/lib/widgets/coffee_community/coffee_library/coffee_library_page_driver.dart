@@ -49,4 +49,7 @@ class CoffeeLibraryPageDriver extends WidgetDriver {
     _subscription?.cancel();
     super.dispose();
   }
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }

@@ -15,4 +15,7 @@ class MyAppDriver extends WidgetDriver {
 
   @TestDriverDefaultValue('Coffee Demo App')
   String get appTitle => _locator<Localization>().appTitle;
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }

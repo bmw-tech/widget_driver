@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../../localization/localization.dart';
+import '../../../models/consumed_coffees_count.dart';
 import '../../../services/coffee_consumption_service.dart';
 
 part 'coffee_counter_widget_driver.g.dart';
@@ -28,11 +29,8 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
     });
   }
 
-  @TestDriverDefaultValue('Consumed coffees')
-  String get descriptionText => _localization().consumedCoffees;
-
-  @TestDriverDefaultValue('3')
-  String get amountText => '${_consumptionService.counter}';
+  @TestDriverDefaultValue(ConsumedCoffeesCount(3))
+  ConsumedCoffeesCount get consumedCoffeeCount => ConsumedCoffeesCount(_consumptionService.counter);
 
   @TestDriverDefaultValue('Consume coffee quick')
   String get consumeCoffeeQuickButtonText => _localization().consumeCoffeeQuick;
@@ -79,4 +77,7 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
   }
 
   Localization _localization() => _locator<Localization>();
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }

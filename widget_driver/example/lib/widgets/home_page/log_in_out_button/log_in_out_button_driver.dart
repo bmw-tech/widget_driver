@@ -15,7 +15,7 @@ class LogInOutButtonDriver extends WidgetDriver {
   StreamSubscription? _subscription;
 
   LogInOutButtonDriver(BuildContext context)
-      : _authService = context.watch<AuthService>(),
+      : _authService = context.read<AuthService>(),
         _locator = context.read,
         super(context) {
     _subscription = _authService.isLoggedInStream.listen((_) {
@@ -44,4 +44,7 @@ class LogInOutButtonDriver extends WidgetDriver {
   }
 
   Localization _localization() => _locator<Localization>();
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }

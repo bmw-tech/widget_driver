@@ -39,4 +39,7 @@ class NotLoggedInPageDriver extends WidgetDriver {
       },
     );
   }
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }

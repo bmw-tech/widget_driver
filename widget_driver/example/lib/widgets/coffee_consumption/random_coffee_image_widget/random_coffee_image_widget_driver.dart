@@ -32,4 +32,7 @@ class RandomCoffeeImageWidgetDriver extends WidgetDriver {
   void updateRandomImage() {
     notifyWidget();
   }
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }

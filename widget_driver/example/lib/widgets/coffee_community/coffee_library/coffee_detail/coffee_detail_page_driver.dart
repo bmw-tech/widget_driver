@@ -32,8 +32,11 @@ class CoffeeDetailPageDriver extends WidgetDriver implements _$DriverProvidedPro
   }
 
   @override
-  void updateDriverProvidedProperties({required int newIndex, required Coffee newCoffee}) {
+  void didUpdateProvidedProperties({required int newIndex, required Coffee newCoffee}) {
     _index = newIndex;
     _coffee = newCoffee;
   }
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {}
 }

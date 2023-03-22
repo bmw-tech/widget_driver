@@ -10,7 +10,7 @@ part 'register_account_page_driver.g.dart';
 @GenerateTestDriver()
 class RegisterAccountPageDriver extends WidgetDriver {
   final Localization _localization;
-  final CreateUserService _createUserService;
+  CreateUserService _createUserService;
   final Coordinator _coordinator;
 
   String _currentUsername = '';
@@ -20,10 +20,9 @@ class RegisterAccountPageDriver extends WidgetDriver {
   RegisterAccountPageDriver(
     BuildContext context, {
     Localization? localization,
-    CreateUserService? createUserService,
     Coordinator? coordinator,
   })  : _localization = context.read<Localization>(),
-        _createUserService = createUserService ?? context.read<CreateUserService>(),
+        _createUserService = context.watch<CreateUserService>(),
         _coordinator = coordinator ?? Coordinator(),
         super(context);
 
@@ -80,5 +79,10 @@ class RegisterAccountPageDriver extends WidgetDriver {
   void _setRegisterLoading(bool isLoading) {
     _registerIsLoading = isLoading;
     notifyWidget();
+  }
+
+  @override
+  void didUpdateBuildContextDependencies(BuildContext context) {
+    _createUserService = context.watch<CreateUserService>();
   }
 }

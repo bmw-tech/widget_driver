@@ -8,7 +8,7 @@ part of 'coffee_library_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.1.0"
+// This file was generated with widget_driver_generator version "0.2.0"
 
 class _$TestCoffeeLibraryPageDriver extends TestDriver implements CoffeeLibraryPageDriver {
   @override
