@@ -27,11 +27,12 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
     final codeWriter = CodeWriter();
     final driverClassName = visitor.className;
 
-    //#####################################################
-    // Start - Package version generation and code coverage
-    //#####################################################
+    //#################################################################
+    // Start - Package version generation and coverage/analyzer ignore
+    //#################################################################
 
-    codeWriter.writeCode('// coverage:ignore-file\n');
+    codeWriter.writeCode('// coverage:ignore-file');
+    codeWriter.writeCode('// ignore_for_file: prefer_const_constructors\n');
 
     final packageVersionString = await _packageInfoProvider.getPackageVersionString();
     codeWriter.writeCode('// This file was generated with widget_driver_generator version $packageVersionString\n');

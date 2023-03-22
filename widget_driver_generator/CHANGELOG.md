@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+
+* Adds dart analyzer ignore to generated TestDrivers for ignoring adding const to properties.
+
 ## 0.2.0
 
 * Changes the name of the generated method for driver provided properties. It used to be `updateDriverProvidedProperties`, now it is called `didUpdateProvidedProperties` to fit better with the name of the method which is called when a build context dependency triggers the driver to update.

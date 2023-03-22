@@ -7,15 +7,13 @@ part of 'coffee_counter_widget_driver.dart';
 // **************************************************************************
 
 // coverage:ignore-file
+// ignore_for_file: prefer_const_constructors
 
-// This file was generated with widget_driver_generator version "0.2.0"
+// This file was generated with widget_driver_generator version "0.2.1"
 
 class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounterWidgetDriver {
   @override
-  String get descriptionText => 'Consumed coffees';
-
-  @override
-  String get amountText => '3';
+  ConsumedCoffeesCount get consumedCoffeeCount => ConsumedCoffeesCount(3);
 
   @override
   String get consumeCoffeeQuickButtonText => 'Consume coffee quick';
