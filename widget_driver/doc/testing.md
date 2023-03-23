@@ -70,7 +70,7 @@ Well they are easier to test than widgets, since they are not ui components.
 So basically they are just unit tests. You do not need to find some buttons and do some fake tapping.
 You just have to test that they provide the correct property values depending on their internal dependencies.
 
-**But**, yes there is a but, it becomes a bit tricky to test `WidgetDrivers` since they need the BuildContext in their constructor.
+**But**, yes there is a but, it becomes a bit tricky to test `WidgetDrivers` since they might need the BuildContext. `WidgetDriver` has an optional method which you can override called `didUpdateBuildContext(...)` which should provide a valid BuildContext which your driver can use to resolve a dependency.
 
 It is not super straightforward how to get an instance of the build context.
 But luckily we have created some helper code for you to make this easy.
@@ -88,7 +88,7 @@ void main() {
 ### Create a driver
 
 To create your driver you will need a helper function.  
-This is because the `Driver` needs a build context as a parameter to its constructor.
+This is because the `Driver` might need a BuildContext as a parameter to its `didUpdateBuildContext`.
 To help you with this we have created a helper function on the `WidgetTester`.
 
 This is how you create your `Driver`:
@@ -96,7 +96,7 @@ This is how you create your `Driver`:
 ```dart
 testWidgets('Some driver test', (WidgetTester tester) async {
     final driverTester = await tester.getDriverTester<MyWidgetDriver>(
-          driverBuilder: (context) => MyWidgetDriver(context, theService: mockTheService),
+          driverBuilder: () => MyWidgetDriver(theService: mockTheService),
           parentWidgetBuilder: (driverWidget) {
             return MultiProvider(
               providers: [

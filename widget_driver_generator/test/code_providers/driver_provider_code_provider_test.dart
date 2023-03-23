@@ -13,8 +13,8 @@ void main() {
       const expectedCode = '''
 class \$ExampleDriverProvider extends WidgetDriverProvider<ExampleDriver> {
   @override
-  ExampleDriver buildDriver(BuildContext context) {
-    return ExampleDriver(context);
+  ExampleDriver buildDriver() {
+    return ExampleDriver();
   }
 
   @override
@@ -56,8 +56,8 @@ required String example2,
   }) : _example = example,_example2 = example2;
 
   @override
-  ExampleDriver buildDriver(BuildContext context) {
-    return ExampleDriver(context , _example, example2: _example2,);
+  ExampleDriver buildDriver() {
+    return ExampleDriver(_example, example2: _example2,);
   }
 
   @override

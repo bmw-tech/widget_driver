@@ -109,12 +109,13 @@ void main() {
       });
     });
 
-    group('BuildContext dependencies:', () {
+    group('BuildContext updates:', () {
       setUp(() {
         when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
       });
 
-      testWidgets('Does not call didUpdateBuildContextDependencies, if there are no buildContext dependencies',
+      testWidgets(
+          'Only calls didUpdateBuildContext 1 time (after construction), if there are no registered buildContext dependencies',
           (tester) async {
         late TestContainerDriver driver;
         final testContainerDrivableWidget = WrappedTestContainer(
@@ -126,15 +127,16 @@ void main() {
         await tester.pumpWidget(testContainerDrivableWidget);
         final firstDriver = driver;
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.numberOfCallsToUpdateBuildContext, 1);
 
         await _tapButtonToIncreaseSomeData(tester);
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.numberOfCallsToUpdateBuildContext, 1);
         expect(identical(driver, firstDriver), isTrue);
       });
 
-      testWidgets('Does not call didUpdateBuildContextDependencies, if we only read from buildContext', (tester) async {
+      testWidgets('Only calls didUpdateBuildContext 1 time (after construction), if we only read from buildContext',
+          (tester) async {
         late TestContainerDriver driver;
         final testContainerDrivableWidget = WrappedTestContainer(
           environmentInfo: _mockRuntimeEnvironmentInfo,
@@ -145,19 +147,20 @@ void main() {
         await tester.pumpWidget(testContainerDrivableWidget);
         final firstDriver = driver;
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.numberOfCallsToUpdateBuildContext, 1);
         expect(driver.readDataValue, 0);
 
         await _tapButtonToIncreaseSomeData(tester);
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.numberOfCallsToUpdateBuildContext, 1);
         // Should still be zero since we are not watching anything from build context.
         // So the driver does not get updated.
         expect(driver.readDataValue, 0);
         expect(identical(driver, firstDriver), isTrue);
       });
 
-      testWidgets('Does not call didUpdateBuildContextDependencies, if we watch buildContext but it never changes',
+      testWidgets(
+          'Only calls didUpdateBuildContext 1 time (after construction), if we watch buildContext but it never changes',
           (tester) async {
         late TestContainerDriver driver;
         final testContainerDrivableWidget = WrappedTestContainer(
@@ -169,18 +172,17 @@ void main() {
         await tester.pumpWidget(testContainerDrivableWidget);
         final firstDriver = driver;
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.numberOfCallsToUpdateBuildContext, 1);
         expect(driver.watchDataValue, 0);
 
         await _tapButtonWhichDoesNothingJustCallsSetState(tester);
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.numberOfCallsToUpdateBuildContext, 1);
         expect(driver.watchDataValue, 0);
         expect(identical(driver, firstDriver), isTrue);
       });
 
-      testWidgets('Does call didUpdateBuildContextDependencies, if we watch buildContext and it changes',
-          (tester) async {
+      testWidgets('Calls didUpdateBuildContext more times, if we watch buildContext and it changes', (tester) async {
         late TestContainerDriver driver;
         final testContainerDrivableWidget = WrappedTestContainer(
           environmentInfo: _mockRuntimeEnvironmentInfo,
@@ -191,18 +193,18 @@ void main() {
         await tester.pumpWidget(testContainerDrivableWidget);
         final firstDriver = driver;
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 0);
+        expect(driver.numberOfCallsToUpdateBuildContext, 1);
         expect(driver.watchDataValue, 0);
 
         await _tapButtonToIncreaseSomeData(tester);
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 1);
+        expect(driver.numberOfCallsToUpdateBuildContext, 2);
         expect(driver.watchDataValue, 1);
         expect(identical(driver, firstDriver), isTrue);
 
         await _tapButtonToIncreaseSomeData(tester);
 
-        expect(driver.numberOfCallsToUpdateBuildContextDependencies, 2);
+        expect(driver.numberOfCallsToUpdateBuildContext, 3);
         expect(driver.watchDataValue, 2);
         expect(identical(driver, firstDriver), isTrue);
       });

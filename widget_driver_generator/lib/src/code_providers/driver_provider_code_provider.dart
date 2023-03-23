@@ -102,7 +102,7 @@ class DriverProviderCodeProvider {
         _providedNamedFields.isNotEmpty ? '${_providedNamedFields.map((e) => '${e.name}: _${e.name}').join(',')},' : '';
     final positionalVariables =
         _providedPositionalFields.isNotEmpty ? '${_providedPositionalFields.map((e) => '_${e.name}').join(',')},' : '';
-    return ', $positionalVariables $namedVariables';
+    return '$positionalVariables $namedVariables';
   }
 
   String _updateParameters() {
@@ -113,8 +113,8 @@ class DriverProviderCodeProvider {
   String _classWithoutFields() => '''
 class $_providerClassName extends WidgetDriverProvider<$_driverClassName> {
   @override
-  $_driverClassName buildDriver(BuildContext context) {
-    return $_driverClassName(context);
+  $_driverClassName buildDriver() {
+    return $_driverClassName();
   }
 
   @override
@@ -134,8 +134,8 @@ class $_providerClassName extends WidgetDriverProvider<$_driverClassName> {
   }) : ${_constructorInitializer()};
 
   @override
-  $_driverClassName buildDriver(BuildContext context) {
-    return $_driverClassName(context ${_parameters()});
+  $_driverClassName buildDriver() {
+    return $_driverClassName(${_parameters()});
   }
 
   @override

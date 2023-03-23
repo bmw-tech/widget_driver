@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0
+
+* Updates generator to be compatible with latest api changes in version 0.2.0 of widget_driver.
+
 ## 0.2.0
 
 * Changes the name of the generated method for driver provided properties. It used to be `updateDriverProvidedProperties`, now it is called `didUpdateProvidedProperties` to fit better with the name of the method which is called when a build context dependency triggers the driver to update.

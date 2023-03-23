@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.2.0
+
+* Refactors WidgetDriver to no longer get the BuildContext passed into via the constructor.  
+Instead the driver now has an optional method called `didUpdateBuildContext` which is called once directly after the constructor. And then this method is called again if any inherited build context dependency did change.
+
 ## 0.1.0
 
 * Adds a new method which your drivers are forced to implement. This new method is `didUpdateBuildContextDependencies` and it is called by the framework if your driver has a dependency to an inherited widget from the build context and that dependency updates.

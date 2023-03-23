@@ -64,8 +64,6 @@ import 'package:meta/meta.dart';
 abstract class WidgetDriver {
   ValueNotifier<bool>? _widgetNotifier = ValueNotifier<bool>(true);
 
-  WidgetDriver(BuildContext context);
-
   @nonVirtual
   void notifyWidget() {
     if (_widgetNotifier != null) {
@@ -86,19 +84,23 @@ abstract class WidgetDriver {
     }
   }
 
-  /// If the [WidgetDriver] constructor referenced an
-  /// [InheritedWidget] from the [BuildContext] that later changed, then
-  /// the framework will call this method to notify this driver about the change.
+  /// If the [WidgetDriver] needs a dependency from
+  /// the [BuildContext] then you can override this method.
   ///
-  /// Use this method to grab the latest value for your dependency from the [BuildContext].
-  /// Since the value which you got in the [WidgetDriver] constructor might be outdated/changed.
+  /// This method is called directly after the driver is created,
+  /// and before the build method is called on the corresponding [DrivableWidget].
   ///
-  /// The framework always calls [build] after a dependency changes.
+  /// You can use this to grab all the needed dependencies from the context.
+  ///
+  /// If you reference any [InheritedWidget] from the [BuildContext] that later changes, then
+  /// the framework will call this method again to notify this driver about the change.
+  ///
+  /// The framework always calls [build] on your [DrivableWidget] after a dependency changes.
   /// So there is no need to call `notifyWidget` in this method since the widget's build method is called anyways.
   ///
   /// NOTE: If your driver is not referencing an [InheritedWidget]
-  /// then you can ignore this method since it will anyways never be called.
-  void didUpdateBuildContextDependencies(BuildContext context);
+  /// then this method is only called once directly after the driver creation.
+  void didUpdateBuildContext(BuildContext context) {}
 }
 
 /// A base class for the test version of the WidgetDrivers.
@@ -124,4 +126,6 @@ class TestDriver {
   void notifyWidget() {}
 
   void dispose() {}
+
+  void didUpdateBuildContext(BuildContext context) {}
 }
