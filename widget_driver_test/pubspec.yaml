@@ -3,7 +3,6 @@ description: Contains helper classes/methods for DrivableWidgets, WidgetDrivers,
 version: 0.1.0
 repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver_test
 issue_tracker: https://github.com/bmw-tech/widget_driver/issues
-publish_to: "none"
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
