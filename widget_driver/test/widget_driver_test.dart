@@ -12,7 +12,7 @@ void main() {
         int numberOfDriverListenersEmits = 0;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => _ConcreteWidgetDriver(),
+          driverBuilder: () => _ConcreteWidgetDriver(),
         );
         final driver = driverTester.driver;
         driver.addListener(() {
@@ -28,7 +28,7 @@ void main() {
         int numberOfDriverListenersEmits = 0;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => _ConcreteWidgetDriver(),
+          driverBuilder: () => _ConcreteWidgetDriver(),
         );
         final driver = driverTester.driver;
         driver.addListener(() {
@@ -47,7 +47,7 @@ void main() {
         int numberOfDriverListenersEmits = 0;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => _ConcreteWidgetDriver(),
+          driverBuilder: () => _ConcreteWidgetDriver(),
         );
         final driver = driverTester.driver;
         driver.addListener(() {
@@ -70,7 +70,7 @@ void main() {
         bool disposeWasCalled = false;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => _ConcreteWidgetDriver(),
+          driverBuilder: () => _ConcreteWidgetDriver(),
         );
         final driver = driverTester.driver;
         driver.disposedCallback = () {
@@ -88,7 +88,7 @@ void main() {
         bool disposeWasCalled = false;
 
         final driverTester = await tester.getDriverTester(
-          driverBuilder: (context) => _ConcreteWidgetDriver(),
+          driverBuilder: () => _ConcreteWidgetDriver(),
         );
         final driver = driverTester.driver;
         driver.disposedCallback = () {
@@ -118,7 +118,7 @@ void main() {
       bool disposeWasCalled = false;
 
       final driverTester = await tester.getDriverTester(
-        driverBuilder: (context) => _ConcreteTestDriver(),
+        driverBuilder: () => _ConcreteTestDriver(),
       );
       final driver = driverTester.driver;
       driver.disposedCallback = () {
@@ -135,7 +135,7 @@ void main() {
     testWidgets('Calling function with no placeholder implementation throws', (WidgetTester tester) async {
       bool didThrowNoSuchMethodError = false;
       final driverTester = await tester.getDriverTester(
-        driverBuilder: (context) => _ConcreteTestDriver(),
+        driverBuilder: () => _ConcreteTestDriver(),
       );
       final driver = driverTester.driver;
       try {

@@ -9,11 +9,11 @@ import 'test_widget_driver_provider.dart';
 /// This widget will be used as a container for your driver.
 /// It makes sure that your driver is created and disposed correctly.
 class TestDrivableWidget<T extends WidgetDriver> extends DrivableWidget<T> {
-  final T Function(BuildContext context) _driverBuilder;
+  final T Function() _driverBuilder;
 
   TestDrivableWidget({
     Key? key,
-    required T Function(BuildContext context) driverBuilder,
+    required T Function() driverBuilder,
   })  : _driverBuilder = driverBuilder,
         super(key: key, environmentInfo: TestRuntimeEnvironmentInfo());
 
