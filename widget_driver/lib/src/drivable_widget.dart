@@ -51,7 +51,7 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
   /// Describes the part of the user interface represented by this widget.
   @override
   Widget build(BuildContext context) {
-    final driver = _getDriverAndSetupUpIfNeeded(context);
+    final driver = _getDriverAndSetupUpIfNeeded();
     widget._widgetDriverContainer.instance = driver;
     return widget.build(context);
   }
@@ -68,24 +68,23 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_driverExists) {
-      // If didChangeDependencies get's called this means your driver depends on a value from the BuildContext,
-      // which the flutter framework marked as "has changed".
-      // Thus we need to tell the driver about this so that it can update any logic depending on that dependency.
-      _driver!.didUpdateBuildContextDependencies(context);
+      _driver!.didUpdateBuildContext(context);
     }
   }
 
-  Driver _getDriverAndSetupUpIfNeeded(BuildContext context) {
+  Driver _getDriverAndSetupUpIfNeeded() {
     if (_driverExists) {
       return _driver!;
     }
 
     Driver driver;
     if (_isRunningInTestEnvironment()) {
-      driver = _getTestDriver(context);
+      driver = _getTestDriver();
     } else {
-      driver = _getRealDriver(context);
+      driver = _getRealDriver();
     }
+
+    driver.didUpdateBuildContext(context);
 
     driver.addListener(() {
       if (mounted) {
@@ -101,11 +100,11 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
     return widget._environmentInfo.isRunningInTestEnvironment();
   }
 
-  Driver _getRealDriver(BuildContext context) {
-    return widget.driverProvider.buildDriver(context);
+  Driver _getRealDriver() {
+    return widget.driverProvider.buildDriver();
   }
 
-  Driver _getTestDriver(BuildContext context) {
+  Driver _getTestDriver() {
     // Check if we have an injected MockDriver for the current type.
     // If it exists and it was not already assigned as current driver,
     // then update the current driver.

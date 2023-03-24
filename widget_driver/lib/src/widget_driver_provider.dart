@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'widget_driver.dart';
 
 /// This is a factory which knows how to create `Drivers`.
@@ -9,7 +7,7 @@ import 'widget_driver.dart';
 /// And when running the real app then the real Driver gets created.
 abstract class WidgetDriverProvider<Driver extends WidgetDriver> {
   /// Creates and returns the `Driver` with the real business logic.
-  Driver buildDriver(BuildContext context);
+  Driver buildDriver();
 
   /// Creates and returns the `Driver` with the hard coded test values.
   Driver buildTestDriver();

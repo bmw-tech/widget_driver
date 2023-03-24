@@ -3,6 +3,7 @@ description: Contains helper classes/methods for DrivableWidgets, WidgetDrivers,
 version: 0.0.5
 repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver_test
 issue_tracker: https://github.com/bmw-tech/widget_driver/issues
+publish_to: "none"
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
@@ -10,7 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widget_driver: ^0.0.6
+  widget_driver:
+    path: ../widget_driver
   mocktail: ^0.1.4
   meta: ^1.7.0
   test: ^1.16.0

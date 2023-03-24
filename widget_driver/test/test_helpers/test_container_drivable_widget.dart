@@ -14,19 +14,22 @@ class TestContainerDriver extends WidgetDriver {
   final bool _readFromContext;
   final bool _watchFromContext;
 
-  TestContainerDriver(
-    BuildContext context, {
+  TestContainerDriver({
     int? newSomeData,
     required bool readFromContext,
     required bool watchFromContext,
   })  : _readFromContext = readFromContext,
         _watchFromContext = watchFromContext,
-        someData = newSomeData ?? -1,
-        super(context) {
-    if (readFromContext) {
+        someData = newSomeData ?? -1;
+
+  int numberOfCallsToUpdateBuildContext = 0;
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    numberOfCallsToUpdateBuildContext += 1;
+    if (_readFromContext) {
       readDataValue = context.read<ReadData>().value;
     }
-    if (watchFromContext) {
+    if (_watchFromContext) {
       watchDataValue = context.watch<WatchData>().value;
     }
   }
@@ -44,20 +47,6 @@ class TestContainerDriver extends WidgetDriver {
   void didUpdateProvidedProperties({required int newSomeData}) {
     someData = newSomeData;
     numberOfCallsToUpdateDriverProvidedProperties += 1;
-  }
-
-  int numberOfCallsToUpdateBuildContextDependencies = 0;
-
-  @override
-  void didUpdateBuildContextDependencies(BuildContext context) {
-    numberOfCallsToUpdateBuildContextDependencies += 1;
-
-    if (_readFromContext) {
-      readDataValue = context.read<ReadData>().value;
-    }
-    if (_watchFromContext) {
-      watchDataValue = context.watch<WatchData>().value;
-    }
   }
 }
 
@@ -94,9 +83,8 @@ class TestContainerDriverProvider extends WidgetDriverProvider<TestContainerDriv
         _watchFromContext = watchFromContext ?? false;
 
   @override
-  TestContainerDriver buildDriver(BuildContext context) {
+  TestContainerDriver buildDriver() {
     return TestContainerDriver(
-      context,
       newSomeData: _someData,
       readFromContext: _readFromContext,
       watchFromContext: _watchFromContext,

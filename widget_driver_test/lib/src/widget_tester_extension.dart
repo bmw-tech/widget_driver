@@ -36,7 +36,7 @@ extension Driver on WidgetTester {
   /// final driver = driverTester.driver;
   /// ```
   Future<DriverTester<T>> getDriverTester<T extends WidgetDriver>({
-    required T Function(BuildContext context) driverBuilder,
+    required T Function() driverBuilder,
     WidgetBuilder? parentWidgetBuilder,
   }) async {
     TestDrivableWidget<T> drivableWidget = TestDrivableWidget<T>(

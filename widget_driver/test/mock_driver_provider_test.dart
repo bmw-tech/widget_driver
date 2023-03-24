@@ -14,6 +14,7 @@ void main() {
     setUp(() {
       _mockTestContainerDriver = _MockTestContainerDriver();
       when(() => _mockTestContainerDriver.didCallTestMethod).thenReturn(false);
+      when(() => _mockTestContainerDriver.someData).thenReturn(1);
     });
 
     testWidgets('Verify that mocked driver overrides real driver property', (WidgetTester tester) async {

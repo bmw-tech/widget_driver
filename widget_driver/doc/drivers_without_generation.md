@@ -42,8 +42,8 @@ This is also easy to define. You just need to extend `WidgetDriverProvider` and 
 class MyCoolWidgetDriverProvider
     extends WidgetDriverProvider<MyCoolWidgetDriver> {
   @override
-  MyCoolWidgetDriver buildDriver(BuildContext context) {
-    return MyCoolWidgetDriver(context);
+  MyCoolWidgetDriver buildDriver() {
+    return MyCoolWidgetDriver();
   }
 
   @override
@@ -53,7 +53,7 @@ class MyCoolWidgetDriverProvider
 }
 ```
 
-The `WidgetDriverProvider` has two methods which you need to override. The `buildDriver(BuildContext context)` and `buildTestDriver()`. In the `buildDriver(...)` you create an instance of your real `driver` and return it.
+The `WidgetDriverProvider` has two methods which you need to override. The `buildDriver()` and `buildTestDriver()`. In the `buildDriver()` you create an instance of your real `driver` and return it.
 
 And in the `buildTestDriver()` you create and instance of your `testDriver` and return it. Makes sense right 😁
 
