@@ -8,7 +8,7 @@ part of 'my_app_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.1.0"
+// This file was generated with widget_driver_generator version "0.2.0"
 
 class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
   @override
@@ -17,8 +17,8 @@ class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
 
 class $MyAppDriverProvider extends WidgetDriverProvider<MyAppDriver> {
   @override
-  MyAppDriver buildDriver(BuildContext context) {
-    return MyAppDriver(context);
+  MyAppDriver buildDriver() {
+    return MyAppDriver();
   }
 
   @override

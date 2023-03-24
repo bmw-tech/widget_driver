@@ -8,12 +8,12 @@ part 'coffee_community_page_driver.g.dart';
 
 @GenerateTestDriver()
 class CoffeeCommunityPageDriver extends WidgetDriver {
-  final AuthService _authService;
+  late AuthService _authService;
   StreamSubscription? _subscription;
 
-  CoffeeCommunityPageDriver(BuildContext context)
-      : _authService = context.watch<AuthService>(),
-        super(context) {
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    _authService = context.read<AuthService>();
     _subscription = _authService.isLoggedInStream.listen((_) {
       notifyWidget();
     });

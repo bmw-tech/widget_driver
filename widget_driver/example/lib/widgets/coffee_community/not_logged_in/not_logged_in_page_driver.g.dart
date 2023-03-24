@@ -8,7 +8,7 @@ part of 'not_logged_in_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.1.0"
+// This file was generated with widget_driver_generator version "0.2.0"
 
 class _$TestNotLoggedInPageDriver extends TestDriver implements NotLoggedInPageDriver {
   @override
@@ -23,8 +23,8 @@ class _$TestNotLoggedInPageDriver extends TestDriver implements NotLoggedInPageD
 
 class $NotLoggedInPageDriverProvider extends WidgetDriverProvider<NotLoggedInPageDriver> {
   @override
-  NotLoggedInPageDriver buildDriver(BuildContext context) {
-    return NotLoggedInPageDriver(context);
+  NotLoggedInPageDriver buildDriver() {
+    return NotLoggedInPageDriver();
   }
 
   @override

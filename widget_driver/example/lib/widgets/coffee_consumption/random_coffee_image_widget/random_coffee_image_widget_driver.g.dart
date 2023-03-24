@@ -8,7 +8,7 @@ part of 'random_coffee_image_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.1.0"
+// This file was generated with widget_driver_generator version "0.2.0"
 
 class _$TestRandomCoffeeImageWidgetDriver extends TestDriver implements RandomCoffeeImageWidgetDriver {
   @override
@@ -23,8 +23,8 @@ class _$TestRandomCoffeeImageWidgetDriver extends TestDriver implements RandomCo
 
 class $RandomCoffeeImageWidgetDriverProvider extends WidgetDriverProvider<RandomCoffeeImageWidgetDriver> {
   @override
-  RandomCoffeeImageWidgetDriver buildDriver(BuildContext context) {
-    return RandomCoffeeImageWidgetDriver(context);
+  RandomCoffeeImageWidgetDriver buildDriver() {
+    return RandomCoffeeImageWidgetDriver();
   }
 
   @override

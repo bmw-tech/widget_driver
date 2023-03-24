@@ -9,17 +9,17 @@ part 'home_page_driver.g.dart';
 @GenerateTestDriver()
 class HomePageDriver extends WidgetDriver {
   final HomePageAppTabs _appTabs;
-  final Locator _locator;
+  late Localization _localization;
 
-  HomePageDriver(
-    BuildContext context, {
-    HomePageAppTabs? appTabs,
-  })  : _appTabs = appTabs ?? HomePageAppTabs(),
-        _locator = context.read,
-        super(context);
+  HomePageDriver({HomePageAppTabs? appTabs}) : _appTabs = appTabs ?? HomePageAppTabs();
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    _localization = context.read<Localization>();
+  }
 
   @TestDriverDefaultValue('Coffee Demo App')
-  String get title => _locator<Localization>().appTitle;
+  String get title => _localization.appTitle;
 
   @TestDriverDefaultValue(2)
   int get numberOfTabs {

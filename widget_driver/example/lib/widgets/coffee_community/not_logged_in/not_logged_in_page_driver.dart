@@ -10,22 +10,23 @@ part 'not_logged_in_page_driver.g.dart';
 
 @GenerateTestDriver()
 class NotLoggedInPageDriver extends WidgetDriver {
-  final Locator _locator;
+  late Localization _localization;
   final Coordinator _coordinator;
 
-  NotLoggedInPageDriver(
-    BuildContext context, {
-    Localization? localization,
+  NotLoggedInPageDriver({
     Coordinator? coordinator,
-  })  : _locator = context.read,
-        _coordinator = coordinator ?? Coordinator(),
-        super(context);
+  }) : _coordinator = coordinator ?? Coordinator();
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    _localization = context.read<Localization>();
+  }
 
   @TestDriverDefaultValue('Not logged in')
-  String get notLoggedInText => _locator<Localization>().notLoggedIn;
+  String get notLoggedInText => _localization.notLoggedIn;
 
   @TestDriverDefaultValue('Register a new account')
-  String get registerNewAccountButtonText => _locator<Localization>().registerNewAccount;
+  String get registerNewAccountButtonText => _localization.registerNewAccount;
 
   @TestDriverDefaultValue()
   void registerNewAccountTapped(BuildContext context) {

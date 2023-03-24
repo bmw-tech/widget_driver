@@ -8,7 +8,7 @@ part of 'home_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.1.0"
+// This file was generated with widget_driver_generator version "0.2.0"
 
 class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
   @override
@@ -23,8 +23,8 @@ class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
 
 class $HomePageDriverProvider extends WidgetDriverProvider<HomePageDriver> {
   @override
-  HomePageDriver buildDriver(BuildContext context) {
-    return HomePageDriver(context);
+  HomePageDriver buildDriver() {
+    return HomePageDriver();
   }
 
   @override

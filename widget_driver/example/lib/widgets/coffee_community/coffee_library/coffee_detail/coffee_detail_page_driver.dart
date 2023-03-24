@@ -10,11 +10,9 @@ class CoffeeDetailPageDriver extends WidgetDriver implements _$DriverProvidedPro
   Coffee _coffee;
 
   CoffeeDetailPageDriver(
-    BuildContext context,
     @driverProvidableProperty this._index, {
     @driverProvidableProperty required Coffee coffee,
-  })  : _coffee = coffee,
-        super(context);
+  }) : _coffee = coffee;
 
   @TestDriverDefaultValue(TestCoffee.testCoffeeName)
   String get coffeeName {
@@ -32,7 +30,7 @@ class CoffeeDetailPageDriver extends WidgetDriver implements _$DriverProvidedPro
   }
 
   @override
-  void updateDriverProvidedProperties({required int newIndex, required Coffee newCoffee}) {
+  void didUpdateProvidedProperties({required int newIndex, required Coffee newCoffee}) {
     _index = newIndex;
     _coffee = newCoffee;
   }

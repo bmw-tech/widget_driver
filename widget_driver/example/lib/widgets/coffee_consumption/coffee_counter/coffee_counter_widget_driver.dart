@@ -12,37 +12,38 @@ part 'coffee_counter_widget_driver.g.dart';
 @GenerateTestDriver()
 class CoffeeCounterWidgetDriver extends WidgetDriver {
   final CoffeeConsumptionService _consumptionService;
-  final Locator _locator;
+  late Localization _localization;
 
   StreamSubscription? _subscription;
   bool _isCurrentlyConsuming = false;
 
-  CoffeeCounterWidgetDriver(
-    BuildContext context, {
+  CoffeeCounterWidgetDriver({
     CoffeeConsumptionService? consumptionService,
-  })  : _consumptionService = consumptionService ?? GetIt.I.get<CoffeeConsumptionService>(),
-        _locator = context.read,
-        super(context) {
+  }) : _consumptionService = consumptionService ?? GetIt.I.get<CoffeeConsumptionService>() {
     _subscription = _consumptionService.counterStream.listen((event) {
       notifyWidget();
     });
   }
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    _localization = context.read<Localization>();
+  }
 
   @TestDriverDefaultValue('Consumed coffees')
-  String get descriptionText => _localization().consumedCoffees;
+  String get descriptionText => _localization.consumedCoffees;
 
   @TestDriverDefaultValue('3')
   String get amountText => '${_consumptionService.counter}';
 
   @TestDriverDefaultValue('Consume coffee quick')
-  String get consumeCoffeeQuickButtonText => _localization().consumeCoffeeQuick;
+  String get consumeCoffeeQuickButtonText => _localization.consumeCoffeeQuick;
 
   @TestDriverDefaultValue('Consume coffee slow')
   String get consumeCoffeeSlowButtonText =>
-      _isCurrentlyConsuming ? _localization().consumingCoffee : _localization().consumeCoffeeSlow;
+      _isCurrentlyConsuming ? _localization.consumingCoffee : _localization.consumeCoffeeSlow;
 
   @TestDriverDefaultValue('Reset consumption')
-  String get resetCoffeeButtonText => _localization().resetConsumedCoffees;
+  String get resetCoffeeButtonText => _localization.resetConsumedCoffees;
 
   @TestDriverDefaultValue()
   void consumeCoffeeQuick() {
@@ -77,6 +78,4 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
     _subscription?.cancel();
     super.dispose();
   }
-
-  Localization _localization() => _locator<Localization>();
 }

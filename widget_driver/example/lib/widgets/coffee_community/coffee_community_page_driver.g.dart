@@ -8,7 +8,7 @@ part of 'coffee_community_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.1.0"
+// This file was generated with widget_driver_generator version "0.2.0"
 
 class _$TestCoffeeCommunityPageDriver extends TestDriver implements CoffeeCommunityPageDriver {
   @override
@@ -17,8 +17,8 @@ class _$TestCoffeeCommunityPageDriver extends TestDriver implements CoffeeCommun
 
 class $CoffeeCommunityPageDriverProvider extends WidgetDriverProvider<CoffeeCommunityPageDriver> {
   @override
-  CoffeeCommunityPageDriver buildDriver(BuildContext context) {
-    return CoffeeCommunityPageDriver(context);
+  CoffeeCommunityPageDriver buildDriver() {
+    return CoffeeCommunityPageDriver();
   }
 
   @override
