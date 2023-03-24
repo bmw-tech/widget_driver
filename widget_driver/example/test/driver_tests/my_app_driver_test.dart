@@ -19,7 +19,7 @@ void main() {
       when(() => mockLocalization.appTitle).thenReturn('Some app title');
 
       final driverTester = await tester.getDriverTester<MyAppDriver>(
-          driverBuilder: (context) => MyAppDriver(context),
+          driverBuilder: () => MyAppDriver(),
           parentWidgetBuilder: (driverWidget) {
             return Provider<Localization>.value(
               value: mockLocalization,

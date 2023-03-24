@@ -32,7 +32,7 @@ void main() {
       when(() => mockAuthService.isLoggedIn).thenReturn(false);
 
       final driverTester = await tester.getDriverTester<LogInOutButtonDriver>(
-          driverBuilder: (context) => LogInOutButtonDriver(context),
+          driverBuilder: () => LogInOutButtonDriver(),
           parentWidgetBuilder: (driverWidget) {
             return MultiProvider(
               providers: [
@@ -54,7 +54,7 @@ void main() {
       when(() => mockAuthService.isLoggedIn).thenReturn(false);
 
       final driverTester = await tester.getDriverTester<LogInOutButtonDriver>(
-          driverBuilder: (context) => LogInOutButtonDriver(context),
+          driverBuilder: () => LogInOutButtonDriver(),
           parentWidgetBuilder: (driverWidget) {
             return MultiProvider(
               providers: [
@@ -78,7 +78,7 @@ void main() {
 
     testWidgets('When isLoggedInStream emits then notifyWidgets is called', (WidgetTester tester) async {
       final driverTester = await tester.getDriverTester<LogInOutButtonDriver>(
-          driverBuilder: (context) => LogInOutButtonDriver(context),
+          driverBuilder: () => LogInOutButtonDriver(),
           parentWidgetBuilder: (driverWidget) {
             return MultiProvider(
               providers: [

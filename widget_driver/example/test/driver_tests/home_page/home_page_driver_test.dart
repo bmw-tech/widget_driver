@@ -24,7 +24,7 @@ void main() {
       when(() => mockLocalization.appTitle).thenReturn('Some title');
 
       final driverTester = await tester.getDriverTester<HomePageDriver>(
-          driverBuilder: (context) => HomePageDriver(context, appTabs: mockHomePageAppTabs),
+          driverBuilder: () => HomePageDriver(appTabs: mockHomePageAppTabs),
           parentWidgetBuilder: (driverWidget) {
             return Provider<Localization>.value(
               value: mockLocalization,
@@ -44,7 +44,7 @@ void main() {
       when(() => mockHomePageAppTabs.tabs).thenReturn([AppTabType.consumption]);
 
       final driverTester = await tester.getDriverTester<HomePageDriver>(
-          driverBuilder: (context) => HomePageDriver(context, appTabs: mockHomePageAppTabs),
+          driverBuilder: () => HomePageDriver(appTabs: mockHomePageAppTabs),
           parentWidgetBuilder: (driverWidget) {
             return Provider<Localization>.value(
               value: mockLocalization,

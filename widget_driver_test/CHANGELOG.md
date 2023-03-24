@@ -1,3 +1,7 @@
+## 0.1.0
+
+* Changes to use latest api from widget_driver package. The build context is no longer passed into the constructor of the driver.
+
 ## 0.0.5
 
 * Fixes bug where a new TestDrivableWidget is ignored by element tree if one was already created

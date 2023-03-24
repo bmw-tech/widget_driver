@@ -8,7 +8,7 @@ part of 'coffee_detail_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.1.0"
+// This file was generated with widget_driver_generator version "0.3.0"
 
 class _$TestCoffeeDetailPageDriver extends TestDriver implements CoffeeDetailPageDriver {
   @override
@@ -32,9 +32,8 @@ class $CoffeeDetailPageDriverProvider extends WidgetDriverProvider<CoffeeDetailP
         _coffee = coffee;
 
   @override
-  CoffeeDetailPageDriver buildDriver(BuildContext context) {
+  CoffeeDetailPageDriver buildDriver() {
     return CoffeeDetailPageDriver(
-      context,
       _index,
       coffee: _coffee,
     );
@@ -54,11 +53,11 @@ class $CoffeeDetailPageDriverProvider extends WidgetDriverProvider<CoffeeDetailP
     //    ...
     //
     //    @override
-    //    void updateDriverProvidedProperties(...) {
+    //    void didUpdateProvidedProperties(...) {
     //      // Handle your updates
     //    }
     //  }
-    driver.updateDriverProvidedProperties(
+    driver.didUpdateProvidedProperties(
       newIndex: _index,
       newCoffee: _coffee,
     );
@@ -80,9 +79,9 @@ abstract class _$DriverProvidedProperties {
   ///
   /// Very Important!!
   /// Because this function is running during the build process,
-  /// it is NOT the place to run time cosuming or blocking tasks etc. (like calling Api-Endpoints)
+  /// it is NOT the place to run time consuming or blocking tasks etc. (like calling Api-Endpoints)
   /// This could greatly impact your apps performance.
-  void updateDriverProvidedProperties({
+  void didUpdateProvidedProperties({
     required int newIndex,
     required Coffee newCoffee,
   });

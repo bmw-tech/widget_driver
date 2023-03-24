@@ -8,7 +8,7 @@ part of 'coffee_counter_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.1.0"
+// This file was generated with widget_driver_generator version "0.3.0"
 
 class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounterWidgetDriver {
   @override
@@ -40,8 +40,8 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounte
 
 class $CoffeeCounterWidgetDriverProvider extends WidgetDriverProvider<CoffeeCounterWidgetDriver> {
   @override
-  CoffeeCounterWidgetDriver buildDriver(BuildContext context) {
-    return CoffeeCounterWidgetDriver(context);
+  CoffeeCounterWidgetDriver buildDriver() {
+    return CoffeeCounterWidgetDriver();
   }
 
   @override

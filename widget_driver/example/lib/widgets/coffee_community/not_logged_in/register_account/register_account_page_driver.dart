@@ -9,23 +9,23 @@ part 'register_account_page_driver.g.dart';
 
 @GenerateTestDriver()
 class RegisterAccountPageDriver extends WidgetDriver {
-  final Localization _localization;
-  final CreateUserService _createUserService;
+  late Localization _localization;
+  late CreateUserService _createUserService;
   final Coordinator _coordinator;
 
   String _currentUsername = '';
   String? _usernameInputError;
   bool _registerIsLoading = false;
 
-  RegisterAccountPageDriver(
-    BuildContext context, {
-    Localization? localization,
-    CreateUserService? createUserService,
+  RegisterAccountPageDriver({
     Coordinator? coordinator,
-  })  : _localization = context.read<Localization>(),
-        _createUserService = createUserService ?? context.read<CreateUserService>(),
-        _coordinator = coordinator ?? Coordinator(),
-        super(context);
+  }) : _coordinator = coordinator ?? Coordinator();
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    _localization = context.read<Localization>();
+    _createUserService = context.read<CreateUserService>();
+  }
 
   @TestDriverDefaultValue('Register new account')
   String get pageTitle => _localization.registerNewAccount;

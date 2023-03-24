@@ -15,11 +15,9 @@ class CoffeeLibraryPageDriver extends WidgetDriver {
   List<Coffee> _coffees = [];
   StreamSubscription? _subscription;
 
-  CoffeeLibraryPageDriver(
-    BuildContext context, {
+  CoffeeLibraryPageDriver({
     CoffeeService? coffeeService,
-  })  : _coffeeService = coffeeService ?? GetIt.I.get<CoffeeService>(),
-        super(context) {
+  }) : _coffeeService = coffeeService ?? GetIt.I.get<CoffeeService>() {
     _subscription = _coffeeService.isFetchingStream.listen((isFetching) {
       _isFetching = isFetching;
       notifyWidget();

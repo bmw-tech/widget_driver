@@ -11,14 +11,16 @@ part 'random_coffee_image_widget_driver.g.dart';
 @GenerateTestDriver()
 class RandomCoffeeImageWidgetDriver extends WidgetDriver {
   final CoffeeImageService _coffeeImageService;
-  final Locator _locator;
+  late Localization _localization;
 
-  RandomCoffeeImageWidgetDriver(
-    BuildContext context, {
+  RandomCoffeeImageWidgetDriver({
     CoffeeImageService? coffeeImageService,
-  })  : _coffeeImageService = coffeeImageService ?? GetIt.I.get<CoffeeImageService>(),
-        _locator = context.read,
-        super(context);
+  }) : _coffeeImageService = coffeeImageService ?? GetIt.I.get<CoffeeImageService>();
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    _localization = context.read<Localization>();
+  }
 
   @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
@@ -26,7 +28,7 @@ class RandomCoffeeImageWidgetDriver extends WidgetDriver {
   }
 
   @TestDriverDefaultValue('Tap image to load a new one')
-  String get title => _locator<Localization>().randomCoffeeImageTitle;
+  String get title => _localization.randomCoffeeImageTitle;
 
   @TestDriverDefaultValue()
   void updateRandomImage() {
