@@ -12,10 +12,7 @@ part of 'coffee_counter_widget_driver.dart';
 
 class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounterWidgetDriver {
   @override
-  String get descriptionText => 'Consumed coffees';
-
-  @override
-  String get amountText => '3';
+  int get coffeeCount => 3;
 
   @override
   String get consumeCoffeeQuickButtonText => 'Consume coffee quick';

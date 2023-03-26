@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import 'coffee_counter_header_section.dart';
 import 'coffee_counter_widget_driver.dart';
 
 class CoffeeCounterWidget extends DrivableWidget<CoffeeCounterWidgetDriver> {
@@ -11,8 +13,7 @@ class CoffeeCounterWidget extends DrivableWidget<CoffeeCounterWidgetDriver> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(driver.descriptionText),
-        Text(driver.amountText),
+        Provider.value(value: driver.coffeeCount, child: CoffeeCounterHeaderSection()),
         const SizedBox(height: 30),
         ElevatedButton(
           onPressed: driver.consumeCoffeeQuick,
