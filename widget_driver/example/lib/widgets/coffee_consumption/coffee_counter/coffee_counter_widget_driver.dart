@@ -24,16 +24,14 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
       notifyWidget();
     });
   }
+
   @override
   void didUpdateBuildContext(BuildContext context) {
     _localization = context.read<Localization>();
   }
 
-  @TestDriverDefaultValue('Consumed coffees')
-  String get descriptionText => _localization.consumedCoffees;
-
-  @TestDriverDefaultValue('3')
-  String get amountText => '${_consumptionService.counter}';
+  @TestDriverDefaultValue(3)
+  int get coffeeCount => _consumptionService.counter;
 
   @TestDriverDefaultValue('Consume coffee quick')
   String get consumeCoffeeQuickButtonText => _localization.consumeCoffeeQuick;
