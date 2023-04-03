@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0
+
+* Changes name of `DependencyProvider` to `DependencyResolver` and adds support in it for resolving dependencies using the BuildContext.
+
 ## 0.2.0
 
 * Refactors WidgetDriver to no longer get the BuildContext passed into via the constructor.  

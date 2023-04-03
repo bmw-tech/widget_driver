@@ -528,20 +528,20 @@ Widget build(BuildContext context) {
 
 Now this works fine when running the app normally. But when you run widget tests, then any parent of this widget would need to provide a mocked version of `SomeStuff` into the build context, otherwise the `context.read<SomeStuff>()` would fail and throw an exception.
 
-To get around this we have created a helper class called `DependencyProvider`. This class adds a small wrapper around the creation of your dependency and will automatically provide a test default value for you when running tests.  
+To get around this we have created a helper class called `DependencyResolver`. This class adds a small wrapper around the creation of your dependency and will automatically provide a test default value for you when running tests.  
 
 This is how you would use it:
 
 ```dart
 Widget build(BuildContext context) {
   return Provider(
-    create: _DependencyProvider().get(() => MyService(someStuffFromContext: context.read<SomeStuff>())),
+    create: _DependencyResolver(context).get(() => MyService(someStuffFromContext: context.read<SomeStuff>())),
     child: child,
   );
 }
 ```
 
-Please see the documentation for [DependencyProvider](lib/src/dependency_provider.dart) for more information.
+Please see the documentation for [DependencyResolver](lib/src/dependency_resolver.dart) for more information.
 
 ## Examples
 
