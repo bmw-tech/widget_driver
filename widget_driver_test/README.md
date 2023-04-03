@@ -67,14 +67,16 @@ void main() {
 ### Create a driver
 
 To create your driver you will need a helper function.  
-This is because the `Driver` needs a build context as a parameter to its constructor. To help you with this we have created a helper function on the `WidgetTester`.
+This is because the `Driver` needs to be constructed in the correct way by the widget_driver framework. If you would just create an instance of the driver yourself then some parts initialization phase and the lifecycle management of the driver will not work.
+
+To help you with this we have created a helper function on the `WidgetTester`.
 
 This is how you create your `Driver`:
 
 ```dart
 testWidgets('Some driver test', (WidgetTester tester) async {
     final driverTester = await tester.getDriverTester<MyWidgetDriver>(
-          driverBuilder: (context) => MyWidgetDriver(context, theService: mockTheService),
+          driverBuilder: () => MyWidgetDriver(theService: mockTheService),
           parentWidgetBuilder: (driverWidget) {
             return MultiProvider(
               providers: [
