@@ -92,6 +92,8 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
       }
     });
 
+    driver.didInitDriver();
+
     _driver = driver;
     return driver;
   }

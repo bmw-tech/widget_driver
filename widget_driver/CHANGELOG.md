@@ -3,6 +3,7 @@
 ## 0.3.0
 
 * Changes name of `DependencyProvider` to `DependencyResolver` and adds support in it for resolving dependencies using the BuildContext.
+* Adds a `didInitDriver` method to the driver which is called one time per `Driver` lifecycle after the driver is fully initialized.
 
 ## 0.2.0
 
