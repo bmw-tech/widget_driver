@@ -99,6 +99,26 @@ void main() {
 
         expect(disposeWasCalled, false);
       });
+
+      testWidgets('Calls didInitDriver one time after constructor and didUpdateBuildContext was called',
+          (WidgetTester tester) async {
+        late bool _didCallConstructor;
+        late int _didUpdateBuildContextCallCount;
+
+        await tester.getDriverTester(
+          driverBuilder: () => _ConcreteWidgetDriver(
+            didInitCallback: (didCallConstructor, didUpdateBuildContextCallCount) {
+              _didCallConstructor = didCallConstructor;
+              _didUpdateBuildContextCallCount = didUpdateBuildContextCallCount;
+            },
+          ),
+        );
+
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        expect(_didCallConstructor, true);
+        expect(_didUpdateBuildContextCallCount, 1);
+      });
     });
   });
 
@@ -153,7 +173,15 @@ void main() {
 /// To be able to create an instance of the driver which we can use for testing,
 /// we create a `ConcreteWidgetDriver` which is only used in these tests.
 class _ConcreteWidgetDriver extends WidgetDriver {
+  bool _didCallConstructor = false;
+  int _didUpdateBuildContextCallCount = 0;
+
+  void Function(bool didCallConstructor, int didUpdateBuildContextCallCount)? didInitCallback;
   VoidCallback? disposedCallback;
+
+  _ConcreteWidgetDriver({this.didInitCallback}) {
+    _didCallConstructor = true;
+  }
 
   void someEmptyFunction() {}
 
@@ -166,7 +194,16 @@ class _ConcreteWidgetDriver extends WidgetDriver {
   }
 
   @override
-  void didUpdateBuildContext(BuildContext context) {}
+  void didInitDriver() {
+    if (didInitCallback != null) {
+      didInitCallback!(_didCallConstructor, _didUpdateBuildContextCallCount);
+    }
+  }
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    _didUpdateBuildContextCallCount += 1;
+  }
 }
 
 class _ConcreteTestDriver extends TestDriver implements _ConcreteWidgetDriver {

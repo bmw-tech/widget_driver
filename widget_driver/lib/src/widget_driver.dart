@@ -84,6 +84,19 @@ abstract class WidgetDriver {
     }
   }
 
+  /// Called when this driver is fully initialized.
+  /// This means that the constructor has been called
+  /// and the [didUpdateBuildContext] was called one time.
+  ///
+  /// So any `late` dependency setup you did in either the constructor or the [didUpdateBuildContext]
+  /// has now been completed and your driver has access to all its initial data.
+  ///
+  /// The framework will call this method exactly once for each [WidgetDriver] object
+  /// it creates.
+  ///
+  /// Override this method to perform initialization work which you want to run only one time per [WidgetDriver].
+  void didInitDriver() {}
+
   /// If the [WidgetDriver] needs a dependency from
   /// the [BuildContext] then you can override this method.
   ///
@@ -126,6 +139,8 @@ class TestDriver {
   void notifyWidget() {}
 
   void dispose() {}
+
+  void didInitDriver() {}
 
   void didUpdateBuildContext(BuildContext context) {}
 }
