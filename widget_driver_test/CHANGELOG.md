@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Adds `UpdatableDependency` to help test the `didUpdateBuildContext` method of drivers.
+
 ## 0.1.0
 
 * Changes to use latest api from widget_driver package. The build context is no longer passed into the constructor of the driver.
