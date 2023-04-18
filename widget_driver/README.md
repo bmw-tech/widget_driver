@@ -4,8 +4,8 @@
 [![check-code-quality](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml/badge.svg?branch=master)](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 
-A Flutter presentation layer framework, which will clean up your  
-widget code and make your widgets testable without a need for thousands of mock objects.  
+A Flutter presentation layer framework,  
+which will clean up your widget code, make your widgets more maintainable and easier to test and removes the need to mock thousands of dependencies in your widget tests.  
 Let's go driving! 🚙💨
 
 ---
@@ -17,17 +17,28 @@ But maybe you should not put all of your code directly in the widgets.
 
 Doing that will:
 
-- give you a headache when you try to write unit tests
+- give you a headache when you try to write widget tests
 - make it tougher to reuse your code
+- couple your business logic to your views and make  
+maintainability and new feature development tough
 - clutter the declarative UI part of Flutter
 
-`WidgetDriver` to the rescue! `WidgetDriver` gives you a [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) style presentation layer framework.  
-It effectively guides you into moving all of the business logic parts of your code out from widgets and into something called `WidgetDrivers`.
+`WidgetDriver` to the rescue!  
+`WidgetDriver` gives you a [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) style presentation layer framework.  
+It effectively guides you into moving the business logic code out from the widgets and instead have it managed by something called `WidgetDrivers`.
+
+<div align="center">
+  <img src="doc/resources/widget_driver_description.jpg" style="max-width: 600px">
+</div>
+
+Your widget stays "pure" and only manages the actual presentation and user input.
+
+The `Driver` sits between your widget and your business logic (sort of like a ViewModel or an adapter). It is responsible for exposing data to the widget and making any needed adaptions from business model to something which is easily presentable. E.g. if your business logic has a Date object, then the Driver would convert this and expose it as a date string to the widget.
 
 ### Core features of WidgetDriver
 
 - Clear separation of concern.  
-Business logic goes in the `Driver` and only the view logic  goes in the `Widget`
+Business logic is managed by the `Driver` and only the view logic  goes in the `Widget`
 - Better testability of your `Widgets`.  
 When you use `WidgetDriver` then you can **test your `Widgets` in isolation**!  
 You do not need to mock hundreds of child dependencies!
@@ -39,6 +50,8 @@ We have all been there. We write `widgetTests` and over time we end up with 90% 
 Well since widgets tend to contain other child widgets and these widget contains yet more widgets. All these widgets have their own set of dependencies which needs to be resolved when they get created.
 
 So when you want to write a simple `widgetTest` for a widget, then you end up needing to provide mock data for all the dependencies of all your children. 😱
+
+This is annoying and makes testing tougher and less useful. You only want to focus on testing the current widget. In this moment you do not care which dependencies any of your child widgets might have. (Cause you will anyway test them in isolation later)
 
 `WidgetDriver` to the rescue again! `WidgetDriver` uses a special `TestDriver` when you are running tests. These `TestDrivers` provide predefined default values to all child widgets so that you do not need to provide any dependencies! 🥳  
 
