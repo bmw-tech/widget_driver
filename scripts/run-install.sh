@@ -12,7 +12,7 @@ set -o nounset
 set -o pipefail
 
 function run_install() {
-    flutter pub get $@
+    flutter pub get
 }
 
 if [[ $# -eq 0 ]] 

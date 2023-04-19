@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next version comes here
+
+* Updates the README.
+
 ## 0.3.0
 
 * Updates generator to be compatible with latest api changes in version 0.2.0 of widget_driver.

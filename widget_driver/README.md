@@ -4,8 +4,8 @@
 [![check-code-quality](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml/badge.svg?branch=master)](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 
-A Flutter presentation layer framework, which will clean up your  
-widget code and make your widgets testable without a need for thousands of mock objects.  
+A Flutter presentation layer framework,  
+which will clean up your widget code, make your widgets more maintainable and easier to test, and removes the need to mock thousands of dependencies in your widget tests.  
 Let's go driving! 🚙💨
 
 ---
@@ -17,17 +17,28 @@ But maybe you should not put all of your code directly in the widgets.
 
 Doing that will:
 
-- give you a headache when you try to write unit tests
+- give you a headache when you try to write widget tests
 - make it tougher to reuse your code
+- couple your business logic to your views and make  
+maintainability and new feature development tough
 - clutter the declarative UI part of Flutter
 
-`WidgetDriver` to the rescue! `WidgetDriver` gives you a [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) style presentation layer framework.  
-It effectively guides you into moving all of the business logic parts of your code out from widgets and into something called `WidgetDrivers`.
+`WidgetDriver` to the rescue!  
+`WidgetDriver` gives you a [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) style presentation layer framework.  
+It effectively guides you into moving the business logic code out from the widgets and instead have it managed by something called `WidgetDrivers`.
+
+<div align="center">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description.jpg" style="max-width: 600px">
+</div>
+
+Your widget stays "pure" and only manages the actual presentation and user input.
+
+The `Driver` sits between your widget and your business logic (sort of like a ViewModel or an adapter). It is responsible for exposing data to the widget and making any needed adaptions from business model to something which is easily presentable. E.g. if your business logic has a Date object, then the Driver would convert this and expose it as a date string to the widget.
 
 ### Core features of WidgetDriver
 
 - Clear separation of concern.  
-Business logic goes in the `Driver` and only the view logic  goes in the `Widget`
+Business logic is managed by the `Driver` and only the view logic  goes in the `Widget`
 - Better testability of your `Widgets`.  
 When you use `WidgetDriver` then you can **test your `Widgets` in isolation**!  
 You do not need to mock hundreds of child dependencies!
@@ -39,6 +50,8 @@ We have all been there. We write `widgetTests` and over time we end up with 90% 
 Well since widgets tend to contain other child widgets and these widget contains yet more widgets. All these widgets have their own set of dependencies which needs to be resolved when they get created.
 
 So when you want to write a simple `widgetTest` for a widget, then you end up needing to provide mock data for all the dependencies of all your children. 😱
+
+This is annoying and makes testing tougher and less useful. You only want to focus on testing the current widget. In this moment you do not care which dependencies any of your child widgets might have. (Cause you will anyway test them in isolation later)
 
 `WidgetDriver` to the rescue again! `WidgetDriver` uses a special `TestDriver` when you are running tests. These `TestDrivers` provide predefined default values to all child widgets so that you do not need to provide any dependencies! 🥳  
 
@@ -119,7 +132,7 @@ Okay wait, what was all that?! That looks very complicated!
 Well, not really. Let's dive into what happens:
 
 1. First we just define a driver which extend the `WidgetDriver`.  
-  The "`part '...'`" definition and the `@GenerateTestDriver()` annotation above it is needed later for the code generation to work.
+  The "`part '...'`" definition and the `@GenerateTestDriver()` annotation above is needed later for the code generation to work.
 
     ```dart
     part 'counter_widget_driver.g.dart';
@@ -151,7 +164,7 @@ Well, not really. Let's dive into what happens:
     }
     ```
   
-1. Now we need to add some logic where the `Driver` listens to changes from the `CounterService` and when a changes happens, then it will notify the widget that it needs to update. You do this by calling the `notifyWidget()` method in the driver.
+1. Now we need to add some logic where the `Driver` listens to changes from the `CounterService` and when a change happens, then it will notify the widget that it needs to update. You do this by calling the `notifyWidget()` method in the driver.
 As soon as your `Driver` has new data to display, then you want to call the `notifyWidget()`.
 
     ```dart
@@ -186,7 +199,7 @@ As soon as your `Driver` has new data to display, then you want to call the `not
 
       As mentioned, these annotations are used by the `TestDriver`, and you have to provide them! The values provided there are only used in testing. Never in any production code. Because in production you use the real business logic.
 
-      But in your `widgetTests` these values are used when your widget is used as a child-widget. This helps you to test widgets in isolation, without caring about which dependencies all your child widgets need.
+      But in your `widgetTests` these values are used when your widget is used as a child-widget in another widget. This helps you to test widgets in isolation, without caring about which dependencies all your child widgets need. This mean that when you test a widget, you can ignore any dependencies which any of your child widgets might need internally. Since those child widgets will just use the default values provided by their `TestDriver`. So you are free to focus on te data which your widget needs.
 
       For a more in-depth documentation about `TestDrivers` read [here](doc/testing.md).
 
@@ -202,7 +215,7 @@ Read more about that [here](doc/drivers_without_generation.md)*
 At the root of your flutter project, run this command:
 
 ```bash
-flutter pub run build_runner build
+flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 When the build runner completes then we are ready to start building our widget
@@ -241,7 +254,7 @@ class CounterWidget extends DrivableWidget<CounterWidgetDriver> {
 
 And voila, we are done!  
 Now check out that widget code! Isn't that clean.  
-Just focused on UI. No StreamBuilders or BuildContext being watched.  
+Just focused on UI. No nested StreamBuilders or BuildContext being watched.  
 No business logic in your view code!
 And **no** dependency being created or resolved!
 
@@ -277,7 +290,9 @@ Let's go over what happens:
     WidgetDriverProvider<CounterWidgetDriver> get driverProvider => $CounterWidgetDriverProvider();
     ```
 
-    For each `WidgetDriver` you get a generated `WidgetDriverProvider`. They are all prefixed with `$` to indicate that they are generated. So just grab the provider which belongs to your driver and create an instance of it here.
+    For each `WidgetDriver` you get a generated `WidgetDriverProvider`. They are all prefixed with `$` to indicate that they are generated. Their name have this pattern: `${name-of-your-driver}Provider`
+
+    So just grab the provider which belongs to your driver and create an instance of it here.
 
 1. And that is all you need to do!  
 
@@ -296,10 +311,10 @@ The driver decides when the widget needs to update. So inside your driver code, 
 
 This will automatically make sure that your widget get reloaded and it can consume the latest values from your driver.
 
-### If you do want to pass data from the widget to the driver
+### If you want to pass data from the widget directly to the driver
 
-Say we have a ListView which contains multiple coffees. When the user clicks on one of the items, we want to redirect him to a details page. So how do we pass that coffee object through our widget to the driver to properly use it.
-Easy...
+Say we have a ListView which contains multiple coffees. When the user clicks on one of the items, we want to redirect him/her to a details page. So how do we pass that coffee object through our widget to the driver to properly use it.  
+Easy... 🧙
 
 1. First, we annotate the variable in the driver with the `@driverProvidableProperty` annotation. This tells the generator to allow this variable to be passed through from the widget.
 
@@ -331,7 +346,7 @@ Easy...
       }
     ```
 
-2. Then we just run the generator like we did before...
+2. Then we just run the generator like we did before.
 3. We should get a compiler warning in the generated file. To resolve that we just have to add the generated abstract class `_$DriverProvidedProperties` to our driver like this:
 
     ```dart
@@ -406,35 +421,54 @@ If you grab the dependency as an inherited widget then when/if your dependency e
 
 #### Example grabbing a dependency with Provider
 
-We want to read a ThemeDataService from the context, which could change between light and dark Theme at runtime.
-If we were to resolve it like this:
+If we want to read out a `Coffee` object from the context, then we can resolve that like this:
 
 ```dart
 class SomeDriver extends WidgetDriver {
-  late ThemeDataService _themeDataService;
+  late Coffee _coffee;
 
   @override
   void didUpdateBuildContext(BuildContext context) {
-      _themeDataService = context.read<ThemeDataService>();
+      _coffee = context.read<Coffee>();
   }
 }
 ```
 
-The driver would not get an update should the ThemeDataService be changed.
+The driver would not get an update should the `Coffee` be changed by a parent widget.
 The `Provider` package however offers us the option to `watch` the provided value.
 
 ```dart
 class SomeDriver extends WidgetDriver {
-  late ThemeDataService _themeDataService;
+  late Coffee _coffee;
 
   @override
   void didUpdateBuildContext(BuildContext context) {
-      _themeDataService = context.watch<ThemeDataService>();
+      _coffee = context.watch<Coffee>();
   }
 }
 ```
 
-In this case, your driver will always get the latest value for the `ThemeDataService` if it would ever be changed by a parent widget.
+In this case, your driver will always get the latest value for the `Coffee` if it would ever be changed by a parent widget.
+
+### Lifecycle of a Driver
+
+The `Driver` lives longer than your `Widget`. It has the same lifecycle as the `State` of a `StatefulWidget`. (If you would look inside the source code you would actually see that the driver is living inside a State object)
+
+If you want to take some action one time the first time the widget gets shown then there is a method in the driver called `didInitDriver()`.  
+Simple override this method and put your code there.
+
+This method will be called one time for each lifecycle of the `Driver`.  
+It will get called after the constructor and after the `didUpdatedidUpdateBuildContext` and `didUpdateProvidedProperties` methods have been called. So if you needed to first assign some data in those methods you are safe to use that data in the `didInitDriver()`.
+
+```dart
+class MyDriver extends WidgetDriver {
+  ...
+  @override
+  void didInitDriver() {
+    // Put your one time setup code here.
+  }
+}
+```
 
 ### If your WidgetDriver exposes classes that require a lot of overrides
 
@@ -469,24 +503,23 @@ pass to the Test Driver.
 
 Here is a demo of how the final product looks like
 
-<p>
-  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/counter_widget_demo.gif?raw=true"
-  height="400"/>
-</p>
+<div>
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/counter_widget_demo.gif?raw=true" style="max-height: 400px">
+</div>
 
 ## Guidelines
 
 `WidgetDriver` gives you two big benefits.
 
 - Move business logic out of the widget. Clean up the UI code.
-- Test widgets in isolation without the of mocks mocks mocks.
+- Test widgets in isolation without the need of a huge mocks setup.
 
 But you only gain these benefits if you follow these guidelines.
 
 ### Guideline One - Architecture 🏗️
 
-Move out Business Logic out from the Widgets!  
-That logic should now instead go inside the `WidgetDriver`.
+Move out Business Logic from the Widgets!  
+That logic should instead go inside other components (services, managers, use cases etc.) and these are then consumed by the `Drivers`.
 
 It is **NOT** the job of a Widget to create and combine dependencies!  
 The `Driver` is the place where you want to create/resolve dependencies and combine them.  
@@ -498,22 +531,22 @@ The widget is **ONLY** interested in creating UI and reacting to interactions fr
 
 ### Guideline Two - Testing 🔬
 
-Thanks to the `TestDrivers` which get auto-created for you when running widget tests, you do not have to mock your dependencies in the tests.  
+Thanks to the `TestDrivers` which get auto-created for you when running widget tests, you do not have to mock the dependencies for other widgets. You can focus on the current widget under test.  
 
 When you run tests, then the real `driver` is not created. Instead the `testDriver` gets created and it just provides hard coded default values.
 
-The only thing you need to do when testing a widget is to mock the `driver` for that specific widget.
-You just need to mock the `driver` used by the widget which is currently under test and that is it! No other mocks are needed.
+The only thing you need to do when testing a widget is to mock the `driver` for that specific widget under test.
+You just need to mock the `driver` used by the widget which is currently under test and that is it! No other mocks for other widgets are needed.
 
 But you only get this benefit if you move the business logic out of the widget.  
 
 When you keep business logic in your widgets, then the parent widgets will need to provide mock values for all those child widgets and you end up in mock-mock-mock-world
 
-So please follow guideline two -> Put your business logic in the `Driver`, not in the `Widget`!
+So please follow guideline one -> Put your business logic in the `Driver`, not in the `Widget`!
 
 More about testing and the benefits are described [here](doc/testing.md)
 
-## Providing dependencies into the build context
+## Providing dependencies into the build context from a Widget
 
 If you need to inject some dependencies into the BuildContext then a typical use case is that you create/resolve them in a build method of a widget. And then you use some state management tool like `Provider` to inject them into the widget tree. Like so:
 

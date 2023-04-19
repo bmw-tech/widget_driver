@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next version comes here
+
+* Updates the README.
+
 ## 0.3.0
 
 * Changes name of `DependencyProvider` to `DependencyResolver` and adds support in it for resolving dependencies using the BuildContext.
