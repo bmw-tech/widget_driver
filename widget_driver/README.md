@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 
 A Flutter presentation layer framework,  
-which will clean up your widget code, make your widgets more maintainable and easier to test and removes the need to mock thousands of dependencies in your widget tests.  
+which will clean up your widget code, make your widgets more maintainable and easier to test, and removes the need to mock thousands of dependencies in your widget tests.  
 Let's go driving! 🚙💨
 
 ---
