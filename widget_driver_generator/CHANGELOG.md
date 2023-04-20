@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## next version comes here
+## 0.4.0
 
 * Updates the README.
+* Specified minimum versions to some pubspec dependencies.
 
 ## 0.3.0
 

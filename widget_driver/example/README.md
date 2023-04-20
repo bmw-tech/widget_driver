@@ -40,7 +40,7 @@ The example app will show you how to use both approaches.
 To generate the needed `WidgetDriver` code then run this command from the root folder of the example app:
 
 ```shell
-flutter pub run build_runner build
+flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 ## Testing
