@@ -1,3 +1,7 @@
+## 1.0.0
+
+* The official release of WidgetDriverTest :-D
+
 ## 0.3.0
 
 * Updates to use 0.4.0 of widget_driver
