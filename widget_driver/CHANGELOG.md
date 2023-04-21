@@ -4,6 +4,7 @@
 
 * Updates the README.
 * Updates the order in which the DependencyResolver resolves dependencies.
+* Removes all TestDriver code creation when running release builds.
 
 ## 0.3.0
 
