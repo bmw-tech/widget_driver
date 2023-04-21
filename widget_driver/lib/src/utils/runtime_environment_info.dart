@@ -13,6 +13,11 @@ class RuntimeEnvironmentInfo {
 
   /// Returns `true` if the current runtime is in a test environment and tests are running.
   bool isRunningInTestEnvironment() {
-    return _platformEnvironment.containsKey(_flutterTestEnvKey);
+    bool isRunningInTest = false;
+    assert(() {
+      isRunningInTest = _platformEnvironment.containsKey(_flutterTestEnvKey);
+      return true;
+    }());
+    return isRunningInTest;
   }
 }
