@@ -34,6 +34,6 @@ This is pretty easy. It basically just contains two steps:
 
 2. Run the build runner:  
     ```console
-    flutter pub run build_runner build
+    flutter pub run build_runner build --delete-conflicting-outputs
     ```
     Read more about using the `build_runner` [here](https://pub.dev/packages/build_runner).

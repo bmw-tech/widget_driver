@@ -99,7 +99,12 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
   }
 
   bool _isRunningInTestEnvironment() {
-    return widget._environmentInfo.isRunningInTestEnvironment();
+    var isRunningInTest = false;
+    assert(() {
+      isRunningInTest = widget._environmentInfo.isRunningInTestEnvironment();
+      return true;
+    }());
+    return isRunningInTest;
   }
 
   Driver _getRealDriver() {

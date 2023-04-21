@@ -66,20 +66,20 @@ part 'counter_widget_driver.g.dart';
 @GenerateTestDriver()
 class CounterWidgetDriver extends WidgetDriver {
   final CounterService _counterService;
-  final Locator _locator;
+  late Locator _locator;
   StreamSubscription? _subscription;
 
-  CounterWidgetDriver(
-    BuildContext context, {
+  CounterWidgetDriver({
     CounterService? counterService,
-  })  : _counterService = counterService ?? GetIt.I.get<CounterService>(),
-        _locator = context.read,
-        super(context) {
-
+  })  : _counterService = counterService ?? GetIt.I.get<CounterService>() {
     _subscription = _counterService.valueStream.listen((_) {
       notifyWidget();
     });
+  }
 
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    _locator = context.read;
   }
 
   @TestDriverDefaultValue('The title of the counter')
@@ -103,21 +103,17 @@ class CounterWidgetDriver extends WidgetDriver {
     _subscription?.cancel();
     super.dispose();
   }
-
-  @override
-  void didUpdateBuildContextDependencies(BuildContext context) {}
 }
 ```
 
 There are three important concepts here.
 
-1. The dependencies are loaded/created/resolved in the constructor of the `driver`.  
-(If the driver depends on an inherited widgets, then you can update these dependencies in the `didUpdateBuildContextDependencies` method)
+1. The dependencies are loaded/created/resolved in the constructor of the `driver` or in the `didUpdateBuildContext` method.  
 1. All the properties/methods which the driver wants to expose to the widgets needs to be annotated and given default values.
 1. Whenever important data has changed in the `driver` and you want the widget to update: call `notifyWidget()`
 
 **Let's start talking about the dependencies.**  
-Any type of dependencies which your `driver` needs to be able to give your widget the correct data has to be loaded/created/resolved in the constructor of the `driver`. (And potentially updated in the `didUpdateBuildContextDependencies` and/or `didUpdateProvidedProperties` methods.)
+Any type of dependencies which your `driver` needs to be able to give your widget the correct data has to be loaded/created/resolved in the constructor of the `driver` and/or in the `didUpdateBuildContext` method and/or `didUpdateProvidedProperties` method.
 
 You get three option here for how to resolve these dependencies. Either you can grab them out of the `BuildContext` (for example if you are using the `Provider` package). Or you can use some DI package like `get_it` and then just grab the dependencies from the DI container. Or you can pass in the dependencies to your driver using the `@driverProvidableProperty` annotation.
 
