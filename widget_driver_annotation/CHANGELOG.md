@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.0
+
+* No changes. Just the official release of WidgetDriverAnnotations :-D
+
 ## 0.0.4
 
 * Adds new annotation to support passing data from the widget to the driver
