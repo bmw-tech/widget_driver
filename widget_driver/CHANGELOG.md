@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.0.0
+
+* The official release of WidgetDriver :-D
+* Fixes issue with widgetdriver image in readme.
+
 ## 0.4.0
 
 * Updates the README.

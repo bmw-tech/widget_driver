@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.0
+
+* No changes. Just the official release of WidgetDriverGenerator :-D
+
 ## 0.4.0
 
 * Updates the README.

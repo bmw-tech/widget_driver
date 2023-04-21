@@ -28,7 +28,7 @@ maintainability and new feature development tough
 It effectively guides you into moving the business logic code out from the widgets and instead have it managed by something called `WidgetDrivers`.
 
 <div align="center">
-  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description.jpg" style="max-width: 600px">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description.jpg?raw=true" style="max-width: 600px">
 </div>
 
 Your widget stays "pure" and only manages the actual presentation and user input.
