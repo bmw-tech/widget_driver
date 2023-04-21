@@ -1,6 +1,6 @@
 name: widget_driver_annotation
 description: Defines the annotations used by widget_driver and widget_driver_generator to create code for your WidgetDrivers
-version: 0.0.4
+version: 1.0.0
 repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver_annotation
 issue_tracker: https://github.com/bmw-tech/widget_driver/issues
 
