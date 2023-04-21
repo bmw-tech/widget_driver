@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Updates to use 0.4.0 of widget_driver
+
 ## 0.2.0
 
 * Adds `UpdatableDependency` to help test the `didUpdateBuildContext` method of drivers.
