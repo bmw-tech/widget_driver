@@ -244,10 +244,9 @@ void main() {
       });
 
       group('When TestDefault is registered and dependency from context:', () {
-        testWidgets('Returns dependency from builder when builder does not throw.', (tester) async {
-          const expectedStringDependency = 'Some string I want to inject';
+        testWidgets('Returns dependency from BuildContext when builder does not throw.', (tester) async {
           final String Function() stringBuilder = () {
-            return expectedStringDependency;
+            return 'Some string I want to inject';
           };
 
           final resolver = await _getResolver(
@@ -259,7 +258,7 @@ void main() {
 
           final myStringDependency = resolver.get(() => stringBuilder());
 
-          expect(myStringDependency, equals(expectedStringDependency));
+          expect(myStringDependency, equals('DependencyFromContextString'));
         });
 
         testWidgets('Returns dependency from BuildContext when builder does throw and dependency was injected.',

@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'utils/runtime_environment_info.dart';
 
-/// Use this class to resolve dependencies in your widgets/drivers.
+/// You can use this class to resolve dependencies in your widgets/drivers.
 /// This class offers 2 approaches to help you write better tests:
 ///
 /// First:
 /// If you resolve dependencies in your widgets, then this class adds a safe way to resolve these dependencies
 /// during testing where ancestor widgets are not forced to provide a mocked instances of your dependencies.
+/// This is done with the use of Test Default Values.
 ///
 /// Second:
-/// If you resolve dependencies in your drivers where you don't know exactly how to inject new values for these
+/// If you resolve dependencies in your drivers where you don't know exactly how to inject override/mock values for these
 /// dependencies, then this class helps you provide an easy way to inject these dependencies during testing.
 ///
 ///
 /// How it works:
-/// When you are not running tests, then the `DependencyResolver` will just
+/// When you are not running tests, then the [DependencyResolver] will just
 /// get the dependency instance according to the provided builder method.
 ///
-/// But, during testing the `DependencyResolver` will first try to get the dependency instance using your builder,
-/// but if this fails and throws (because for example no ancestor widget registered the dependency),
-/// then the `DependencyResolver` will:
+/// But, during testing the [DependencyResolver] will do this:
 ///
-/// 1: Try to find the dependency using the `tryToGetDependencyFromBuildContext` method.
-/// In here you can specify yourself how this look up should work. E.g. you could use the Provider package and
-/// look up the widget tree using `context.read<MyDependency>()`.
-/// If the dependency is found, then it is returned and used. Otherwise it continues to the second approach.
+/// 1: First it will check if someone registered a custom instance for the given type
+/// using the [tryToGetDependencyFromBuildContext] method. If so then that is used and returned.
+/// --> You can use this approach to inject mock values.
 ///
-/// 2: In the second approach it will check if there is a registered test default builder for the given dependency.
+/// 2: If no mock override was provided, then it will try to get the dependency instance using your builder.
+/// If that works and the dependency could be resolved, then it gets returned.
+///
+/// 3: If the normal builder fails to resolve the real dependency, then as a final step, the the [DependencyResolver]
+/// will check if there is a registered test default builder for the given dependency.
 /// If that exists, then it tries run that builder and return the value.
 /// If there is no registered test default builder, then the original error is thrown.
 ///
@@ -36,10 +38,10 @@ import 'utils/runtime_environment_info.dart';
 /// 1 - Widget Example:
 ///
 /// This is how you use this in your widget where you resolve dependencies:
-/// Step one: At the bottom of your widget class, create a subclass of `DependencyResolver` and implement the
-/// `registerTestDefaultFallbackValues` method. In this method you register the test default instances.
-/// This should be an empty implementation instance. Like a mock object.
-/// You typically would only have one concrete implementation of `DependencyResolver` per widget where you use it.
+/// Step one: At the bottom of your widget class, create a subclass of [DependencyResolver] and implement the
+/// [registerTestDefaultFallbackValues] method. In this method you register the test default instances.
+/// This should be an "empty implementation" instance. Like a mock object.
+/// You typically would only have one concrete implementation of [DependencyResolver] per widget where you use it.
 ///
 /// ```dart
 /// class MyServiceProviderWidget extends StatelessWidget {
@@ -58,7 +60,7 @@ import 'utils/runtime_environment_info.dart';
 /// class TestDefaultMyService extends EmptyDefault implements TestDefaultMyService {}
 /// ```
 ///
-/// And then you use this concrete version of `DependencyResolver` in your widget to create that instance.
+/// And then you use this concrete version of [DependencyResolver] in your widget to create that instance.
 /// Like this:
 ///
 /// ```dart
@@ -79,7 +81,7 @@ import 'utils/runtime_environment_info.dart';
 ///
 /// BUT: if you run this during tests, and you never registered any type for `SomeStuff` in the buildContext.
 /// Normally, this would break your test build and throw an exception. In this case however, we will use your
-/// test default instance of your `MyService`, provided in the registerTestDefaultBuilder() method.
+/// test default instance of your `MyService`, provided in the [registerTestDefaultBuilder] method.
 /// This is useful since it simplifies the WidgetTesting for any ancestor widget which might have your widget
 /// as a child. Since normally, all ancestor widgets would need to provide all the dependencies to all their children.
 /// Using this approach how ever, in testing, your ancestor
@@ -99,8 +101,8 @@ import 'utils/runtime_environment_info.dart';
 /// to create a lot of logic above your driver and wrap it in some localization providing widget.
 /// This adds a lot of clutter-setup-mock-code to your driver tests.
 ///
-/// The `DependencyResolver` can help you here. Create a shared `DependencyResolver` and override the
-/// `tryToGetDependencyFromBuildContext` method, and in there, for example use the Provider package like this:
+/// The [DependencyResolver] can help you here. Create a shared [DependencyResolver] and override the
+/// [tryToGetDependencyFromBuildContext] method, and in there, for example use the Provider package like this:
 ///
 /// ```dart
 /// class Resolver extends DependencyResolver {
@@ -139,14 +141,24 @@ abstract class DependencyResolver {
 
   /// When running normally (outside of tests) this returns the instance which your builder returns.
   ///
-  /// During tests, this tries to return the instance which your builder returns.
-  /// But if this fails for some reason (e.g. you did not provide a mock version of that type),
-  /// then this method:
+  /// During tests, this tries to return a mocked version if it exists.
+  /// If there is no mock then it tries to return the instance which your builder returns.
   ///
-  /// First: Tries to return the dependency for the given type using the `tryToGetDependencyFromBuildContext` method.
-  /// Second: Tries to return the registered test default value for the given type.
-  /// Finally: If of both these fail, then this method throws the exception which was thrown by the builder method.
+  /// But if this fails for some reason (e.g. you did not provide a mock version of that type),
+  /// then it tries to return the registered test default value for the given type.
+  ///
+  /// Finally, if there is no test default value,
+  /// then this method throws the exception which was thrown by the builder method.
   T get<T>(T Function() builder) {
+    final isRunningInTest = _environmentInfo.isRunningInTestEnvironment();
+
+    if (isRunningInTest) {
+      final buildContextInstance = tryToGetDependencyFromBuildContext<T>(_context);
+      if (buildContextInstance != null) {
+        return buildContextInstance;
+      }
+    }
+
     try {
       final T value = builder();
       return value;
@@ -154,13 +166,8 @@ abstract class DependencyResolver {
       // No dependency could be loaded from the provided builder.
       // Probably since the builder tries to access a dependency from the BuildContext which was not there.
       // This is a common issue when ancestor widgets renders child widgets which tries to resolve dependencies.
-
-      // If we are running tests, then try to return the dependency from build context or test default value.
-      if (_environmentInfo.isRunningInTestEnvironment()) {
-        final buildContextInstance = tryToGetDependencyFromBuildContext<T>(_context);
-        if (buildContextInstance != null) {
-          return buildContextInstance;
-        }
+      // If we are running tests, then try to return the test default value.
+      if (isRunningInTest) {
         final testDefaultInstance = _tryToGetTestDefaultInstance<T>();
         if (testDefaultInstance != null) {
           return testDefaultInstance;
@@ -186,11 +193,13 @@ abstract class DependencyResolver {
   /// ```
   ///
   /// where the `TestDefaultMyService` and `TestDefaultThemeData` are some empty/mock-like fake implementations.
+  @protected
   void registerTestDefaultFallbackValues();
 
   /// Call this to register a builder which creates a test default instance for a given type.
   /// This builder/created-instance is used in testing when the normal
   /// `DependencyResolver-get` method fails to create your dependency.
+  @protected
   void registerTestDefaultBuilder<T>(T Function() builder) {
     _defaultTestValueMap[T] = builder;
   }
@@ -211,6 +220,7 @@ abstract class DependencyResolver {
   ///     }
   /// }
   /// ```
+  @protected
   T? tryToGetDependencyFromBuildContext<T>(BuildContext context);
 
   T? _tryToGetTestDefaultInstance<T>() {

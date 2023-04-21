@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## next version comes here
+## 0.4.0
 
 * Updates the README.
+* Updates the order in which the DependencyResolver resolves dependencies.
 
 ## 0.3.0
 
