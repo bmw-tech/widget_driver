@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.1
+
+* Adds example/example.md for the example page on pub.dev
+
 ## 1.0.0
 
 * The official release of WidgetDriver :-D
