@@ -60,7 +60,7 @@ class MyFirstDrivableWidgetDriver extends WidgetDriver {
 }
 ```
 
-### 2. Create your Drivable Widget
+### 3. Create your Drivable Widget
 
 Run the WidgetDriver code generator.
 At the root of your flutter project, run this command:
@@ -69,7 +69,7 @@ At the root of your flutter project, run this command:
 flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
-### 3. Create your Drivable Widget
+### 4. Create your Drivable Widget
 
 Now you are ready to create your DrivableWidget.
 Just make it extend `DrivableWidget<MyFirstDrivableWidgetDriver>`.
@@ -97,12 +97,12 @@ class MyFirstDrivableWidget extends DrivableWidget<MyFirstDrivableWidgetDriver> 
         children: [
           FloatingActionButton(
             onPressed: driver.increaseCounterAction, // <-- Action is forwarded to the driver
-            child: const Icon(Icons.add),
+            child: Icon(driver.increaseActionIcon), // <-- Icon comes from the driver
           ),
           const SizedBox(width: 10),
           FloatingActionButton(
             onPressed: driver.resetCounterAction,
-            child: const Icon(Icons.restore),
+            child: Icon(driver.resetActionIcon),
           ),
         ],
       ),

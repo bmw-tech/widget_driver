@@ -15,12 +15,12 @@ class MyFirstDrivableWidget extends DrivableWidget<MyFirstDrivableWidgetDriver> 
         children: [
           FloatingActionButton(
             onPressed: driver.increaseCounterAction,
-            child: const Icon(Icons.add),
+            child: Icon(driver.increaseActionIcon),
           ),
           const SizedBox(width: 10),
           FloatingActionButton(
             onPressed: driver.resetCounterAction,
-            child: const Icon(Icons.restore),
+            child: Icon(driver.resetActionIcon),
           ),
         ],
       ),

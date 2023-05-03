@@ -21,6 +21,12 @@ class _$TestMyFirstDrivableWidgetDriver extends TestDriver implements MyFirstDri
   String get counterValue => '0';
 
   @override
+  IconData get increaseActionIcon => Icons.add;
+
+  @override
+  IconData get resetActionIcon => Icons.restore;
+
+  @override
   void increaseCounterAction() {}
 
   @override
