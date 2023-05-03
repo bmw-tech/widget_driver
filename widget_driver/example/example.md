@@ -2,7 +2,7 @@
 
 ## Minium steps needed to get started with WidgetDriver
 
-Following these steps will give you this:
+If you follow these steps then you will get this:
 <div align="left">
   <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_intro_example.gif?raw=true" style="max-width: 300px">
 </div>
@@ -22,7 +22,7 @@ dev_dependencies:
   widget_driver_generator: <latest_version>
 ```
 
-And run `flutter pub get`
+Run: `flutter pub get`
 
 ### 2. Create your Driver
 
@@ -67,9 +67,9 @@ class MyFirstDrivableWidgetDriver extends WidgetDriver {
 }
 ```
 
-### 3. Create your Drivable Widget
+### 3. Run the generator
 
-Run the WidgetDriver code generator.
+Run the WidgetDriver code generator.  
 At the root of your flutter project, run this command:
 
 ```bash
