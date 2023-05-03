@@ -29,6 +29,7 @@ And run `flutter pub get`
 In this example we are creating a driver called `MyFirstDrivableWidgetDriver` in a file called `my_first_drivable_widget_driver.dart`.
 
 ```dart
+import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 part 'my_first_drivable_widget_driver.g.dart';
@@ -45,6 +46,12 @@ class MyFirstDrivableWidgetDriver extends WidgetDriver {
 
   @TestDriverDefaultValue('0')
   String get counterValue => '$_count';
+
+  @TestDriverDefaultValue(Icons.add)
+  IconData get increaseActionIcon => Icons.add;
+
+  @TestDriverDefaultValue(Icons.restore)
+  IconData get resetActionIcon => Icons.restore;
 
   @TestDriverDefaultValue()
   void increaseCounterAction() {
@@ -89,7 +96,7 @@ class MyFirstDrivableWidget extends DrivableWidget<MyFirstDrivableWidgetDriver> 
   MyFirstDrivableWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(driver.appBarTitle)), // <-- The title comes from the driver
       floatingActionButton: Row(
@@ -97,7 +104,7 @@ class MyFirstDrivableWidget extends DrivableWidget<MyFirstDrivableWidgetDriver> 
         children: [
           FloatingActionButton(
             onPressed: driver.increaseCounterAction, // <-- Action is forwarded to the driver
-            child: Icon(driver.increaseActionIcon), // <-- Icon comes from the driver
+            child: Icon(driver.increaseActionIcon),  // <-- Icon comes from the driver
           ),
           const SizedBox(width: 10),
           FloatingActionButton(
@@ -123,4 +130,3 @@ class MyFirstDrivableWidget extends DrivableWidget<MyFirstDrivableWidgetDriver> 
   WidgetDriverProvider<MyFirstDrivableWidgetDriver> get driverProvider => $MyFirstDrivableWidgetDriverProvider();
 }
 ```
-

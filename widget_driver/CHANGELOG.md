@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.2
+
+* Fixes small issues with missing params for the example-driver in the example.md file.
+
 ## 1.0.1
 
 * Adds example/example.md for the example page on pub.dev

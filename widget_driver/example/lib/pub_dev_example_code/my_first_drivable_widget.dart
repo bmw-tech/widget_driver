@@ -7,7 +7,7 @@ class MyFirstDrivableWidget extends DrivableWidget<MyFirstDrivableWidgetDriver> 
   MyFirstDrivableWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(driver.appBarTitle)),
       floatingActionButton: Row(
