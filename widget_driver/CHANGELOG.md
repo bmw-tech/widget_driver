@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.3
+
+* Found one more small issue in the example.md file. Now I think I fixed them all :-D
+
 ## 1.0.2
 
 * Fixes small issues with missing params for the example-driver in the example.md file.
