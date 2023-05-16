@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.4
+
+* Adds the WidgetDriver logo to the readme 🥳
+
 ## 1.0.3
 
 * Found one more small issue in the example.md file. Now I think I fixed them all :-D
