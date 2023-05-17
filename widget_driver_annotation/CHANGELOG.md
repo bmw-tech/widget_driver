@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.1
+
+* Adds the WidgetDriver logo to the readme 🥳
+
 ## 1.0.0
 
 * No changes. Just the official release of WidgetDriverAnnotations :-D

@@ -10,7 +10,7 @@
 
 </div>
 
-A Flutter presentation layer framework,  
+`WidgetDriver` is a Flutter presentation layer framework,  
 which will clean up your widget code, make your widgets more maintainable and easier to test, and removes the need to mock thousands of dependencies in your widget tests.  
 Let's go driving! 🚙💨
 
