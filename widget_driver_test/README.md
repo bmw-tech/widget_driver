@@ -1,11 +1,16 @@
-# WidgetDriver test
+<div align="center" style="margin-bottom: 15px;">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_logo.png?raw=true" style="max-width: 170px">
+</div>
+
+<div align="center" style="margin-bottom: 15px;">
 
 [![pub package](https://img.shields.io/pub/v/widget_driver_test.svg)](https://pub.dev/packages/widget_driver_test)
 [![check-code-quality](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml/badge.svg?branch=master)](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 
-A package that makes testing `WidgetDrivers` and `DrivableWidgets` easy.  
-Built to work with mocktail for easy mocking.
+</div>
+
+`widget_driver_test` is a package that makes testing `WidgetDrivers` and `DrivableWidgets` easy. Built to work with mocktail for easy mocking.
 
 To learn more about `WidgetDrivers` then please read the documentation for [widget_driver](../widget_driver).
 
