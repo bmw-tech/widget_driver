@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.2
+
+* Adds and bumps support for SDK constraint to 3.0.0.
+
 ## 1.0.1
 
 * Adds the WidgetDriver logo to the readme 🥳

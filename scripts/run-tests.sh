@@ -16,7 +16,7 @@ function run_tests() {
         # allowed in flutter
         dart test --coverage coverage || exit $?
     else
-        flutter test --coverage --no-pub --no-test-assets --no-track-widget-creation --no-sound-null-safety || exit $?
+        flutter test --coverage --no-pub --no-test-assets --no-track-widget-creation || exit $?
     fi
     cd $current_dir
 }
