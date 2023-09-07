@@ -8,7 +8,7 @@ part of 'coffee_counter_header_section_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.3.0"
+// This file was generated with widget_driver_generator version "1.0.2"
 
 class _$TestCoffeeCounterHeaderSectionDriver extends TestDriver implements CoffeeCounterHeaderSectionDriver {
   @override

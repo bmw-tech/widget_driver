@@ -8,7 +8,7 @@ part of 'register_account_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "0.3.0"
+// This file was generated with widget_driver_generator version "1.0.2"
 
 class _$TestRegisterAccountPageDriver extends TestDriver implements RegisterAccountPageDriver {
   @override
