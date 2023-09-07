@@ -8,4 +8,4 @@ TAG_COLOR="\n${GREEN}${TAG}${NC}"
 echo -e "$TAG_COLOR Generating code in example: $project_folder"
 cd widget_driver/example
 flutter pub get
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
