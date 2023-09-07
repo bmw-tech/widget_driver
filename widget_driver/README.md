@@ -221,7 +221,7 @@ Read more about that [here](doc/drivers_without_generation.md)*
 At the root of your flutter project, run this command:
 
 ```bash
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 ```
 
 When the build runner completes then we are ready to start building our widget

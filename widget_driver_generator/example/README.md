@@ -64,5 +64,5 @@ This works with named, positional and/or optional variables.
 In order to generate TestDrivers and WidgetDriverProviders just run this command:
 
 ```console
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 ```

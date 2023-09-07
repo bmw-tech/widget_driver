@@ -90,7 +90,7 @@ So now you have all of your imports, definitions and annotations in place.
 Then let's do a one-time build:
 
 ```console
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 ```
 
 Read more about using
