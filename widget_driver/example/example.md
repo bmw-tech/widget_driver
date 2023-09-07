@@ -73,7 +73,7 @@ Run the WidgetDriver code generator.
 At the root of your flutter project, run this command:
 
 ```bash
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 ```
 
 ### 4. Create your Drivable Widget

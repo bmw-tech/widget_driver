@@ -1,18 +1,18 @@
 name: widget_driver
 description: A Flutter presentation layer framework, which will clean up your widget code and make your widgets testable without a need for thousands of mock objects. Let's go driving!
-version: 1.0.4
+version: 1.0.5
 repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver
 issue_tracker: https://github.com/bmw-tech/widget_driver/issues
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
-  flutter: ">=2.6.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
 
 dependencies:
   flutter:
     sdk: flutter
   meta: ^1.7.0
-  widget_driver_annotation: ^1.0.0
+  widget_driver_annotation: ^1.0.2
 
 dev_dependencies:
   flutter_test:
