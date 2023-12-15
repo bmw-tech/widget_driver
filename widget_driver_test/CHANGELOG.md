@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Updates images in readme to look more "snappy" 😁
+
 ## 1.0.2
 
 * Adds SDK constraint to 3.0.0.
