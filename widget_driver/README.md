@@ -34,7 +34,8 @@ maintainability and new feature development tough
 It effectively guides you into moving the business logic code out from the widgets and instead have it managed by something called `WidgetDrivers`.
 
 <div align="center">
-  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description.jpg?raw=true" style="max-width: 600px">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description_dark.png?raw=true#gh-dark-mode-only" style="max-width: 600px">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description_light.png?raw=true#gh-light-mode-only" style="max-width: 600px">
 </div>
 
 Your widget stays "pure" and only manages the actual presentation and user input.
@@ -60,6 +61,12 @@ So when you want to write a simple `widgetTest` for a widget, then you end up ne
 This is annoying and makes testing tougher and less useful. You only want to focus on testing the current widget. In this moment you do not care which dependencies any of your child widgets might have. (Cause you will anyway test them in isolation later)
 
 `WidgetDriver` to the rescue again! `WidgetDriver` uses a special `TestDriver` when you are running tests. These `TestDrivers` provide predefined default values to all child widgets so that you do not need to provide any dependencies! 🥳  
+This means that during testing, your real `Driver` is never created. Instead only this `TestDriver` is created which has only hardcoded values and does not contain any dependencies or business logic.
+
+<div align="center">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_test_description_dark.png?raw=true#gh-dark-mode-only" style="max-width: 400px">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_test_description_light.png?raw=true#gh-light-mode-only" style="max-width: 400px">
+</div>
 
 This mean you can finally test your widgets in isolation!  
 Just focus on the current widget under test, and forget about all other child widgets and their dependencies!

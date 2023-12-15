@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.6
+
+* Updates images in WidgetDriver readme to look more "snappy" 😁
+
 ## 1.0.5
 
 * Adds SDK constraint to 3.0.0.
