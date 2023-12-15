@@ -1,8 +1,8 @@
-<div align="center" style="margin-bottom: 15px;">
-  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_logo.png?raw=true" style="width: 12em">
+<div align="center">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_logo.png?raw=true" width="180">
 </div>
-
-<div align="center" style="margin-bottom: 15px;">
+<br>
+<div align="center">
 
 [![check-code-quality](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml/badge.svg?branch=master)](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
