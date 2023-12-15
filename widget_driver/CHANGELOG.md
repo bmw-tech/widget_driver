@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.7
+
+* Make readme images darkmode compatible
+
 ## 1.0.6
 
 * Updates images in WidgetDriver readme to look more "snappy" 😁

@@ -1,8 +1,8 @@
-<div align="center" style="margin-bottom: 15px;">
-  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_logo.png?raw=true" style="width: 12em">
+<div align="center">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_logo.png?raw=true" width="180">
 </div>
-
-<div align="center" style="margin-bottom: 15px;">
+<br>
+<div align="center">
 
   [![pub package](https://img.shields.io/pub/v/widget_driver.svg)](https://pub.dev/packages/widget_driver)
   [![check-code-quality](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml/badge.svg?branch=master)](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml)
@@ -34,10 +34,7 @@ maintainability and new feature development tough
 It effectively guides you into moving the business logic code out from the widgets and instead have it managed by something called `WidgetDrivers`.
 
 <div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description_dark.png?raw=true">
-  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description_light.png?raw=true" width="500">
-</picture>
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_description.png?raw=true" width="500">
 </div>
 
 Your widget stays "pure" and only manages the actual presentation and user input.
@@ -66,10 +63,7 @@ This is annoying and makes testing tougher and less useful. You only want to foc
 This means that during testing, your real `Driver` is never created. Instead only this `TestDriver` is created which has only hardcoded values and does not contain any dependencies or business logic.
 
 <div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_test_description_dark.png?raw=true">
-  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_test_description_light.png?raw=true" width="300">
-</picture>
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_test_description.png?raw=true" width="300">
 </div>
 
 This mean you can finally test your widgets in isolation!  
