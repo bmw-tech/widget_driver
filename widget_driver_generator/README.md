@@ -1,5 +1,5 @@
 <div align="center" style="margin-bottom: 15px;">
-  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_logo.png?raw=true" style="max-width: 170px">
+  <img src="https://github.com/bmw-tech/widget_driver/blob/master/widget_driver/doc/resources/widget_driver_logo.png?raw=true" style="width: 12em">
 </div>
 
 <div align="center" style="margin-bottom: 15px;">
