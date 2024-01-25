@@ -6,6 +6,7 @@ import 'mock_driver_provider.dart';
 import 'utils/runtime_environment_info.dart';
 import 'widget_driver.dart';
 import 'widget_driver_provider.dart';
+import 'widget_driver_test_config.dart';
 
 export 'package:flutter/widgets.dart' show BuildContext;
 
@@ -78,7 +79,7 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
     }
 
     Driver driver;
-    if (_isRunningInTestEnvironment()) {
+    if (_isRunningInTestEnvironment() && _testingConfigAllowsTestDriver()) {
       driver = _getTestDriver();
     } else {
       driver = _getRealDriver();
@@ -125,6 +126,16 @@ class _DriverWidgetState<Driver extends WidgetDriver> extends State<DrivableWidg
   }
 
   bool get _driverExists => _driver != null;
+
+  bool _testingConfigAllowsTestDriver() {
+    // You can use the WidgetDriverTestConfigProvider to make custom
+    // overrides and disable the use of TestDrivers in some cases if needed.
+    final testConfig = WidgetDriverTestConfigProvider.of(context);
+    if (testConfig != null) {
+      return testConfig.useTestDriver<Driver>();
+    }
+    return true;
+  }
 }
 
 class _WidgetDriverContainer<Driver extends WidgetDriver> {

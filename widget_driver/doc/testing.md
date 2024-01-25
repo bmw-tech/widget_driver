@@ -61,6 +61,32 @@ And that is it! Wow!
 Now your widgetTests can get back to focus on testing your widget. 
 And they can stop being mock-factories 😄
 
+### Use real drivers in your DrivableWidgets
+
+In case you have some special use case where you actually don't want to use `TestDrivers` then you can use the `WidgetDriverTestConfigProvider`. It gives you the possibility to control if a TestDriver or a real driver is created for each `DrivableWidget`. Just wrap the widget under tests inside a `WidgetDriverTestConfigProvider`.
+
+If you want to use real drivers for all `DrivableWidgets` in a test, then you can do this:
+
+```dart
+final myWidget = WidgetDriverTestConfigProvider(
+  config: AlwaysUseRealDriversTestConfig(),
+  child: MyWidget(),
+);
+await tester.pumpWidget(myWidget);
+```
+
+If you only want to use real drivers for some of your `DrivableWidgets`, then you can do this:
+
+```dart
+final myWidget = WidgetDriverTestConfigProvider(
+  config: UseRealDriversForSomeTestConfig(
+    useRealDriversFor: { MyWidgetDriver }
+  ),
+  child: MyWidget(),
+);
+await tester.pumpWidget(myWidget);
+```
+
 ## Testing WidgetDrivers
 
 Okay, so now you know how to test these new widgets.  
