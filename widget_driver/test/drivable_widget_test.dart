@@ -24,29 +24,79 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    group('Runtime Environment:', () {
-      testWidgets('Uses real driver when not in test environment', (WidgetTester tester) async {
-        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+    group('Real & Test Drivers:', () {
+      group('Not in test environment:', () {
+        setUp(() {
+          when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(false);
+        });
 
-        final testContainerDrivableWidget = TestContainerDrivableWidget(
-          environmentInfo: _mockRuntimeEnvironmentInfo,
-        );
-        await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+        testWidgets('Uses real driver when no test config', (WidgetTester tester) async {
+          final testContainerDrivableWidget = TestContainerDrivableWidget(
+            environmentInfo: _mockRuntimeEnvironmentInfo,
+          );
+          await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
 
-        final driver = testContainerDrivableWidget.driver;
-        expect(driver.runtimeType, TestContainerDriver);
+          final driver = testContainerDrivableWidget.driver;
+          expect(driver.runtimeType, TestContainerDriver);
+        });
+
+        testWidgets('Uses real driver when test config', (WidgetTester tester) async {
+          final testContainerDrivableWidget = TestContainerDrivableWidget(
+            environmentInfo: _mockRuntimeEnvironmentInfo,
+          );
+          final testConfigWidget = WidgetDriverTestConfigProvider(
+            config: AlwaysUseTestDriverTestConfig(),
+            child: testContainerDrivableWidget,
+          );
+          await tester.pumpWidget(MaterialApp(home: testConfigWidget));
+
+          final driver = testContainerDrivableWidget.driver;
+          expect(driver.runtimeType, TestContainerDriver);
+        });
       });
 
-      testWidgets('Uses test driver when in test environment', (WidgetTester tester) async {
-        when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(true);
+      group('In test environment:', () {
+        setUp(() {
+          when(() => _mockRuntimeEnvironmentInfo.isRunningInTestEnvironment()).thenReturn(true);
+        });
 
-        final testContainerDrivableWidget = TestContainerDrivableWidget(
-          environmentInfo: _mockRuntimeEnvironmentInfo,
-        );
-        await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
+        testWidgets('Uses test driver when no test config', (WidgetTester tester) async {
+          final testContainerDrivableWidget = TestContainerDrivableWidget(
+            environmentInfo: _mockRuntimeEnvironmentInfo,
+          );
+          await tester.pumpWidget(MaterialApp(home: testContainerDrivableWidget));
 
-        final driver = testContainerDrivableWidget.driver;
-        expect(driver.runtimeType, TestContainerTestDriver);
+          final driver = testContainerDrivableWidget.driver;
+          expect(driver.runtimeType, TestContainerTestDriver);
+        });
+
+        testWidgets('Uses test driver when test config allows test driver', (WidgetTester tester) async {
+          final testContainerDrivableWidget = TestContainerDrivableWidget(
+            environmentInfo: _mockRuntimeEnvironmentInfo,
+          );
+          final testConfigWidget = WidgetDriverTestConfigProvider(
+            config: AlwaysUseTestDriverTestConfig(),
+            child: testContainerDrivableWidget,
+          );
+          await tester.pumpWidget(MaterialApp(home: testConfigWidget));
+
+          final driver = testContainerDrivableWidget.driver;
+          expect(driver.runtimeType, TestContainerTestDriver);
+        });
+
+        testWidgets('Uses real driver when test config does not allow test driver', (WidgetTester tester) async {
+          final testContainerDrivableWidget = TestContainerDrivableWidget(
+            environmentInfo: _mockRuntimeEnvironmentInfo,
+          );
+          final testConfigWidget = WidgetDriverTestConfigProvider(
+            config: AlwaysUseRealDriversTestConfig(),
+            child: testContainerDrivableWidget,
+          );
+          await tester.pumpWidget(MaterialApp(home: testConfigWidget));
+
+          final driver = testContainerDrivableWidget.driver;
+          expect(driver.runtimeType, TestContainerDriver);
+        });
       });
     });
 
@@ -210,4 +260,9 @@ void main() {
       });
     });
   });
+}
+
+class AlwaysUseTestDriverTestConfig implements WidgetDriverTestConfig {
+  @override
+  bool useTestDriver<Driver extends WidgetDriver>() => true;
 }

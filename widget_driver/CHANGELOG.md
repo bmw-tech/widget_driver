@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.8
+
+* Adds a new `WidgetDriverTestConfigProvider` which you can use in your widget tests to control if a test driver or a real driver should be used.
+
 ## 1.0.7
 
 * Make readme images darkmode compatible
