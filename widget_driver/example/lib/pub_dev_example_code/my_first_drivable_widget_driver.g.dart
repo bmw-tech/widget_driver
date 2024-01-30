@@ -8,7 +8,7 @@ part of 'my_first_drivable_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.2"
+// This file was generated with widget_driver_generator version "1.0.3"
 
 class _$TestMyFirstDrivableWidgetDriver extends TestDriver implements MyFirstDrivableWidgetDriver {
   @override
