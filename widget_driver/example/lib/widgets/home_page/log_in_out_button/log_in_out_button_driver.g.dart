@@ -8,7 +8,7 @@ part of 'log_in_out_button_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.2"
+// This file was generated with widget_driver_generator version "1.0.3"
 
 class _$TestLogInOutButtonDriver extends TestDriver implements LogInOutButtonDriver {
   @override

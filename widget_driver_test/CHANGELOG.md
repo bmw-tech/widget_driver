@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Updates widget_driver dependency to latest 1.0.8. And updates readme with info about latest TestConfig feature.
+
 ## 1.0.3
 
 * Updates images in readme to look more "snappy" 😁

@@ -8,7 +8,7 @@ part of 'not_logged_in_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.2"
+// This file was generated with widget_driver_generator version "1.0.3"
 
 class _$TestNotLoggedInPageDriver extends TestDriver implements NotLoggedInPageDriver {
   @override
