@@ -1,4 +1,3 @@
-import 'package:example/models/coffee.dart';
 import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
 
