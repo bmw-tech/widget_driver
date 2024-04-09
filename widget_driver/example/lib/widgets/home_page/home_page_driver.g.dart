@@ -12,7 +12,7 @@ part of 'home_page_driver.dart';
 
 class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
   @override
-  String get title => '';
+  String get title => ' ';
 
   @override
   int get numberOfTabs => 0;

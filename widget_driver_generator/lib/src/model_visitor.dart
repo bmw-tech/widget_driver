@@ -5,8 +5,8 @@ import 'package:widget_driver_annotation/widget_driver_annotation.dart';
 import 'models/annotated_element.dart';
 import 'models/providable_field.dart';
 import 'utils/element_utils.dart';
-import 'utils/property_accessor_element_extensions.dart';
 import 'utils/field_element_extensions.dart';
+import 'utils/property_accessor_element_extensions.dart';
 
 typedef CodeGeneratorMethod = String Function(String codeDefinition, String returnValue);
 
@@ -55,7 +55,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
       element: element,
       validAnnotationTypes: _validAnnotationTypes,
     );
-    if (!element.name.startsWith('_')) {
+    if (element.isPublic) {
       final type = element.type;
       fields.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType, type));
     }
@@ -70,7 +70,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
       element: element,
       validAnnotationTypes: _validAnnotationTypes,
     );
-    if (!element.name.startsWith('_')) {
+    if (element.isPublic) {
       final returnType = element.returnType;
       final property = AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType, returnType);
       if (element.isSetter) {
@@ -87,7 +87,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
       element: element,
       validAnnotationTypes: _validAnnotationTypes,
     );
-    if (!element.name.startsWith('_')) {
+    if (element.isPublic) {
       final returnType = element.returnType;
       methods.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType, returnType));
     }

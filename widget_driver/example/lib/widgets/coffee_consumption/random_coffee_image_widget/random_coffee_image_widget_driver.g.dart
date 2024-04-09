@@ -12,10 +12,10 @@ part of 'random_coffee_image_widget_driver.dart';
 
 class _$TestRandomCoffeeImageWidgetDriver extends TestDriver implements RandomCoffeeImageWidgetDriver {
   @override
-  String get coffeeImageUrl => '';
+  String get coffeeImageUrl => ' ';
 
   @override
-  String get title => '';
+  String get title => ' ';
 
   @override
   void didUpdateBuildContext(BuildContext context) {}

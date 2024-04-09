@@ -12,10 +12,10 @@ part of 'coffee_counter_header_section_driver.dart';
 
 class _$TestCoffeeCounterHeaderSectionDriver extends TestDriver implements CoffeeCounterHeaderSectionDriver {
   @override
-  String get descriptionText => '';
+  String get descriptionText => ' ';
 
   @override
-  String get amountText => '';
+  String get amountText => ' ';
 
   @override
   void didUpdateBuildContext(BuildContext context) {}

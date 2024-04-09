@@ -34,7 +34,7 @@ class DefaultReturnValueHelper {
     }
     var typeName = type.toString();
     if (type is InterfaceType && type.element is ClassElement && type.element.name == "Future") {
-      typeName = type.typeArguments.first.toString();
+      return hasDefaultValueForType(type.typeArguments.first);
     }
     return _hasDefaultValueForTypeName(typeName);
   }
@@ -44,7 +44,7 @@ class DefaultReturnValueHelper {
   static final Map<String, String> _defaultTypeValueMap = {
     "int": "0",
     "double": "0.0",
-    "String": "''",
+    "String": "' '",
     "bool": "false",
     "List": "[]",
     "Set": "{}",

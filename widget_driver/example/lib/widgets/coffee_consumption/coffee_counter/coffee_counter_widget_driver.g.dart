@@ -15,13 +15,13 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounte
   int get coffeeCount => 0;
 
   @override
-  String get consumeCoffeeQuickButtonText => '';
+  String get consumeCoffeeQuickButtonText => ' ';
 
   @override
-  String get consumeCoffeeSlowButtonText => '';
+  String get consumeCoffeeSlowButtonText => ' ';
 
   @override
-  String get resetCoffeeButtonText => '';
+  String get resetCoffeeButtonText => ' ';
 
   @override
   void didUpdateBuildContext(BuildContext context) {}

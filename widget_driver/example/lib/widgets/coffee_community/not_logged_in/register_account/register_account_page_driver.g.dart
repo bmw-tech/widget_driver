@@ -12,16 +12,16 @@ part of 'register_account_page_driver.dart';
 
 class _$TestRegisterAccountPageDriver extends TestDriver implements RegisterAccountPageDriver {
   @override
-  String get pageTitle => '';
+  String get pageTitle => ' ';
 
   @override
-  String get usernameTextFieldPlaceholder => '';
+  String get usernameTextFieldPlaceholder => ' ';
 
   @override
-  String? get usernameInputError => '';
+  String? get usernameInputError => ' ';
 
   @override
-  String get registerButtonText => '';
+  String get registerButtonText => ' ';
 
   @override
   bool get registerIsLoading => false;

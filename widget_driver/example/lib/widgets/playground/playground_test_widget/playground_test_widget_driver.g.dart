@@ -12,7 +12,7 @@ part of 'playground_test_widget_driver.dart';
 
 class _$TestPlaygroundTestWidgetDriver extends TestDriver implements PlaygroundTestWidgetDriver {
   @override
-  String get buttonHeaderText => '';
+  String get buttonHeaderText => ' ';
 }
 
 class $PlaygroundTestWidgetDriverProvider extends WidgetDriverProvider<PlaygroundTestWidgetDriver> {
