@@ -53,7 +53,6 @@ class DefaultReturnValueHelper {
     "void": "",
     "Color": "Colors.black",
     "IconData": "const IconData(0)",
-    "FontWeight": "FontWeight.normal",
   };
 
   static bool _hasDefaultValueForTypeName(String typeName) {

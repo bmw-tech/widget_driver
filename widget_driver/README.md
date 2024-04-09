@@ -188,7 +188,7 @@ As soon as your `Driver` has new data to display, then you want to call the `not
 
     If you have a method or property which returns a future, then you can use the `@TestDriverDefaultFutureValue({default value})` instead. It will take the default value and return it as a future.
 
-   Simple return types like all of [Dart's built-in types](https://dart.dev/language/built-in-types), enums, Optionals and some frequently used types in widgets like `Color`, `IconData` and `FontWeight` are already covered. More complex types, like your custom classes, must be covered with annotations in your code. You can also optionally add annotations for any of the public fields, properties or methods with return types that are already covered. 
+   Simple return types like all of [Dart's built-in types](https://dart.dev/language/built-in-types), enums, Optionals and some frequently used types in widgets like `Color` and `IconData` are already covered. More complex types, like your custom classes, must be covered with annotations in your code. You can also optionally add annotations for any of the public fields, properties or methods with return types that are already covered. 
 
 
       ```dart
