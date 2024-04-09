@@ -15,12 +15,15 @@ class _$TestCoffeeLibraryPageDriver extends TestDriver implements CoffeeLibraryP
   bool get isFetching => false;
 
   @override
-  int get numberOfCoffees => 10;
+  int get numberOfCoffees => 0;
 
   @override
   Coffee getCoffeeAtIndex(int index) {
     return TestCoffee.testCoffee;
   }
+
+  @override
+  void dispose() {}
 }
 
 class $CoffeeLibraryPageDriverProvider extends WidgetDriverProvider<CoffeeLibraryPageDriver> {

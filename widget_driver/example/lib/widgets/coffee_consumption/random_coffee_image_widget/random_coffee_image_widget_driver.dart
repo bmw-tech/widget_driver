@@ -22,15 +22,12 @@ class RandomCoffeeImageWidgetDriver extends WidgetDriver {
     _localization = context.read<Localization>();
   }
 
-  @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
     return _coffeeImageService.getRandomCoffeeImageUrl();
   }
 
-  @TestDriverDefaultValue('Tap image to load a new one')
   String get title => _localization.randomCoffeeImageTitle;
 
-  @TestDriverDefaultValue()
   void updateRandomImage() {
     notifyWidget();
   }

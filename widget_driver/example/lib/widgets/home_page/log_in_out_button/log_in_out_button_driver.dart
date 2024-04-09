@@ -23,12 +23,10 @@ class LogInOutButtonDriver extends WidgetDriver {
     });
   }
 
-  @TestDriverDefaultValue('Log in')
   String get buttonText {
     return _authService.isLoggedIn ? _localization.logOut : _localization.logIn;
   }
 
-  @TestDriverDefaultValue()
   void toggleLogInOut() {
     if (_authService.isLoggedIn) {
       _authService.logOut();

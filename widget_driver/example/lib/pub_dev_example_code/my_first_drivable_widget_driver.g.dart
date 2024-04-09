@@ -12,19 +12,19 @@ part of 'my_first_drivable_widget_driver.dart';
 
 class _$TestMyFirstDrivableWidgetDriver extends TestDriver implements MyFirstDrivableWidgetDriver {
   @override
-  String get appBarTitle => 'The app bar title';
+  String get appBarTitle => '';
 
   @override
-  String get counterTitle => 'Counter:';
+  String get counterTitle => '';
 
   @override
-  String get counterValue => '0';
+  String get counterValue => '';
 
   @override
-  IconData get increaseActionIcon => Icons.add;
+  IconData get increaseActionIcon => const IconData(0);
 
   @override
-  IconData get resetActionIcon => Icons.restore;
+  IconData get resetActionIcon => const IconData(0);
 
   @override
   void increaseCounterAction() {}

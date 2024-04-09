@@ -14,17 +14,14 @@ class CoffeeDetailPageDriver extends WidgetDriver implements _$DriverProvidedPro
     @driverProvidableProperty required Coffee coffee,
   }) : _coffee = coffee;
 
-  @TestDriverDefaultValue(TestCoffee.testCoffeeName)
   String get coffeeName {
     return '$_index. ${_coffee.name}';
   }
 
-  @TestDriverDefaultValue(TestCoffee.testCoffeeDescription)
   String get coffeeDescription {
     return _coffee.description;
   }
 
-  @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
     return _coffee.imageUrl;
   }

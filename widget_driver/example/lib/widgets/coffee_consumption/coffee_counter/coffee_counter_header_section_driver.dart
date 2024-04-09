@@ -16,9 +16,7 @@ class CoffeeCounterHeaderSectionDriver extends WidgetDriver {
     _coffeeCount = context.watch<int>();
   }
 
-  @TestDriverDefaultValue('Consumed coffees')
   String get descriptionText => _localization.consumedCoffees;
 
-  @TestDriverDefaultValue('3')
   String get amountText => '$_coffeeCount';
 }

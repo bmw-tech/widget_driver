@@ -52,11 +52,11 @@ class MyDriver extends WidgetDriver {
 }
 ```
 
-Now there is just one thing missing. You need to annotate all public properties and methods in your `Driver` that you want to be able to use in your widgets later.
+Now there is just one step missing. Any public properties and methods in your `Driver` can be annotated so they provide a specific value in tests. Simple return types like all of [Dart's built-in types](https://dart.dev/language/built-in-types), enums, Optionals and some frequently used types in widgets like `Color`, `IconData` and `FontWeight` are already covered. More complex type, like your custom classes, must be covered in your code.
 
-Annotate the properties with `TestDriverDefaultValue({default_value})`. As a parameter to the `TestDriverDefaultValue` you pass in the default value which you want the driver to give to the widget when the widget is being tested.
+Annotate the properties you want to explicitly define in the `TestDriver` with `TestDriverDefaultValue({default_value})`. As a parameter to the `TestDriverDefaultValue` you pass in the default value which you want the driver to give to the widget when the widget is being tested.
 
-You also annotate your methods with `TestDriverDefaultValue({default_return_value})`. As a parameter to the `TestDriverDefaultValue` you pass in the default value which you want the driver to return to the widget when the widget calls this method during tests. If the method does not return anything, then just pass nothing as a parameter.
+You can also annotate your methods with `TestDriverDefaultValue({default_return_value})`. As a parameter to the `TestDriverDefaultValue` you pass in the default value which you want the driver to return to the widget when the widget calls this method during tests. If the method does not return anything, then just pass nothing as a parameter.
 If you method returns a future, then you can use the `TestDriverDefaultFutureValue` annotation instead. It will correctly generate a future with the return value you pass into it.
 
 ```dart
@@ -64,22 +64,26 @@ If you method returns a future, then you can use the `TestDriverDefaultFutureVal
 class MyDriver extends WidgetDriver {
   ...
 
-  @TestDriverDefaultValue(1)
   int get value => _someService.value;
 
-  @TestDriverDefaultValue()
+  @TestDriverDefaultValue(CustomClass())
+  CustomClass get value => _counterService.getCustomClass;
+
   void doSomething() {
     ...
   }
 
-  @TestDriverDefaultValue('The string')
   String giveMeSomeString() {
     return _someService.getSomeString();
   }
 
-  @TestDriverDefaultFutureValue(123)
   Future<int> giveMeSomeIntSoon() {
     return _someService.getSomeIntSoon();
+  }
+
+  @TestDriverDefaultFutureValue(CustomClass())
+  Future<CustomClass> giveMeSomeCustomClassSoon() {
+  return _someService.getSomeCustomClassSoon();
   }
 }
 ```

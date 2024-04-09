@@ -27,28 +27,21 @@ class RegisterAccountPageDriver extends WidgetDriver {
     _createUserService = context.read<CreateUserService>();
   }
 
-  @TestDriverDefaultValue('Register new account')
   String get pageTitle => _localization.registerNewAccount;
 
-  @TestDriverDefaultValue('Enter your desired username')
   String get usernameTextFieldPlaceholder => _localization.createUsernameInputPlaceholder;
 
-  @TestDriverDefaultValue(null)
   String? get usernameInputError => _usernameInputError;
 
-  @TestDriverDefaultValue('Register and log in')
   String get registerButtonText => _localization.registerAndLogIn;
 
-  @TestDriverDefaultValue(false)
   bool get registerIsLoading => _registerIsLoading;
 
-  @TestDriverDefaultValue()
   void usernameInputChanged(String inputName) {
     _currentUsername = inputName;
     _validateUsernameInput();
   }
 
-  @TestDriverDefaultFutureValue()
   Future<void> tappedRegister(BuildContext context) async {
     if (_createUserService.isUserValidName(_currentUsername)) {
       _setRegisterLoading(true);

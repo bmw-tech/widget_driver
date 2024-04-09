@@ -4,18 +4,21 @@ import '../models/annotated_element.dart';
 
 class TestDriverCodeProvider {
   final List<AnnotatedElement> _methods;
-  final List<AnnotatedElement> _properties;
+  final List<AnnotatedElement> _getProperties;
+  final List<AnnotatedElement> _setProperties;
   final List<AnnotatedElement> _fields;
   final String _driverClassName;
   final String _testDriverClassName;
 
   TestDriverCodeProvider({
     required List<AnnotatedElement> methods,
-    required List<AnnotatedElement> properties,
+    required List<AnnotatedElement> getProperties,
+    required List<AnnotatedElement> setProperties,
     required List<AnnotatedElement> fields,
     required String driverClassName,
   })  : _methods = methods,
-        _properties = properties,
+        _getProperties = getProperties,
+        _setProperties = setProperties,
         _fields = fields,
         _driverClassName = driverClassName,
         _testDriverClassName = ClassUtils.testDriverClassName(driverClassName);
@@ -41,9 +44,15 @@ class $_testDriverClassName extends TestDriver implements $_driverClassName {
 }
 ''';
 
-  /// Joins `_getComputedPropertyCode()` for every property in `_properties`.
-  String _propertyCode() =>
-      _properties.map((e) => _getComputedPropertyCode(e.codeDefinition, e.returnValue)).join(doubleEmptyLine);
+  /// Joins `_getComputedPropertyCode()` for every property in `_getProperties` and in `_setProperties`.
+  String _propertyCode() {
+    final List<String> properties = [];
+    final getProperties = _getProperties.map((e) => _getComputedPropertyCode(e.codeDefinition, e.returnValue));
+    properties.addAll(getProperties);
+    final setProperties = _setProperties.map((e) => _getMethodCode(e.codeDefinition, e.returnValue));
+    properties.addAll(setProperties);
+    return properties.join(doubleEmptyLine);
+  }
 
   /// Joins `_getMethodCode()` for every method in `_methods`.
   String _methodsCode() => _methods.map((e) => _getMethodCode(e.codeDefinition, e.returnValue)).join(doubleEmptyLine);

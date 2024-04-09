@@ -12,16 +12,19 @@ part of 'coffee_counter_widget_driver.dart';
 
 class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounterWidgetDriver {
   @override
-  int get coffeeCount => 3;
+  int get coffeeCount => 0;
 
   @override
-  String get consumeCoffeeQuickButtonText => 'Consume coffee quick';
+  String get consumeCoffeeQuickButtonText => '';
 
   @override
-  String get consumeCoffeeSlowButtonText => 'Consume coffee slow';
+  String get consumeCoffeeSlowButtonText => '';
 
   @override
-  String get resetCoffeeButtonText => 'Reset consumption';
+  String get resetCoffeeButtonText => '';
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void consumeCoffeeQuick() {}
@@ -33,6 +36,9 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounte
 
   @override
   void resetConsumption() {}
+
+  @override
+  void dispose() {}
 }
 
 class $CoffeeCounterWidgetDriverProvider extends WidgetDriverProvider<CoffeeCounterWidgetDriver> {

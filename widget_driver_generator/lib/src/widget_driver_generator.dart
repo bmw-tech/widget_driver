@@ -42,7 +42,8 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
 
     final testDriverCodeProvider = TestDriverCodeProvider(
       methods: visitor.methods,
-      properties: visitor.properties,
+      getProperties: visitor.getProperties,
+      setProperties: visitor.setProperties,
       fields: visitor.fields,
       driverClassName: driverClassName,
     );

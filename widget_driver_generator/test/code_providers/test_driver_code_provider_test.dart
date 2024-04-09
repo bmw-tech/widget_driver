@@ -7,7 +7,8 @@ void main() {
     test('Builds with no elements', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
-        properties: [],
+        getProperties: [],
+        setProperties: [],
         fields: [],
         driverClassName: 'ExampleDriver',
       );
@@ -26,7 +27,8 @@ class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
     test('Builds with one field', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
-        properties: [],
+        getProperties: [],
+        setProperties: [],
         fields: [
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
         ],
@@ -48,7 +50,8 @@ final String example = '';
     test('Builds with multiple fields', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
-        properties: [],
+        getProperties: [],
+        setProperties: [],
         fields: [
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example2'),
@@ -71,12 +74,13 @@ final String example2 = '';
       expect(codeProvider.code, expected);
     });
 
-    test("Builds with one property", () {
+    test("Builds with one getProperty", () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
-        properties: [
+        getProperties: [
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
         ],
+        setProperties: [],
         fields: [],
         driverClassName: 'ExampleDriver',
       );
@@ -93,13 +97,14 @@ String get example => '';
       expect(codeProvider.code, expected);
     });
 
-    test("Builds with multiple properties", () {
+    test("Builds with multiple getProperties", () {
       final codeProvider = TestDriverCodeProvider(
         methods: [],
-        properties: [
+        getProperties: [
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example2'),
         ],
+        setProperties: [],
         fields: [],
         driverClassName: 'ExampleDriver',
       );
@@ -119,12 +124,63 @@ String get example2 => '';
       expect(codeProvider.code, expected);
     });
 
+    test("Builds with one setProperty", () {
+      final codeProvider = TestDriverCodeProvider(
+        methods: [],
+        getProperties: [],
+        setProperties: [
+          const AnnotatedElement(returnValue: '', codeDefinition: 'void set example(String newExample)'),
+        ],
+        fields: [],
+        driverClassName: 'ExampleDriver',
+      );
+      const expected = '''
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  
+
+  @override
+void set example(String newExample) {}
+
+  
+}
+''';
+      expect(codeProvider.code, expected);
+    });
+
+    test("Builds with multiple setProperties", () {
+      final codeProvider = TestDriverCodeProvider(
+        methods: [],
+        getProperties: [],
+        setProperties: [
+          const AnnotatedElement(returnValue: '', codeDefinition: 'void set example(String newExample)'),
+          const AnnotatedElement(returnValue: '', codeDefinition: 'void set example2(String newExample2)'),
+        ],
+        fields: [],
+        driverClassName: 'ExampleDriver',
+      );
+      const expected = '''
+class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
+  
+
+  @override
+void set example(String newExample) {}
+
+@override
+void set example2(String newExample2) {}
+
+  
+}
+''';
+      expect(codeProvider.code, expected);
+    });
+
     test('Builds with one method', () {
       final codeProvider = TestDriverCodeProvider(
         methods: [
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
         ],
-        properties: [],
+        getProperties: [],
+        setProperties: [],
         fields: [],
         driverClassName: 'ExampleDriver',
       );
@@ -149,7 +205,8 @@ String example() {
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
           const AnnotatedElement(returnValue: '', codeDefinition: 'void example2()'),
         ],
-        properties: [],
+        getProperties: [],
+        setProperties: [],
         fields: [],
         driverClassName: 'ExampleDriver',
       );
@@ -177,9 +234,13 @@ void example2() {}
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String example()'),
           const AnnotatedElement(returnValue: '', codeDefinition: 'void example2()'),
         ],
-        properties: [
+        getProperties: [
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example'),
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'String get example2'),
+        ],
+        setProperties: [
+          const AnnotatedElement(returnValue: '', codeDefinition: 'void set example(String newExample)'),
+          const AnnotatedElement(returnValue: '', codeDefinition: 'void set example2(String newExample2)'),
         ],
         fields: [
           const AnnotatedElement(returnValue: '\'\'', codeDefinition: 'final String example'),
@@ -200,6 +261,12 @@ String get example => '';
 
 @override
 String get example2 => '';
+
+@override
+void set example(String newExample) {}
+
+@override
+void set example2(String newExample2) {}
 
   @override
 String example() {

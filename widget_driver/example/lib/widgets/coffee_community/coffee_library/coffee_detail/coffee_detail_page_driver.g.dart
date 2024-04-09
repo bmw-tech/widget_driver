@@ -12,13 +12,16 @@ part of 'coffee_detail_page_driver.dart';
 
 class _$TestCoffeeDetailPageDriver extends TestDriver implements CoffeeDetailPageDriver {
   @override
-  String get coffeeName => TestCoffee.testCoffeeName;
+  String get coffeeName => '';
 
   @override
-  String get coffeeDescription => TestCoffee.testCoffeeDescription;
+  String get coffeeDescription => '';
 
   @override
-  String get coffeeImageUrl => TestCoffee.testCoffeeImageUrl;
+  String get coffeeImageUrl => '';
+
+  @override
+  void didUpdateProvidedProperties({required int newIndex, required Coffee newCoffee}) {}
 }
 
 class $CoffeeDetailPageDriverProvider extends WidgetDriverProvider<CoffeeDetailPageDriver> {
