@@ -33,7 +33,7 @@ class AnnotatedElement {
     } else {
       throw Exception("""
 ${elementType.toString()} has no default test value. 
-You need to annotate \"$codeDefinition\" with a default value:
+You need to annotate "$codeDefinition" with a default value:
 ...
   @TestDriverDefaultValue(Instance of ${elementType.toString()})
   $codeDefinition

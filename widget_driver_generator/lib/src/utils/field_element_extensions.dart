@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+// ignore: implementation_imports
 import 'package:analyzer/src/dart/element/element.dart';
 
 extension FieldElementExtension on FieldElement {
