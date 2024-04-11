@@ -22,13 +22,10 @@ class NotLoggedInPageDriver extends WidgetDriver {
     _localization = context.read<Localization>();
   }
 
-  @TestDriverDefaultValue('Not logged in')
   String get notLoggedInText => _localization.notLoggedIn;
 
-  @TestDriverDefaultValue('Register a new account')
   String get registerNewAccountButtonText => _localization.registerNewAccount;
 
-  @TestDriverDefaultValue()
   void registerNewAccountTapped(BuildContext context) {
     _coordinator.pushMaterialPageRoute(
       context: context,

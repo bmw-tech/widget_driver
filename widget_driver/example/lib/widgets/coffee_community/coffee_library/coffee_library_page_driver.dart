@@ -26,10 +26,8 @@ class CoffeeLibraryPageDriver extends WidgetDriver {
     _getCoffees();
   }
 
-  @TestDriverDefaultValue(false)
   bool get isFetching => _isFetching;
 
-  @TestDriverDefaultValue(10)
   int get numberOfCoffees => _coffees.length;
 
   @TestDriverDefaultValue(TestCoffee.testCoffee)

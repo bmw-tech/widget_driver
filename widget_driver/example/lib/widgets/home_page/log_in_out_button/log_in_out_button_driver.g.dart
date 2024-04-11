@@ -12,10 +12,16 @@ part of 'log_in_out_button_driver.dart';
 
 class _$TestLogInOutButtonDriver extends TestDriver implements LogInOutButtonDriver {
   @override
-  String get buttonText => 'Log in';
+  String get buttonText => ' ';
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void toggleLogInOut() {}
+
+  @override
+  void dispose() {}
 }
 
 class $LogInOutButtonDriverProvider extends WidgetDriverProvider<LogInOutButtonDriver> {

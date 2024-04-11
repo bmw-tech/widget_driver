@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.0
+
+* Introduces predefined default values for frequently used types to minimize the need of annotations.
+* Fixes a bug that allows the generation of setters.
+
 ## 1.0.3
 
 * Updates images in readme to look more "snappy" 😁

@@ -12,19 +12,22 @@ part of 'register_account_page_driver.dart';
 
 class _$TestRegisterAccountPageDriver extends TestDriver implements RegisterAccountPageDriver {
   @override
-  String get pageTitle => 'Register new account';
+  String get pageTitle => ' ';
 
   @override
-  String get usernameTextFieldPlaceholder => 'Enter your desired username';
+  String get usernameTextFieldPlaceholder => ' ';
 
   @override
-  String? get usernameInputError => null;
+  String? get usernameInputError => ' ';
 
   @override
-  String get registerButtonText => 'Register and log in';
+  String get registerButtonText => ' ';
 
   @override
   bool get registerIsLoading => false;
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void usernameInputChanged(String inputName) {}

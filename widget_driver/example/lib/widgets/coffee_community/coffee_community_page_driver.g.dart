@@ -13,6 +13,12 @@ part of 'coffee_community_page_driver.dart';
 class _$TestCoffeeCommunityPageDriver extends TestDriver implements CoffeeCommunityPageDriver {
   @override
   bool get isLoggedIn => false;
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
+
+  @override
+  void dispose() {}
 }
 
 class $CoffeeCommunityPageDriverProvider extends WidgetDriverProvider<CoffeeCommunityPageDriver> {

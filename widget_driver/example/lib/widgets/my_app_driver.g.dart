@@ -12,7 +12,10 @@ part of 'my_app_driver.dart';
 
 class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
   @override
-  String get appTitle => 'Coffee Demo App';
+  String get appTitle => ' ';
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 }
 
 class $MyAppDriverProvider extends WidgetDriverProvider<MyAppDriver> {

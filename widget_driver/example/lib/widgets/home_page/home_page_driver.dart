@@ -19,14 +19,11 @@ class HomePageDriver extends WidgetDriver {
     _localization = Resolver(context).get(() => context.read<Localization>());
   }
 
-  @TestDriverDefaultValue('Coffee Demo App')
   String get title => _localization.appTitle;
 
-  @TestDriverDefaultValue(2)
   int get numberOfTabs {
     return _appTabs.tabs.length;
   }
 
-  @TestDriverDefaultValue([AppTabType.consumption, AppTabType.community])
   List<AppTabType> get appTabs => _appTabs.tabs;
 }

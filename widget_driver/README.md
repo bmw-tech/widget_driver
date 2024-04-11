@@ -114,18 +114,14 @@ class CounterWidgetDriver extends WidgetDriver {
     _localization = context.read<Localization>()
   }
 
-  @TestDriverDefaultValue('The title of the counter')
   String get counterTitle => _localization.counterTitle;
 
-  @TestDriverDefaultValue(1)
   int get value => _counterService.value;
 
-  @TestDriverDefaultValue()
   void increment() {
     _counterService.increment();
   }
 
-  @TestDriverDefaultValue()
   void decrement() {
     _counterService.decrement();
   }
@@ -188,23 +184,26 @@ As soon as your `Driver` has new data to display, then you want to call the `not
 
     The annotations are used by the `TestDriver` to provide default values during testing.  
 
-    For each public property and method you add the `@TestDriverDefaultValue({default value})`. As a parameter to this annotation you provide the default value which will be used in testing when other widgets create this widget.  
+    For each public property and method you may add the `@TestDriverDefaultValue({default value})`. As a parameter to this annotation you provide the default value which will be used in testing when other widgets create this widget.  
 
     If you have a method or property which returns a future, then you can use the `@TestDriverDefaultFutureValue({default value})` instead. It will take the default value and return it as a future.
 
-      ```dart
-      @TestDriverDefaultValue(1)
-      int get value => _counterService.value;
+   Simple return types like all of [Dart's built-in types](https://dart.dev/language/built-in-types), enums, Optionals and some frequently used types in widgets like `Color` and `IconData` are already covered. More complex types, like your custom classes, must be covered with annotations in your code. You can also optionally add annotations for any of the public fields, properties or methods with return types that are already covered. 
 
-      @TestDriverDefaultValue()
+
+      ```dart
+      @TestDriverDefaultValue(CustomClass())
+      CustomClass get value => _counterService.getCustomClass;
+
+      String get text => _locale.informativeText;
+
       void increment() {
         _counterService.increment();
       }
 
-      // For methods which return futures, use this annotations:
-      @TestDriverDefaultFutureValue(123)
-      Future<int> getTheNextIncrement() {
-        return _counterService.getNextIncrement();
+      @TestDriverDefaultFutureValue(CustomClass())
+      Future<CustomClass> giveMeSomeCustomClassSoon() { 
+        return _someService.getSomeCustomClassSoon();
       }
       ```
 
@@ -340,17 +339,14 @@ Easy... 🧙
           @driverProvidableProperty required Coffee coffee,
         })  : _coffee = coffee;
 
-        @TestDriverDefaultValue(TestCoffee.testCoffeeName)
         String get coffeeName {
           return '$index. ${_coffee.name}';
         }
 
-        @TestDriverDefaultValue(TestCoffee.testCoffeeDescription)
         String get coffeeDescription {
           return _coffee.description;
         }
 
-        @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
         String get coffeeImageUrl {
           return _coffee.imageUrl;
         }

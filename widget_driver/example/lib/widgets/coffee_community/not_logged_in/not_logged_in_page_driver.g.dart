@@ -12,10 +12,13 @@ part of 'not_logged_in_page_driver.dart';
 
 class _$TestNotLoggedInPageDriver extends TestDriver implements NotLoggedInPageDriver {
   @override
-  String get notLoggedInText => 'Not logged in';
+  String get notLoggedInText => ' ';
 
   @override
-  String get registerNewAccountButtonText => 'Register a new account';
+  String get registerNewAccountButtonText => ' ';
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void registerNewAccountTapped(BuildContext context) {}

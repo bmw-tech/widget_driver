@@ -31,7 +31,6 @@ class CoffeeCommunityPageDriver extends WidgetDriver {
     });
   }
 
-  @TestDriverDefaultValue(false)
   bool get isLoggedIn => _authService.isLoggedIn;
 
   @override

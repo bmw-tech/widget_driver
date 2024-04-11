@@ -30,27 +30,21 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
     _localization = context.read<Localization>();
   }
 
-  @TestDriverDefaultValue(3)
   int get coffeeCount => _consumptionService.counter;
 
-  @TestDriverDefaultValue('Consume coffee quick')
   String get consumeCoffeeQuickButtonText => _localization.consumeCoffeeQuick;
 
-  @TestDriverDefaultValue('Consume coffee slow')
   String get consumeCoffeeSlowButtonText =>
       _isCurrentlyConsuming ? _localization.consumingCoffee : _localization.consumeCoffeeSlow;
 
-  @TestDriverDefaultValue('Reset consumption')
   String get resetCoffeeButtonText => _localization.resetConsumedCoffees;
 
-  @TestDriverDefaultValue()
   void consumeCoffeeQuick() {
     _consumptionService.consumedOneCoffee();
   }
 
   /// Returns true if we could consume a coffee slow.
   /// We cannot consume slow if we are already consuming a slow coffee.
-  @TestDriverDefaultFutureValue(false)
   Future<bool> consumeCoffeeSlow() async {
     if (_isCurrentlyConsuming) {
       return false;
@@ -66,7 +60,6 @@ class CoffeeCounterWidgetDriver extends WidgetDriver {
     return true;
   }
 
-  @TestDriverDefaultValue()
   void resetConsumption() {
     _consumptionService.resetConsumption();
   }

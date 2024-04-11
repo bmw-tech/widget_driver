@@ -1,4 +1,3 @@
-import 'package:example/models/coffee.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:widget_driver/widget_driver.dart';
@@ -22,15 +21,12 @@ class RandomCoffeeImageWidgetDriver extends WidgetDriver {
     _localization = context.read<Localization>();
   }
 
-  @TestDriverDefaultValue(TestCoffee.testCoffeeImageUrl)
   String get coffeeImageUrl {
     return _coffeeImageService.getRandomCoffeeImageUrl();
   }
 
-  @TestDriverDefaultValue('Tap image to load a new one')
   String get title => _localization.randomCoffeeImageTitle;
 
-  @TestDriverDefaultValue()
   void updateRandomImage() {
     notifyWidget();
   }

@@ -12,10 +12,13 @@ part of 'coffee_counter_header_section_driver.dart';
 
 class _$TestCoffeeCounterHeaderSectionDriver extends TestDriver implements CoffeeCounterHeaderSectionDriver {
   @override
-  String get descriptionText => 'Consumed coffees';
+  String get descriptionText => ' ';
 
   @override
-  String get amountText => '3';
+  String get amountText => ' ';
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 }
 
 class $CoffeeCounterHeaderSectionDriverProvider extends WidgetDriverProvider<CoffeeCounterHeaderSectionDriver> {

@@ -5,6 +5,8 @@ import 'package:widget_driver_annotation/widget_driver_annotation.dart';
 import 'models/annotated_element.dart';
 import 'models/providable_field.dart';
 import 'utils/element_utils.dart';
+import 'utils/field_element_extensions.dart';
+import 'utils/property_accessor_element_extensions.dart';
 
 typedef CodeGeneratorMethod = String Function(String codeDefinition, String returnValue);
 
@@ -13,7 +15,8 @@ class ModelVisitor extends SimpleElementVisitor<void> {
   String className = "";
   final fields = <AnnotatedElement>[];
   final methods = <AnnotatedElement>[];
-  final properties = <AnnotatedElement>[];
+  final getProperties = <AnnotatedElement>[];
+  final setProperties = <AnnotatedElement>[];
   final providableFields = <ProvidableField>[];
   final ElementUtils _elementUtils;
 
@@ -45,23 +48,36 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 
   @override
   void visitFieldElement(FieldElement element) {
+    if (element.isRedundantToPropertyAccessorElement) {
+      return;
+    }
     final validAnnotationType = _elementUtils.getValidAnnotation(
       element: element,
       validAnnotationTypes: _validAnnotationTypes,
     );
-    if (validAnnotationType != null) {
-      fields.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType));
+    if (element.isPublic) {
+      final type = element.type;
+      fields.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType, type));
     }
   }
 
   @override
   void visitPropertyAccessorElement(PropertyAccessorElement element) {
+    if (element.isRedundantToFieldElement) {
+      return;
+    }
     final validAnnotationType = _elementUtils.getValidAnnotation(
       element: element,
       validAnnotationTypes: _validAnnotationTypes,
     );
-    if (validAnnotationType != null) {
-      properties.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType));
+    if (element.isPublic) {
+      final returnType = element.returnType;
+      final property = AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType, returnType);
+      if (element.isSetter) {
+        setProperties.add(property);
+      } else {
+        getProperties.add(property);
+      }
     }
   }
 
@@ -71,8 +87,9 @@ class ModelVisitor extends SimpleElementVisitor<void> {
       element: element,
       validAnnotationTypes: _validAnnotationTypes,
     );
-    if (validAnnotationType != null) {
-      methods.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType));
+    if (element.isPublic) {
+      final returnType = element.returnType;
+      methods.add(AnnotatedElement.fromElement(_elementUtils, element, validAnnotationType, returnType));
     }
   }
 }

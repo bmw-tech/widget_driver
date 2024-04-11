@@ -15,6 +15,5 @@ class MyAppDriver extends WidgetDriver {
     _localization = Resolver(context).get(() => context.read<Localization>());
   }
 
-  @TestDriverDefaultValue('Coffee Demo App')
   String get appTitle => _localization.appTitle;
 }
