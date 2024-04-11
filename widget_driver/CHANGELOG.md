@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.9
+
+* Updates the documentation to the new version of the widget_driver_generator 
+
 ## 1.0.8
 
 * Adds a new `WidgetDriverTestConfigProvider` which you can use in your widget tests to control if a test driver or a real driver should be used.

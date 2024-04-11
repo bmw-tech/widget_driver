@@ -26,7 +26,7 @@ dev_dependencies:
   widget_driver_test:
     path: ../../widget_driver_test
   build_runner:
-  widget_driver_generator: ^1.0.2
+  widget_driver_generator: ^1.1.0
 
 flutter:
   uses-material-design: true
