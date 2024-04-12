@@ -38,6 +38,8 @@ part 'my_first_drivable_widget_driver.g.dart';
 class MyFirstDrivableWidgetDriver extends WidgetDriver {
   int _count = 0;
 
+  // The next line is not necessary, since it's a String but if you want to customize the generated output, you can add this.
+  @TestDriverDefaultValue('The app bar title')
   String get appBarTitle => 'Intro to WidgetDriver';
 
   String get counterTitle => 'Counter:';

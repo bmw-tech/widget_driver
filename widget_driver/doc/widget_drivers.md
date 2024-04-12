@@ -118,7 +118,7 @@ Any type of dependencies which your `driver` needs to be able to give your widge
 You get three option here for how to resolve these dependencies. Either you can grab them out of the `BuildContext` (for example if you are using the `Provider` package). Or you can use some DI package like `get_it` and then just grab the dependencies from the DI container. Or you can pass in the dependencies to your driver using the `@driverProvidableProperty` annotation.
 
 **Now what about those annotations?**  
-They are needed for the `testDrivers` to be generated correctly. So for properties and methods with complex return types which you expose to the widget, you will need to add these annotations. Simple return types like all of [Dart's built-in types](https://dart.dev/language/built-in-types), enums, Optionals and some frequently used types in widgets like `Color` and `IconData` are already covered.
+They are needed for the `testDrivers` to be generated correctly. So for properties and methods with complex return types which you expose to the widget, you will need to add these annotations. Simple return types like all of [Dart's built-in types](https://dart.dev/language/built-in-types), enums, Optionals and some frequently used types in widgets like `Color` and `IconData` are already covered with default values (that you still could overwrite if you'd like).
 
 For properties and methods you add `@TestDriverDefaultValue({default_value})`.  
 The `default_value` should be the default value which you want to use when this widget is being created by other widgets under test.
