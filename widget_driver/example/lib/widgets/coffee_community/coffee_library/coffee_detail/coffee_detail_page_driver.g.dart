@@ -8,17 +8,17 @@ part of 'coffee_detail_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestCoffeeDetailPageDriver extends TestDriver implements CoffeeDetailPageDriver {
   @override
-  String get coffeeName => ' ';
+  String get coffeeName => 'Hello World';
 
   @override
-  String get coffeeDescription => ' ';
+  String get coffeeDescription => 'Hello World';
 
   @override
-  String get coffeeImageUrl => ' ';
+  String get coffeeImageUrl => 'Hello World';
 
   @override
   void didUpdateProvidedProperties({required int newIndex, required Coffee newCoffee}) {}

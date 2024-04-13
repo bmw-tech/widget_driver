@@ -6,8 +6,10 @@ import 'package:widget_driver_generator/src/code_providers/driver_provider_code_
 import 'package:widget_driver_generator/src/code_providers/provided_properties_interface_code_provider.dart';
 import 'package:widget_driver_generator/src/code_providers/test_driver_code_provider.dart';
 import 'package:widget_driver_generator/src/utils/code_writer.dart';
+import 'package:yaml/yaml.dart';
 
 import 'model_visitor.dart';
+import 'utils/default_return_value_helper.dart';
 import 'utils/package_info_provider.dart';
 
 /// Generates TestDrivers and WidgetDriverProviders based on annotations
@@ -15,8 +17,14 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
   final PackageInfoProvider _packageInfoProvider;
 
   WidgetDriverGenerator({
+    required BuilderOptions options,
     PackageInfoProvider? packageInfoProvider,
-  }) : _packageInfoProvider = packageInfoProvider ?? PackageInfoProvider();
+  }) : _packageInfoProvider = packageInfoProvider ?? PackageInfoProvider() {
+    final config = (options.config["defaultTestValues"] as YamlMap).entries;
+    DefaultReturnValueHelper.setCustomDefaultValues(config);
+  }
+
+
 
   @override
   Future<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {

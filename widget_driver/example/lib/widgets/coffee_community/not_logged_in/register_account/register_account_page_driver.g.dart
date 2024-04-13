@@ -8,23 +8,23 @@ part of 'register_account_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestRegisterAccountPageDriver extends TestDriver implements RegisterAccountPageDriver {
   @override
-  String get pageTitle => ' ';
+  String get pageTitle => 'Hello World';
 
   @override
-  String get usernameTextFieldPlaceholder => ' ';
+  String get usernameTextFieldPlaceholder => 'Hello World';
 
   @override
-  String? get usernameInputError => ' ';
+  String? get usernameInputError => 'Hello World';
 
   @override
-  String get registerButtonText => ' ';
+  String get registerButtonText => 'Hello World';
 
   @override
-  bool get registerIsLoading => false;
+  bool get registerIsLoading => true;
 
   @override
   void didUpdateBuildContext(BuildContext context) {}

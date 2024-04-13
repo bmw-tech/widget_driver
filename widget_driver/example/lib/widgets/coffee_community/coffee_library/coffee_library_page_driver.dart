@@ -30,7 +30,6 @@ class CoffeeLibraryPageDriver extends WidgetDriver {
 
   int get numberOfCoffees => _coffees.length;
 
-  @TestDriverDefaultValue(TestCoffee.testCoffee)
   Coffee getCoffeeAtIndex(int index) {
     return _coffees[index];
   }

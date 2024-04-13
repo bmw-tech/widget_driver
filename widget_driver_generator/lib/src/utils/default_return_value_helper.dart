@@ -3,6 +3,12 @@ import 'package:analyzer/dart/element/type.dart';
 
 /// Class that provides logic to determine default return values.
 class DefaultReturnValueHelper {
+  static void setCustomDefaultValues(Iterable<MapEntry> customValues) {
+    for (var element in customValues) {
+      _defaultTypeValueMap[element.key.toString()] = element.value.toString();
+    }
+  }
+
   /// Return the default value written as code inside a String for the passed in [type].
   /// It is important to call [hasDefaultValueForType] first to make sure a default value exists.
   /// Otherwise the code generation might generate faulty code.

@@ -8,14 +8,14 @@ part of 'home_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestHomePageDriver extends TestDriver implements HomePageDriver {
   @override
-  String get title => ' ';
+  String get title => 'Hello World';
 
   @override
-  int get numberOfTabs => 0;
+  int get numberOfTabs => 123;
 
   @override
   List<AppTabType> get appTabs => [];

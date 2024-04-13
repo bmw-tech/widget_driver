@@ -8,14 +8,14 @@ part of 'random_coffee_image_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestRandomCoffeeImageWidgetDriver extends TestDriver implements RandomCoffeeImageWidgetDriver {
   @override
-  String get coffeeImageUrl => ' ';
+  String get coffeeImageUrl => 'Hello World';
 
   @override
-  String get title => ' ';
+  String get title => 'Hello World';
 
   @override
   void didUpdateBuildContext(BuildContext context) {}

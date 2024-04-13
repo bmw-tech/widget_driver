@@ -8,17 +8,17 @@ part of 'my_first_drivable_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestMyFirstDrivableWidgetDriver extends TestDriver implements MyFirstDrivableWidgetDriver {
   @override
-  String get appBarTitle => ' ';
+  String get appBarTitle => 'Hello World';
 
   @override
-  String get counterTitle => ' ';
+  String get counterTitle => 'Hello World';
 
   @override
-  String get counterValue => ' ';
+  String get counterValue => 'Hello World';
 
   @override
   IconData get increaseActionIcon => const IconData(0);

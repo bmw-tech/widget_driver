@@ -8,11 +8,11 @@ part of 'playground_test_child_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestPlaygroundTestChildWidgetDriver extends TestDriver implements PlaygroundTestChildWidgetDriver {
   @override
-  String get theText => ' ';
+  String get theText => 'Hello World';
 }
 
 class $PlaygroundTestChildWidgetDriverProvider extends WidgetDriverProvider<PlaygroundTestChildWidgetDriver> {
