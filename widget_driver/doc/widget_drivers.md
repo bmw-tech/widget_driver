@@ -120,6 +120,29 @@ You get three option here for how to resolve these dependencies. Either you can 
 **Now what about those annotations?**  
 They are needed for the `testDrivers` to be generated correctly. So for properties and methods with complex return types which you expose to the widget, you will need to add these annotations. Simple return types like all of [Dart's built-in types](https://dart.dev/language/built-in-types), enums, Optionals and some frequently used types in widgets like `Color` and `IconData` are already covered with default values (that you still could overwrite if you'd like).
 
+There are two not mutually exclusive options, automatic and manual annotation. If a class is defined both ways, the manual annotation is taken for the generation.
+
+**Option1: automatic annotation**
+Here you globally specify what values should be generated for a type. This is done inside your `build.yaml`. It will load your specified values into the table where default values are taken from.
+
+What's important is that you have to specify how they will be constructed, not something like a json version of the class. Note here, how the CustomClass is specified. Make sure though that the drivers for which the class will be generated are aware of all classes used in the constructor, otherwise you'll get a compiler error.
+
+Add the `build.yaml` on the level of your `pubspec.yaml` in the following scheme:
+```yaml
+targets:
+  $default:
+    builders:
+      widget_driver_generator:
+        options:
+          defaultTestValues:
+            "bool": "true"
+            "Color": "Colors.yellow"
+            "int": "123"
+            "CustomClass": "const CustomClass(\n    name: 'name',\n    description: 'Some desc',\n    imageUrl: 'http://www.exampleImage.com/image',\n  )"
+            "String": "'Hello World'"
+```
+
+**Option2: Manual annotation**  
 For properties and methods you add `@TestDriverDefaultValue({default_value})`.  
 The `default_value` should be the default value which you want to use when this widget is being created by other widgets under test.
 

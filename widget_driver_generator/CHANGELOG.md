@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.0
+
+* Introduces the option to specify default values for types in your build.yaml.
+
 ## 1.1.0
 
 * Introduces predefined default values for frequently used types to minimize the need of annotations.
