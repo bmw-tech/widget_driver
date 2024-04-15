@@ -1,14 +1,13 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
-import 'package:analyzer/dart/element/element.dart';
 import 'package:widget_driver_generator/src/utils/default_return_value_helper.dart';
 import 'package:widget_driver_generator/src/utils/package_info_provider.dart';
-import 'package:yaml/yaml.dart';
-
 import 'package:widget_driver_generator/src/widget_driver_generator.dart';
+import 'package:yaml/yaml.dart';
 
 class MockConstantReader extends Mock implements ConstantReader {}
 
@@ -41,7 +40,7 @@ void main() {
   late MockPackageInfoProvider mockPackageInfoProvider;
   late MockBuilderOptions mockBuilderOptions;
 
-  setUp(() {
+  setUpAll(() {
     mockConstantReader = MockConstantReader();
     mockBuildStep = MockBuildStep();
     mockElement = MockElement();
