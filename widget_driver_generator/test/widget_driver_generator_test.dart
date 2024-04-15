@@ -21,7 +21,8 @@ class MockElement extends Mock implements Element {}
 
 class MockBuilderOptions extends Mock implements BuilderOptions {}
 
-class ImaginaryClass implements DartType {  @override
+class ImaginaryClass implements DartType {
+  @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 
   @override
@@ -54,7 +55,7 @@ void main() {
     test("Sets defaultReturnValues if some where passed in the constructor", () {
       expect(DefaultReturnValueHelper.hasDefaultValueForType(ImaginaryClass()), isFalse);
       var fakeMap = YamlMap.wrap({ImaginaryClass: 'ImaginaryClass()'});
-      when(() => mockBuilderOptions.config).thenReturn({"defaultTestValues" : fakeMap});
+      when(() => mockBuilderOptions.config).thenReturn({"defaultTestValues": fakeMap});
       WidgetDriverGenerator(options: mockBuilderOptions);
       expect(DefaultReturnValueHelper.hasDefaultValueForType(ImaginaryClass()), isTrue);
       expect(DefaultReturnValueHelper.getDefaultValueFor(ImaginaryClass()), "ImaginaryClass()");
@@ -77,7 +78,10 @@ void main() {
         (_) => Future.value(expectedVersionNumber),
       );
 
-      final widgetDriverGenerator = WidgetDriverGenerator(options: mockBuilderOptions, packageInfoProvider: mockPackageInfoProvider,);
+      final widgetDriverGenerator = WidgetDriverGenerator(
+        options: mockBuilderOptions,
+        packageInfoProvider: mockPackageInfoProvider,
+      );
       final generatedCode = await widgetDriverGenerator.generateForAnnotatedElement(
         mockElement,
         mockConstantReader,

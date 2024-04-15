@@ -24,8 +24,6 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
     DefaultReturnValueHelper.setCustomDefaultValues(config);
   }
 
-
-
   @override
   Future<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
     // Visit the annotated class and gather the data we need.
