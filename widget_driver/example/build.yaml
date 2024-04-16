@@ -7,5 +7,5 @@ targets:
             "bool": "true"
             "Color": "Colors.yellow"
             "int": "123"
-            "Coffee": "const Coffee(\n    name: 'Coffee',\n    description: 'Some desc',\n    imageUrl: 'http://www.exampleImage.com/image',\n  )"
+            "Coffee": "const Coffee(name: 'Coffee', description: 'Some desc', imageUrl: 'http://www.exampleImage.com/image',)"
             "String": "'Hello World'"

@@ -32,7 +32,7 @@ This is pretty easy. It basically just contains two steps:
         widget_driver_generator: <latest-version>
     ```
    
-2. (Optional) Specify global test default values
+2. (Optional) Specify global test default values in `build.yaml`
    ```yaml
    targets:
      $default:
@@ -43,7 +43,7 @@ This is pretty easy. It basically just contains two steps:
                "bool": "true"
                "Color": "Colors.yellow"
                "int": "123"
-               "CustomClass": "const CustomClass(\n    name: 'name',\n    description: 'Some desc',\n    imageUrl: 'http://www.exampleImage.com/image',\n  )"
+               "CustomClass": "const CustomClass(name: 'name', description: 'Some desc', imageUrl: 'http://www.exampleImage.com/image',)"
                "String": "'Hello World'"
    ```
 
