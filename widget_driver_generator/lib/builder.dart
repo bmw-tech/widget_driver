@@ -7,4 +7,4 @@ import 'src/widget_driver_generator.dart';
 
 /// source_gen helper function, which calls WidgetDriverGenerator to generate TestDrivers and WidgetDriverProviders
 Builder generateWidgetDriver(BuilderOptions options) =>
-    SharedPartBuilder([WidgetDriverGenerator()], 'widget_driver_generator');
+    SharedPartBuilder([WidgetDriverGenerator(options: options)], 'widget_driver_generator');

@@ -8,20 +8,20 @@ part of 'coffee_counter_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounterWidgetDriver {
   @override
-  int get coffeeCount => 0;
+  int get coffeeCount => 123;
 
   @override
-  String get consumeCoffeeQuickButtonText => ' ';
+  String get consumeCoffeeQuickButtonText => 'Hello World';
 
   @override
-  String get consumeCoffeeSlowButtonText => ' ';
+  String get consumeCoffeeSlowButtonText => 'Hello World';
 
   @override
-  String get resetCoffeeButtonText => ' ';
+  String get resetCoffeeButtonText => 'Hello World';
 
   @override
   void didUpdateBuildContext(BuildContext context) {}
@@ -31,7 +31,7 @@ class _$TestCoffeeCounterWidgetDriver extends TestDriver implements CoffeeCounte
 
   @override
   Future<bool> consumeCoffeeSlow() {
-    return Future.value(false);
+    return Future.value(true);
   }
 
   @override

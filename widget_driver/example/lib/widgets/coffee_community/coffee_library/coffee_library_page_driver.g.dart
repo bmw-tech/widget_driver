@@ -8,18 +8,22 @@ part of 'coffee_library_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestCoffeeLibraryPageDriver extends TestDriver implements CoffeeLibraryPageDriver {
   @override
-  bool get isFetching => false;
+  bool get isFetching => true;
 
   @override
-  int get numberOfCoffees => 0;
+  int get numberOfCoffees => 123;
 
   @override
   Coffee getCoffeeAtIndex(int index) {
-    return TestCoffee.testCoffee;
+    return const Coffee(
+      name: 'Coffee',
+      description: 'Some desc',
+      imageUrl: 'http://www.exampleImage.com/image',
+    );
   }
 
   @override

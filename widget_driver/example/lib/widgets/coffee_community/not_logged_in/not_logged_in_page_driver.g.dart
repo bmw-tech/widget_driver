@@ -8,14 +8,14 @@ part of 'not_logged_in_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.0.3"
+// This file was generated with widget_driver_generator version "1.2.0"
 
 class _$TestNotLoggedInPageDriver extends TestDriver implements NotLoggedInPageDriver {
   @override
-  String get notLoggedInText => ' ';
+  String get notLoggedInText => 'Hello World';
 
   @override
-  String get registerNewAccountButtonText => ' ';
+  String get registerNewAccountButtonText => 'Hello World';
 
   @override
   void didUpdateBuildContext(BuildContext context) {}

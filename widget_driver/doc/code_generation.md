@@ -31,8 +31,23 @@ This is pretty easy. It basically just contains two steps:
         build_runner: <latest-version>
         widget_driver_generator: <latest-version>
     ```
+   
+2. (Optional) Specify global test default values in `build.yaml`
+   ```yaml
+   targets:
+     $default:
+       builders:
+         widget_driver_generator:
+           options:
+             defaultTestValues:
+               "bool": "true"
+               "Color": "Colors.yellow"
+               "int": "123"
+               "CustomClass": "const CustomClass(name: 'name', description: 'Some desc', imageUrl: 'http://www.exampleImage.com/image',)"
+               "String": "'Hello World'"
+   ```
 
-2. Run the build runner:  
+3. Run the build runner:  
     ```console
     dart run build_runner build --delete-conflicting-outputs
     ```

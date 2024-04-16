@@ -88,6 +88,31 @@ class MyDriver extends WidgetDriver {
 }
 ```
 
+#### (Optional) Specify global test default values
+
+As an alternative to annotating test default values you can also globally specify what values should be generated for a type inside your `build.yaml`. This will load your specified values into the table where default values are taken from.
+
+What's important is that you have to specify how they will be constructed, not something like a json version of the class. Note here, how the CustomClass is specified. Make sure though that the drivers for which the class will be generated are aware of all classes used in the constructor, otherwise you'll get a compiler error.
+
+Add the `build.yaml` on the level of your `pubspec.yaml` in the following scheme:
+```yaml
+targets:
+  $default:
+    builders:
+      widget_driver_generator:
+        options:
+          defaultTestValues:
+            "bool": "true"
+            "Color": "Colors.yellow"
+            "int": "123"
+            "CustomClass": "const CustomClass(\n    name: 'name',\n    description: 'Some desc',\n    imageUrl: 'http://www.exampleImage.com/image',\n  )"
+            "String": "'Hello World'"
+```
+
+This can help you in multiple situations. The above example does two things:
+1. It overwrites values for already specified built-in and frequently used types (bool, Color, int, String). This is not needed to make the generation work without adding annotations though, it's more a 'nice to have''.
+2. It specifies the value for a CustomClass. This one would not have been generated without annotations. By specifying it here, you can omit the annotation for the class in all of your drivers.
+
 ### Generating the code
 
 So now you have all of your imports, definitions and annotations in place.  

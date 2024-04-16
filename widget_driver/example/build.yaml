@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders:
+      widget_driver_generator:
+        options:
+          defaultTestValues:
+            "bool": "true"
+            "Color": "Colors.yellow"
+            "int": "123"
+            "Coffee": "const Coffee(name: 'Coffee', description: 'Some desc', imageUrl: 'http://www.exampleImage.com/image',)"
+            "String": "'Hello World'"
