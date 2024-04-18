@@ -1,8 +1,13 @@
 # CHANGELOG
 
+
+## 1.0.10
+
+* Updates the example app to use version 1.2.0 of widget_driver_generator 
+ 
 ## 1.0.9
 
-* Updates the documentation to the new version of the widget_driver_generator 
+* Updates the documentation to the version 1.1.0 of widget_driver_generator
 
 ## 1.0.8
 
