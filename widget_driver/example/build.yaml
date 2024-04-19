@@ -9,3 +9,4 @@ targets:
             "int": "123"
             "Coffee": "const Coffee(name: 'Coffee', description: 'Some desc', imageUrl: 'http://www.exampleImage.com/image',)"
             "String": "'Hello World'"
+          lineLength: 120
