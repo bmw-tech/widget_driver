@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.1
+
+* Fixes bug when no build.yaml is provided.
+
 ## 1.2.0
 
 * Introduces the option to specify default values for types in your build.yaml.

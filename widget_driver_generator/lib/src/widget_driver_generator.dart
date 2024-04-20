@@ -20,8 +20,11 @@ class WidgetDriverGenerator extends GeneratorForAnnotation<GenerateTestDriver> {
     required BuilderOptions options,
     PackageInfoProvider? packageInfoProvider,
   }) : _packageInfoProvider = packageInfoProvider ?? PackageInfoProvider() {
-    final config = (options.config["defaultTestValues"] as YamlMap).entries;
-    DefaultReturnValueHelper.setCustomDefaultValues(config);
+    final valuesFromConfig = options.config["defaultTestValues"];
+    if (valuesFromConfig is YamlMap) {
+      final customValues = valuesFromConfig.entries;
+      DefaultReturnValueHelper.setCustomDefaultValues(customValues);
+    }
   }
 
   @override
