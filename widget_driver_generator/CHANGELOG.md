@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.0
+
+* Introduces the option to specify formatter line length in build.yaml.
+
 ## 1.2.1
 
 * Fixes bug when no build.yaml is provided.
