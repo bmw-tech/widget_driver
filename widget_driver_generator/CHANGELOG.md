@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.2
+
+* fixes bug where the generator generates code for static fields/methods/accessors.
+
 ## 1.3.0
 
 * Introduces the option to specify formatter line length in build.yaml.

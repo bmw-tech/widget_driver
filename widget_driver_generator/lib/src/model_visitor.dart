@@ -48,6 +48,9 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 
   @override
   void visitFieldElement(FieldElement element) {
+    if (element.isStatic) {
+      return;
+    }
     if (element.isRedundantToPropertyAccessorElement) {
       return;
     }
@@ -63,6 +66,9 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 
   @override
   void visitPropertyAccessorElement(PropertyAccessorElement element) {
+    if (element.isStatic) {
+      return;
+    }
     if (element.isRedundantToFieldElement) {
       return;
     }
@@ -83,6 +89,9 @@ class ModelVisitor extends SimpleElementVisitor<void> {
 
   @override
   void visitMethodElement(MethodElement element) {
+    if (element.isStatic) {
+      return;
+    }
     final validAnnotationType = _elementUtils.getValidAnnotation(
       element: element,
       validAnnotationTypes: _validAnnotationTypes,
