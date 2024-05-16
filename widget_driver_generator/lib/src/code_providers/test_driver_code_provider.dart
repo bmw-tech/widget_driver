@@ -49,7 +49,7 @@ class $_testDriverClassName extends TestDriver implements $_driverClassName {
     final List<String> properties = [];
     final getProperties = _getProperties.map((e) => _getComputedPropertyCode(e.codeDefinition, e.returnValue));
     properties.addAll(getProperties);
-    final setProperties = _setProperties.map((e) => _getMethodCode(e.codeDefinition, e.returnValue));
+    final setProperties = _setProperties.map((e) => _getSetterCode(e.codeDefinition, e.returnValue));
     properties.addAll(setProperties);
     return properties.join(doubleEmptyLine);
   }
@@ -125,6 +125,13 @@ $methodDefinition {
 }''';
     }
     return sourceCode;
+  }
+
+  /// Returns the code needed to implement an override of a setter.
+  String _getSetterCode(String methodDefinition, String returnValue) {
+    // keeping void will upset dart analyzer
+    final sanitizedCodeDefinition = methodDefinition.replaceFirst('void ', '');
+    return _getMethodCode(sanitizedCodeDefinition, returnValue);
   }
 
   String get emptyLineCode => '\n';

@@ -4,6 +4,14 @@
 
 * Remove unnecessary '= null' from property code generation
 
+## 1.3.2
+
+* fixes bug where the generator generates code for static fields/methods/accessors.
+
+## 1.3.1
+
+* fixes bug where the "void" keyword was unnecessarily added to setters.
+
 ## 1.3.0
 
 * Introduces the option to specify formatter line length in build.yaml.
