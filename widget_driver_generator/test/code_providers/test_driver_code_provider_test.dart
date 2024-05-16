@@ -139,7 +139,7 @@ class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
   
 
   @override
-void set example(String newExample) {}
+set example(String newExample) {}
 
   
 }
@@ -163,10 +163,10 @@ class _\$TestExampleDriver extends TestDriver implements ExampleDriver {
   
 
   @override
-void set example(String newExample) {}
+set example(String newExample) {}
 
 @override
-void set example2(String newExample2) {}
+set example2(String newExample2) {}
 
   
 }
@@ -263,10 +263,10 @@ String get example => '';
 String get example2 => '';
 
 @override
-void set example(String newExample) {}
+set example(String newExample) {}
 
 @override
-void set example2(String newExample2) {}
+set example2(String newExample2) {}
 
   @override
 String example() {
