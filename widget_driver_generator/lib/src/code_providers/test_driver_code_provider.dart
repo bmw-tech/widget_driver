@@ -72,9 +72,10 @@ class $_testDriverClassName extends TestDriver implements $_driverClassName {
   /// In this example, then the `bool myStoredProperty` would be
   /// the `propertyDefinition` and the `false` would be the returnValue.
   String _getStoredPropertyCode(String propertyDefinition, String returnValue) {
+    final returnCode = returnValue == "null" ? "" : " = $returnValue";
     String sourceCode = '''
 @override
-$propertyDefinition = $returnValue;''';
+$propertyDefinition$returnCode;''';
     return sourceCode;
   }
 
