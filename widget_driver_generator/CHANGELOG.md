@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.3
+
+* Remove unnecessary '= null' from property code generation
+
 ## 1.3.2
 
 * fixes bug where the generator generates code for static fields/methods/accessors.
