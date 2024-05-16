@@ -1,6 +1,6 @@
 name: widget_driver_generator
 description: This package provides generators for WidgetDriver to automate the creation of your TestDrivers and WidgetDriverProviders
-version: 1.3.0
+version: 1.3.1
 repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver_generator
 issue_tracker: https://github.com/bmw-tech/widget_driver/issues
 

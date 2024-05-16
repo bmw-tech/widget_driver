@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.1
+
+* fixes bug where the "void" keyword was unnecessarily added to setters.
+
 ## 1.3.0
 
 * Introduces the option to specify formatter line length in build.yaml.
