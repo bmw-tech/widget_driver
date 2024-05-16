@@ -2,7 +2,7 @@
 
 ## 1.3.3
 
-* Introduces the option to specify formatter line length in build.yaml.
+* Remove unnecessary '= null' from property code generation
 
 ## 1.3.0
 
