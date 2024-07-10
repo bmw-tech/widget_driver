@@ -465,7 +465,7 @@ If you want to take some action one time the first time the widget gets shown th
 Simple override this method and put your code there.
 
 This method will be called one time for each lifecycle of the `Driver`.  
-It will get called after the constructor and after the `didUpdatedidUpdateBuildContext` and `didUpdateProvidedProperties` methods have been called. So if you needed to first assign some data in those methods you are safe to use that data in the `didInitDriver()`.
+It will get called after the constructor and after the `didUpdateBuildContext` and `didUpdateProvidedProperties` methods have been called. So if you needed to first assign some data in those methods you are safe to use that data in the `didInitDriver()`.
 
 ```dart
 class MyDriver extends WidgetDriver {
