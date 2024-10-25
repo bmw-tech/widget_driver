@@ -15,7 +15,7 @@ void main() {
     mockDriver = MockWidgetDriver();
   });
 
-  testWidgets('Should wait for notifyWidgets call', (WidgetTester tester) async {
+  testWidgets('should wait for notifyWidget call', (WidgetTester tester) async {
     final driverTester = DriverTester(mockDriver, tester);
     Future<void> testFuture = driverTester.waitForNotifyWidget();
 
@@ -24,7 +24,7 @@ void main() {
     await testFuture;
   });
 
-  testWidgets('Should verify no more calls to notifyWidgets', (WidgetTester tester) async {
+  testWidgets('should verify no more calls to notifyWidget', (WidgetTester tester) async {
     final driverTester = DriverTester(mockDriver, tester);
 
     mockDriver.triggerNotifyWidgets();
@@ -32,7 +32,7 @@ void main() {
     await driverTester.verifyNoMoreCallsToNotifyWidget(timeout: const Duration(milliseconds: 100));
   });
 
-  testWidgets('Should wait for exact number of notifyWidgets calls', (WidgetTester tester) async {
+  testWidgets('should wait for exact number of notifyWidget calls', (WidgetTester tester) async {
     final driverTester = DriverTester(mockDriver, tester);
 
     Future<void> testFuture = driverTester.waitForNotifyWidget(numberOfCalls: 2, requireExactNumberOfCalls: true);
