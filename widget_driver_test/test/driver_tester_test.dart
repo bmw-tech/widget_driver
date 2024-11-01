@@ -22,7 +22,7 @@ void main() {
 
       mockDriver.triggerNotifyWidgets();
 
-      await testFuture;
+      await expectLater(testFuture, completes);
     });
 
     testWidgets('Should verify no more calls to notifyWidget', (WidgetTester tester) async {
@@ -41,7 +41,7 @@ void main() {
       mockDriver.triggerNotifyWidgets();
       mockDriver.triggerNotifyWidgets();
 
-      await testFuture;
+      await expectLater(testFuture, completes);
     });
   });
 }
