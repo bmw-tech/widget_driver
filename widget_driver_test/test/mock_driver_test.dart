@@ -10,23 +10,25 @@ void main() {
     testDriver = TestWidgetDriver();
   });
 
-  test('should add listener and notify widget', () {
-    bool isNotified = false;
-    listener() {
-      isNotified = true;
-    }
+  group('MockDriver:', () {
+    test('Should add listener and notify widget', () {
+      bool isNotified = false;
+      listener() {
+        isNotified = true;
+      }
 
-    testDriver.addListener(listener);
-    testDriver.notifyWidget();
+      testDriver.addListener(listener);
+      testDriver.notifyWidget();
 
-    expect(isNotified, isTrue);
-  });
+      expect(isNotified, isTrue);
+    });
 
-  test('should dispose without errors', () {
-    expect(() => testDriver.dispose(), returnsNormally);
-  });
+    test('Should dispose without errors', () {
+      expect(() => testDriver.dispose(), returnsNormally);
+    });
 
-  test('should not notify widget if no listener is added', () {
-    expect(() => testDriver.notifyWidget(), returnsNormally);
+    test('Should not notify widget if no listener is added', () {
+      expect(() => testDriver.notifyWidget(), returnsNormally);
+    });
   });
 }
