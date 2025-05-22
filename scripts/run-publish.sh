@@ -12,6 +12,6 @@ for project_folder in "${PROJECT_FOLDERS[@]}"
 do
     echo -e "$TAG_COLOR Preparing: $project_folder"
     cd $project_folder
-    flutter pub publish -f
+    flutter pub publish -n
     cd ..
 done
