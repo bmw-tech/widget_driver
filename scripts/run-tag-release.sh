@@ -16,10 +16,10 @@ do
     version=$(grep '^version:' pubspec.yaml | awk '{print $2}')
     tag="$project_folder-$version"
 
-    echo "$TAG_COLOR Creating Git tag for $project_folder and version: $version: $tag"
+    echo -e "$TAG_COLOR Creating Git tag: $tag for $project_folder and version $version"
     git tag $tag
     git push origin $tag
     cd ..
 done
 
-echo "$TAG_COLOR Finished tagging project"
+echo -e "$TAG_COLOR Finished tagging project"

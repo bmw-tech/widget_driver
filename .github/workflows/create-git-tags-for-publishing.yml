@@ -3,13 +3,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
-    permissions:
-      id-token: write # Required for authentication using OIDC
+  create-tag-for-publishing:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
-      - uses: flutter-actions/setup-flutter@54feb1e258158303e041b9eaf89314dcfbf6d38a
-      - name: Publish packages
+      - name: Create git tag for each package in the repo
         run: bash scripts/run-tag-release.sh
