@@ -1,9 +1,9 @@
 name: check-code-quality
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
     types: ["labeled", "opened", "synchronize", "reopened"]
 
 jobs:
@@ -19,10 +19,10 @@ jobs:
       - name: Checkout the latest code
         uses: actions/checkout@v2
       - name: prepare flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # v2.19.0
         with:
-          flutter-version: '3.10.0'
-          channel: 'stable'
+          flutter-version: "3.10.0"
+          channel: "stable"
       - name: Run quality checks if pipeline label was set
         run: |
           git config --global --add safe.directory /opt/hostedtoolcache/flutter/stable-3.10.0-x64
