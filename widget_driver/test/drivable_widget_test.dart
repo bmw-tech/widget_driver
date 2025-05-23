@@ -142,8 +142,11 @@ void main() {
         final testContainerDrivableWidget = WrappedTestContainer(
           environmentInfo: _mockRuntimeEnvironmentInfo,
           driverCallback: (newDriver) => driver = newDriver,
+          readFromContext: false,
+          watchFromContext: false,
         );
         await tester.pumpWidget(testContainerDrivableWidget);
+        await tester.pumpAndSettle();
         final firstDriver = driver;
 
         expect(driver.numberOfCallsToUpdateDriverProvidedProperties, 0);
