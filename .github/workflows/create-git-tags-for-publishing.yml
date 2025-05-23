@@ -1,0 +1,11 @@
+name: Publish all packages to pub.dev
+on:
+  workflow_dispatch:
+
+jobs:
+  create-tag-for-publishing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Create git tag for each package in the repo
+        run: bash scripts/run-tag-release.sh
