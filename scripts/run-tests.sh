@@ -16,7 +16,8 @@ function run_tests() {
         # allowed in flutter
         dart test --coverage coverage || exit $?
     else
-        flutter test --coverage --no-pub --no-test-assets --no-track-widget-creation || exit $?
+        echo "Running flutter tests"
+        flutter test --coverage --no-pub --no-track-widget-creation || exit $?
     fi
     cd $current_dir
 }

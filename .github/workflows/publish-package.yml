@@ -1,8 +1,6 @@
-name: Publish all packages to pub.dev
+name: Publishes a package specified by the git tag to pub.dev
 on:
   workflow_dispatch:
-    branches:
-      - master
 
 jobs:
   publish:
@@ -14,6 +12,8 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Setup Dart
         uses: dart-lang/setup-dart@e51d8e571e22473a2ddebf0ef8a2123f0ab2c02c # v1.7.1
+      - name: Setup Flutter
+        uses: flutter-actions/setup-flutter@54feb1e258158303e041b9eaf89314dcfbf6d38a
 
       - name: Publish packages
-        run: bash scripts/run-publish.sh
+        run: bash scripts/run-publish.sh $GITHUB_REF_NAME

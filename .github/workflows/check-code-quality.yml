@@ -22,10 +22,9 @@ jobs:
       - name: Prepare flutter
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046 # v2.19.0
         with:
-          flutter-version: "3.10.0"
+          flutter-version: "3.22.3"
           channel: "stable"
-
       - name: Run quality checks if pipeline label was set
         run: |
-          git config --global --add safe.directory /opt/hostedtoolcache/flutter/stable-3.10.0-x64
+          git config --global --add safe.directory /opt/hostedtoolcache/flutter/stable-3.22.3-x64
           make quality

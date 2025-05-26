@@ -5,9 +5,9 @@ repository: https://github.com/bmw-tech/widget_driver/tree/master/widget_driver
 issue_tracker: https://github.com/bmw-tech/widget_driver/issues
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.4.0 <4.0.0"
   flutter: ">=3.10.0"
-
+  
 dependencies:
   flutter:
     sdk: flutter
@@ -20,4 +20,3 @@ dev_dependencies:
   flutter_lints: ^1.0.4
   mocktail: ^1.0.4
   provider: ^6.0.4
-
