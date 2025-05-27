@@ -1,4 +1,6 @@
 name: check-code-quality
+# This workflow checks the code quality of the Flutter project.
+# It is triggered on push and pull request events to the master branch and when ready-for-pipeline label is set.
 on:
   push:
     branches: ["master"]
