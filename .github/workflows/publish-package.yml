@@ -1,4 +1,6 @@
 name: Publishes a package specified by the git tag to pub.dev
+# This workflow publishes a package to pub.dev when a git tag is created.
+# It is triggered manually via the GitHub Actions UI.
 on:
   workflow_dispatch:
 
