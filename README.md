@@ -6,6 +6,7 @@
 
 [![check-code-quality](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml/badge.svg?branch=master)](https://github.com/bmw-tech/widget_driver/actions/workflows/check-code-quality.yml)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
+
 </div>
 
 `WidgetDriver` is a Flutter presentation layer framework,  
@@ -16,7 +17,7 @@ The `WidgetDriver` framework is built up on different dart packages. The core pa
 
 Here is an overview of all the packages:
 
-## widget_driver  [![pub package](https://img.shields.io/pub/v/widget_driver.svg)](https://pub.dev/packages/widget_driver)
+## widget_driver [![pub package](https://img.shields.io/pub/v/widget_driver.svg)](https://pub.dev/packages/widget_driver)
 
 - [Source code](widget_driver)
 
@@ -36,7 +37,7 @@ Import it into your pubspec `dev_dependencies:` section.
 
 - [Source code](widget_driver_annotation)
 
-The annotation package which has no dependencies.  
+The annotation package which has no dependencies.
 
 You do not need to import this since the `widget_driver` package already imports it for you.  
 But if you need/want to import it then import it into your pubspec `dependencies:` section.
@@ -91,4 +92,6 @@ watch                       Starts the example app and performs the hot reload i
 
 ### Publish to pub.dev
 
-To make the plugins accessible, we want to publish them to pub.dev. [publish_all_packages.yml](.github/workflows/publish_all_packages.yml) contains a job that deploys all four plugins to pub.dev. This job is named `Publish all packages to pub.dev` and is triggered manually. If you want to check first if it's safe to publish the plugins, you can run `dart pub publish --dry-run` in the root of each plugin.  
+To make the plugins accessible, we plan to publish them to pub.dev. The first step in this process is to create Git tags, which is required for publishing. This can be done by triggering the [create-git-tags-for-publishing.yml](.github/workflows/create-git-tags-for-publishing.yml) workflow. This action generates Git tags for all packages in the repository
+
+The second step is to publish the tagged packages to pub.dev, which can be done by triggering the [publish-package.yml](.github/workflows/publish-package.yml) workflow.

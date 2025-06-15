@@ -1,4 +1,6 @@
-name: Publish all packages to pub.dev
+name: Create Git Tags for Publishing
+# This workflow creates git tags for each package in the repository.
+# It is triggered manually via the GitHub Actions UI.
 on:
   workflow_dispatch:
 
