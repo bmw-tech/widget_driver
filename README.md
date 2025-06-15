@@ -92,6 +92,6 @@ watch                       Starts the example app and performs the hot reload i
 
 ### Publish to pub.dev
 
-To make the plugins accessible, we plan to publish them to pub.dev. The first step in this process is to create Git tags, which is required for publishing. This can be done by triggering the [create-git-tags-for-publishing.yml](.github/workflows/create-git-tags-for-publishing.yml) workflow. This action generates Git tags for all packages in the repository.
+To make the plugins accessible, we plan to publish them to pub.dev. The first step in this process is to create Git tags, which is required for publishing. This can be done by triggering the [create-git-tags-for-publishing.yml](.github/workflows/create-git-tags-for-publishing.yml) workflow. This action generates Git tags for all packages in the repository
 
 The second step is to publish the tagged packages to pub.dev, which can be done by triggering the [publish-package.yml](.github/workflows/publish-package.yml) workflow.
