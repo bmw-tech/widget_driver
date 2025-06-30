@@ -18,9 +18,14 @@ do
     version=$(grep '^version:' pubspec.yaml | awk '{print $2}')
     tag="$project_folder-$version"
 
-    echo -e "$TAG_COLOR Creating Git tag: $tag for $project_folder and version $version"
-    git tag "$tag"
-    git push origin "$tag"
+    # Check if the tag already exists
+    if git rev-parse "$tag" >/dev/null 2>&1; then
+        echo -e "${RED}Tag $tag already exists. Skipping...${NC}"
+    else
+        echo -e "$TAG_COLOR Creating Git tag: $tag for $project_folder and version $version"
+        git tag "$tag"
+        git push origin "$tag"
+    fi
     cd ..
 done
 
