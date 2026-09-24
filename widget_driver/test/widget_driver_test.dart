@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widget_driver/widget_driver.dart';
-
-// ignore: avoid_relative_lib_imports
-import '../../widget_driver_test/lib/widget_driver_test.dart';
+import 'package:widget_driver_test/widget_driver_test.dart';
 
 void main() {
   group('WidgetDriver:', () {
