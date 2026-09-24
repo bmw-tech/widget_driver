@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:example/models/coffee.dart';
+import 'package:example/models/coffee.dart' as c;
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -12,7 +12,7 @@ part 'coffee_library_page_driver.g.dart';
 class CoffeeLibraryPageDriver extends WidgetDriver {
   final CoffeeService _coffeeService;
   bool _isFetching = false;
-  List<Coffee> _coffees = [];
+  List<c.Coffee> _coffees = [];
   StreamSubscription? _subscription;
 
   CoffeeLibraryPageDriver({
@@ -30,7 +30,7 @@ class CoffeeLibraryPageDriver extends WidgetDriver {
 
   int get numberOfCoffees => _coffees.length;
 
-  Coffee getCoffeeAtIndex(int index) {
+  c.Coffee getCoffeeAtIndex(int index) {
     return _coffees[index];
   }
 

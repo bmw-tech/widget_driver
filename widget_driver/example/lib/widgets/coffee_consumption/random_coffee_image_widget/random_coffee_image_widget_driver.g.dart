@@ -8,7 +8,7 @@ part of 'random_coffee_image_widget_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.2.0"
+// This file was generated with widget_driver_generator version "1.3.6"
 
 class _$TestRandomCoffeeImageWidgetDriver extends TestDriver implements RandomCoffeeImageWidgetDriver {
   @override

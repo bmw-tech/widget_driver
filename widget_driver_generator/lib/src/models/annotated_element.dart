@@ -23,8 +23,10 @@ class AnnotatedElement {
   ) {
     final codeDefinition = elementUtils.getCodeDefinitionForElement(element);
     if (validAnnotationType == null && DefaultReturnValueHelper.hasDefaultValueForType(elementType)) {
+      final rawReturnValue = DefaultReturnValueHelper.getDefaultValueFor(elementType);
+      final returnValue = elementUtils.applyImportPrefixes(code: rawReturnValue, type: elementType, element: element);
       return AnnotatedElement(
-        returnValue: DefaultReturnValueHelper.getDefaultValueFor(elementType),
+        returnValue: returnValue,
         codeDefinition: codeDefinition,
       );
     } else if (validAnnotationType != null) {

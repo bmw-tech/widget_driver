@@ -1,12 +1,17 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
 
+import 'import_prefix_resolver.dart';
 import 'type_utils.dart';
 
 /// A helper class for getting data out of elements
 class ElementUtils {
-  const ElementUtils();
+  final ImportPrefixResolver _importPrefixResolver;
+
+  const ElementUtils({ImportPrefixResolver importPrefixResolver = const ImportPrefixResolver()})
+      : _importPrefixResolver = importPrefixResolver;
 
   /// Checks if the current element has an annotation which is valid.
   /// If it has a valid annotation, then that annotation type is returned, else it returns null.
@@ -38,8 +43,40 @@ class ElementUtils {
   /// This is defined as the definition for that element.
   /// For a method you would get back this:
   /// `void myFunction(int someValue)`
+  ///
+  /// If a type used by `element` was imported using an alias (e.g. `import '...' as foo;`), that
+  /// alias is re-applied to the definition, since the analyzer strips import prefixes on its own.
   String getCodeDefinitionForElement(Element element) {
-    return element.toString();
+    final codeDefinition = element.toString();
+    final library = element.library;
+    final types = _relevantTypesFor(element);
+    if (library == null || types.isEmpty) {
+      return codeDefinition;
+    }
+    return _importPrefixResolver.applyPrefixes(code: codeDefinition, types: types, library: library);
+  }
+
+  List<DartType> _relevantTypesFor(Element element) {
+    if (element is FieldElement) {
+      return [element.type];
+    }
+    if (element is PropertyAccessorElement) {
+      return [element.returnType, ...element.parameters.map((parameter) => parameter.type)];
+    }
+    if (element is MethodElement) {
+      return [element.returnType, ...element.parameters.map((parameter) => parameter.type)];
+    }
+    return const [];
+  }
+
+  /// Re-applies the import alias of `type` (if any) to `code`, e.g. turning a default return value
+  /// like `Coffee()` into `foo.Coffee()` when `element`'s library imports `Coffee` as `foo`.
+  String applyImportPrefixes({required String code, required DartType type, required Element element}) {
+    final library = element.library;
+    if (library == null) {
+      return code;
+    }
+    return _importPrefixResolver.applyPrefixes(code: code, types: [type], library: library);
   }
 
   /// Gets the return value for the given element.
