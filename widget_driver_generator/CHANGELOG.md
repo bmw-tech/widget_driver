@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Fixes bug where types imported using an alias (e.g. `import '../constants.dart' as foo;`) were generated without that alias.
+
 ## 1.3.6
 
 - Fixes bug with code generation in child packages using dart 3.6.2

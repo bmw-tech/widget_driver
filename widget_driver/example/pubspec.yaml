@@ -28,5 +28,11 @@ dev_dependencies:
   build_runner:
   widget_driver_generator: ^1.2.0
 
+# Overrides the published widget_driver_generator with the local package, whose analyzer
+# constraint was relaxed to resolve with newer Flutter SDKs (see widget_driver_generator/pubspec.yaml).
+dependency_overrides:
+  widget_driver_generator:
+    path: ../../widget_driver_generator
+
 flutter:
   uses-material-design: true
