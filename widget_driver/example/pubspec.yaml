@@ -15,8 +15,8 @@ dependencies:
   meta: ^1.7.0
   get_it: ^7.2.0
   provider: ^6.0.4
-  cached_network_image: ^3.0.0
-  http: ^0.13.5
+  cached_network_image: ^3.4.1
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:
