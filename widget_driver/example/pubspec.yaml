@@ -21,17 +21,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.1
   mocktail: ^1.0.4
   widget_driver_test:
     path: ../../widget_driver_test
-  build_runner:
-  widget_driver_generator: ^1.2.0
-
-# Overrides the published widget_driver_generator with the local package, whose analyzer
-# constraint was relaxed to resolve with newer Flutter SDKs (see widget_driver_generator/pubspec.yaml).
-dependency_overrides:
-  widget_driver_generator:
+  build_runner: ^2.3.3
+  widget_driver_generator: 
     path: ../../widget_driver_generator
 
 flutter:

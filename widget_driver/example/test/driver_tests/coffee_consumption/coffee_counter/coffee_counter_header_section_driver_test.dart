@@ -16,7 +16,7 @@ void main() {
     mockLocalization = MockLocalization();
   });
 
-  Future<DriverTester<CoffeeCounterHeaderSectionDriver>> _getDriver(WidgetTester tester) async {
+  Future<DriverTester<CoffeeCounterHeaderSectionDriver>> getDriver(WidgetTester tester) async {
     return tester.getDriverTester(
       driverBuilder: () => CoffeeCounterHeaderSectionDriver(),
       parentWidgetBuilder: (driverWidget) {
@@ -42,14 +42,14 @@ void main() {
         const expectedText = 'Some text about consumed coffees';
         when(() => mockLocalization.consumedCoffees).thenReturn(expectedText);
 
-        final driverTester = await _getDriver(tester);
+        final driverTester = await getDriver(tester);
         expect(driverTester.driver.descriptionText, expectedText);
       });
 
       testWidgets('Has correct value for amountText', (tester) async {
         fakeCoffeeCountNotifier.value = 123;
 
-        final driverTester = await _getDriver(tester);
+        final driverTester = await getDriver(tester);
         expect(driverTester.driver.amountText, '123');
       });
     });
@@ -59,7 +59,7 @@ void main() {
         // The initial value used when driver is created
         fakeCoffeeCountNotifier.value = 123;
 
-        final driverTester = await _getDriver(tester);
+        final driverTester = await getDriver(tester);
         expect(driverTester.driver.amountText, '123');
 
         // Set a new value to the coffee count and trigger widget tester to render the update.

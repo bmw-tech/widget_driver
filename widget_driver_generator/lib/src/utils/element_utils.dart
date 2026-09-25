@@ -20,7 +20,7 @@ class ElementUtils {
     required List<Type> validAnnotationTypes,
   }) {
     for (var validAnnotationType in validAnnotationTypes) {
-      final annotation = TypeChecker.fromRuntime(validAnnotationType).firstAnnotationOfExact(element);
+      final annotation = TypeChecker.typeNamed(validAnnotationType).firstAnnotationOfExact(element);
       if (annotation != null) {
         return validAnnotationType;
       }
@@ -61,10 +61,10 @@ class ElementUtils {
       return [element.type];
     }
     if (element is PropertyAccessorElement) {
-      return [element.returnType, ...element.parameters.map((parameter) => parameter.type)];
+      return [element.returnType, ...element.formalParameters.map((parameter) => parameter.type)];
     }
     if (element is MethodElement) {
-      return [element.returnType, ...element.parameters.map((parameter) => parameter.type)];
+      return [element.returnType, ...element.formalParameters.map((parameter) => parameter.type)];
     }
     return const [];
   }
@@ -91,7 +91,7 @@ class ElementUtils {
   }
 
   String _getAnnotationStringFromElement(Element element) {
-    final metaData = element.metadata.first;
+    final metaData = element.metadata.annotations.first;
     return metaData.toSource();
   }
 

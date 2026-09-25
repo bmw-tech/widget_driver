@@ -20,7 +20,7 @@ class ProvidableField {
   });
 
   factory ProvidableField.fromParameterElement(
-    ParameterElement param, {
+    FormalParameterElement param, {
     ImportPrefixResolver importPrefixResolver = const ImportPrefixResolver(),
   }) {
     final rawType = param.type.toString().replaceFirst('*', '');
@@ -29,7 +29,7 @@ class ProvidableField {
         ? rawType
         : importPrefixResolver.applyPrefixes(code: rawType, types: [param.type], library: library);
     return ProvidableField(
-      name: param.name.removeLeadingUnderscore(),
+      name: param.name?.removeLeadingUnderscore() ?? "",
       type: type,
       isRequired: param.isRequired,
       defaultValueCode: param.defaultValueCode,

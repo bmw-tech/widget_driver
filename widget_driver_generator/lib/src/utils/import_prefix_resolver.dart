@@ -96,7 +96,7 @@ class ImportPrefixResolver {
   }
 
   String? _findImportPrefix(LibraryElement library, LibraryElement typeLibrary) {
-    for (final import in library.libraryImports) {
+    for (final import in library.firstFragment.libraryImports) {
       final prefix = import.prefix;
       if (import.importedLibrary == typeLibrary && prefix != null) {
         return prefix.element.name;
@@ -111,7 +111,7 @@ class ImportPrefixResolver {
       if (type is InterfaceType) {
         yield* _flatten(type.typeArguments);
       } else if (type is FunctionType) {
-        yield* _flatten([type.returnType, ...type.parameters.map((parameter) => parameter.type)]);
+        yield* _flatten([type.returnType, ...type.formalParameters.map((parameter) => parameter.type)]);
       }
     }
   }
