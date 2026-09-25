@@ -6,9 +6,11 @@ import 'package:widget_driver_generator/src/utils/import_prefix_resolver.dart';
 
 class MockLibraryElement extends Mock implements LibraryElement {}
 
-class MockLibraryImportElement extends Mock implements LibraryImportElement {}
+class MockLibraryFragment extends Mock implements LibraryFragment {}
 
-class MockImportElementPrefix extends Mock implements ImportElementPrefix {}
+class MockLibraryImport extends Mock implements LibraryImport {}
+
+class MockPrefixFragment extends Mock implements PrefixFragment {}
 
 class MockPrefixElement extends Mock implements PrefixElement {}
 
@@ -31,6 +33,12 @@ void main() {
     typeLibrary = MockLibraryElement();
   });
 
+  void stubImports(MockLibraryElement library, List<LibraryImport> imports) {
+    final fragment = MockLibraryFragment();
+    when(() => fragment.libraryImports).thenReturn(imports);
+    when(() => library.firstFragment).thenReturn(fragment);
+  }
+
   MockDartType typeNamed(String name, LibraryElement library) {
     final element = MockElement();
     when(() => element.name).thenReturn(name);
@@ -40,17 +48,17 @@ void main() {
     return type;
   }
 
-  MockLibraryImportElement importOf(LibraryElement importedLibrary, {String? prefix}) {
-    final import = MockLibraryImportElement();
+  MockLibraryImport importOf(LibraryElement importedLibrary, {String? prefix}) {
+    final import = MockLibraryImport();
     when(() => import.importedLibrary).thenReturn(importedLibrary);
     if (prefix == null) {
       when(() => import.prefix).thenReturn(null);
     } else {
       final prefixElement = MockPrefixElement();
       when(() => prefixElement.name).thenReturn(prefix);
-      final importPrefix = MockImportElementPrefix();
-      when(() => importPrefix.element).thenReturn(prefixElement);
-      when(() => import.prefix).thenReturn(importPrefix);
+      final prefixFragment = MockPrefixFragment();
+      when(() => prefixFragment.element).thenReturn(prefixElement);
+      when(() => import.prefix).thenReturn(prefixFragment);
     }
     return import;
   }
@@ -59,7 +67,7 @@ void main() {
     test('adds the alias in front of a type imported with a prefix', () {
       final import = importOf(typeLibrary, prefix: 'foo');
       final type = typeNamed('SomeClass', typeLibrary);
-      when(() => contextLibrary.libraryImports).thenReturn([import]);
+      stubImports(contextLibrary, [import]);
 
       final result = sut.applyPrefixes(
         code: 'SomeClass get someGetter',
@@ -71,7 +79,7 @@ void main() {
     });
 
     test('does not change code if the type is declared in the same library', () {
-      when(() => contextLibrary.libraryImports).thenReturn([]);
+      stubImports(contextLibrary, []);
       final type = typeNamed('SomeClass', contextLibrary);
 
       final result = sut.applyPrefixes(
@@ -86,7 +94,7 @@ void main() {
     test('does not change code if the import has no prefix', () {
       final import = importOf(typeLibrary);
       final type = typeNamed('SomeClass', typeLibrary);
-      when(() => contextLibrary.libraryImports).thenReturn([import]);
+      stubImports(contextLibrary, [import]);
 
       final result = sut.applyPrefixes(
         code: 'SomeClass get someGetter',
@@ -107,7 +115,7 @@ void main() {
       final listType = MockInterfaceType();
       when(() => listType.element).thenReturn(listElement);
       when(() => listType.typeArguments).thenReturn([typeArgument]);
-      when(() => contextLibrary.libraryImports).thenReturn([import]);
+      stubImports(contextLibrary, [import]);
 
       final result = sut.applyPrefixes(
         code: 'void doSomething(List<SomeClass> list)',
@@ -121,7 +129,7 @@ void main() {
     test('does not re-prefix a name that is already qualified', () {
       final import = importOf(typeLibrary, prefix: 'foo');
       final type = typeNamed('SomeClass', typeLibrary);
-      when(() => contextLibrary.libraryImports).thenReturn([import]);
+      stubImports(contextLibrary, [import]);
 
       final result = sut.applyPrefixes(
         code: 'bar.SomeClass get someGetter',
@@ -135,7 +143,7 @@ void main() {
     test('does not prefix an occurrence of the type name inside a string literal', () {
       final import = importOf(typeLibrary, prefix: 'foo');
       final type = typeNamed('SomeClass', typeLibrary);
-      when(() => contextLibrary.libraryImports).thenReturn([import]);
+      stubImports(contextLibrary, [import]);
 
       final result = sut.applyPrefixes(
         code: "const SomeClass(name: 'SomeClass')",
