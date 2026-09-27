@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/visitor.dart';
+import 'package:analyzer/dart/element/visitor2.dart';
 import 'package:widget_driver_annotation/widget_driver_annotation.dart';
 
 import 'models/annotated_element.dart';
@@ -11,7 +11,7 @@ import 'utils/property_accessor_element_extensions.dart';
 typedef CodeGeneratorMethod = String Function(String codeDefinition, String returnValue);
 
 /// Inspect classes and get className, fields and all constructor parameters annotated with the @driverProvidableFields.
-class ModelVisitor extends SimpleElementVisitor<void> {
+class ModelVisitor extends SimpleElementVisitor2<void> {
   String className = "";
   final fields = <AnnotatedElement>[];
   final methods = <AnnotatedElement>[];
@@ -35,7 +35,7 @@ class ModelVisitor extends SimpleElementVisitor<void> {
     className = elementReturnType.replaceFirst('*', '');
 
     if (!element.isFactory || !element.isDefaultConstructor) {
-      for (final param in element.parameters) {
+      for (final param in element.formalParameters) {
         if (_elementUtils.hasValidAnnotation(
           element: param,
           validAnnotationType: driverProvidableProperty.runtimeType,
@@ -65,7 +65,12 @@ class ModelVisitor extends SimpleElementVisitor<void> {
   }
 
   @override
-  void visitPropertyAccessorElement(PropertyAccessorElement element) {
+  void visitGetterElement(GetterElement element) => _visitPropertyAccessorElement(element);
+
+  @override
+  void visitSetterElement(SetterElement element) => _visitPropertyAccessorElement(element);
+
+  void _visitPropertyAccessorElement(PropertyAccessorElement element) {
     if (element.isStatic) {
       return;
     }

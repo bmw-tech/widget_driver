@@ -47,7 +47,9 @@ class RegisterAccountPageDriver extends WidgetDriver {
       _setRegisterLoading(true);
       await _createUserService.createUserAndLogin(_currentUsername);
       _setRegisterLoading(false);
-      _coordinator.pop(context: context);
+      if (context.mounted) {
+        _coordinator.pop(context: context);
+      }
     } else {
       _validateUsernameInput();
     }

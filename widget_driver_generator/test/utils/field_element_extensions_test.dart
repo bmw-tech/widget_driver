@@ -1,29 +1,32 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/src/dart/element/element.dart';
 import 'package:test/test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widget_driver_generator/src/utils/field_element_extensions.dart';
 
 class MockFieldElement extends Mock implements FieldElement {}
 
-class MockPropertyAccessorElementImplImplicitSetter extends Mock
-    implements PropertyAccessorElementImpl_ImplicitSetter {}
+class MockSetterElement extends Mock implements SetterElement {}
 
-class MockPropertyAccessorElementImplImplicitGetter extends Mock
-    implements PropertyAccessorElementImpl_ImplicitGetter {}
+class MockGetterElement extends Mock implements GetterElement {}
 
 void main() {
   group('FieldElementExtension: isRedundantToPropertyAccessorElement', () {
     test('returns false for a FieldElement with implicit setter and getter (aka variable field)', () {
       final sut = MockFieldElement();
-      when(() => sut.setter).thenReturn(MockPropertyAccessorElementImplImplicitSetter());
-      when(() => sut.getter).thenReturn(MockPropertyAccessorElementImplImplicitGetter());
+      final setter = MockSetterElement();
+      final getter = MockGetterElement();
+      when(() => setter.isSynthetic).thenReturn(true);
+      when(() => getter.isSynthetic).thenReturn(true);
+      when(() => sut.setter).thenReturn(setter);
+      when(() => sut.getter).thenReturn(getter);
       expect(sut.isRedundantToPropertyAccessorElement, isFalse);
     });
 
     test('returns false for a FieldElement with implicit getter (aka final field)', () {
       final sut = MockFieldElement();
-      when(() => sut.getter).thenReturn(MockPropertyAccessorElementImplImplicitGetter());
+      final getter = MockGetterElement();
+      when(() => getter.isSynthetic).thenReturn(true);
+      when(() => sut.getter).thenReturn(getter);
       expect(sut.isRedundantToPropertyAccessorElement, isFalse);
     });
 

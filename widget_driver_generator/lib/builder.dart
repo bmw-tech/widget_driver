@@ -15,6 +15,7 @@ Builder generateWidgetDriver(BuilderOptions options) {
   return SharedPartBuilder(
     [WidgetDriverGenerator(options: options)],
     'widget_driver_generator',
-    formatOutput: DartFormatter(pageWidth: customLineLength).format,
+    formatOutput: (code, languageVersion) =>
+        DartFormatter(languageVersion: languageVersion, pageWidth: customLineLength).format(code),
   );
 }

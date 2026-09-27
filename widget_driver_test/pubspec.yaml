@@ -15,7 +15,7 @@ dependencies:
   widget_driver: ^1.0.8
   mocktail: ^1.0.4
   meta: ^1.7.0
-  test: ^1.22.2
 
 dev_dependencies:
   flutter_lints: ^1.0.4
+  test: ^1.22.2

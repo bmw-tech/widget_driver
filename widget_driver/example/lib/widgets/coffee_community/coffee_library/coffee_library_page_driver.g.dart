@@ -8,7 +8,7 @@ part of 'coffee_library_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.6"
+// This file was generated with widget_driver_generator version "1.4.0-pre.1"
 
 class _$TestCoffeeLibraryPageDriver extends TestDriver implements CoffeeLibraryPageDriver {
   @override
@@ -18,8 +18,8 @@ class _$TestCoffeeLibraryPageDriver extends TestDriver implements CoffeeLibraryP
   int get numberOfCoffees => 123;
 
   @override
-  c.Coffee getCoffeeAtIndex(int index) {
-    return const c.Coffee(
+  b.Coffee getCoffeeAtIndex(int index) {
+    return const b.Coffee(
       name: 'Coffee',
       description: 'Some desc',
       imageUrl: 'http://www.exampleImage.com/image',

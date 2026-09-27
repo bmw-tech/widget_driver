@@ -8,7 +8,7 @@ part of 'my_app_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.6"
+// This file was generated with widget_driver_generator version "1.4.0-pre.1"
 
 class _$TestMyAppDriver extends TestDriver implements MyAppDriver {
   @override

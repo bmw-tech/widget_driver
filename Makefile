@@ -28,14 +28,19 @@ build_ios: install ## Run the iOS build of the example app (located inside `widg
 build_android: install ## Run the Android build of the example app (located inside `widget_driver/example`) without deploying to any device
 	bash scripts/run-android-build.sh
 
+build_macos: install ## Run the macOS build of the example app (located inside `widget_driver/example`) without deploying to any device
+	bash scripts/run-macos-build.sh
+
+build_web: install ## Run the web build of the example app (located inside `widget_driver/example`) without deploying to any device
+	bash scripts/run-web-build.sh
 watch: install ## Starts the example app and performs the hot reload in case of any change
 	bash scripts/run-and-watch.sh
 
 quality: clean install lint test ## Run only linter and tests
 
-build: install build_ios build_android ## Build the example Android and iOS apps from the widget_driver package
+build: install build_ios build_android build_macos build_web ## Build the example Android, iOS, macOS, and web apps from the widget_driver package
 
-all: clean install lint test build_ios build_android ## Run all steps including building the Android and iOS
+all: clean install lint test build_ios build_android build_macos build_web ## Run all steps including building the Android, iOS, macOS, and web
 
 help: ## Show all commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
